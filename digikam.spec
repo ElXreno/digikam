@@ -1,12 +1,13 @@
 Name:		digikam
 Version:	0.7.4
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
 License:	GPL
 URL:		http://www.digikam.org/
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
+Patch0:		digikam-0.7.4-64bit-typo.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	gphoto2-devel >= 2.0.0 imlib2-devel gdbm-devel >= 1.8.0
@@ -36,6 +37,7 @@ needed to develop applications using %{name}.
 
 %prep
 %setup -q
+%patch0 -p1 -b 64bit-typo.patch
 
 %build
 unset QTDIR || : ; . /etc/profile.d/qt.sh
@@ -48,7 +50,7 @@ make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT 
+make install DESTDIR=$RPM_BUILD_ROOT
 
 desktop-file-install --vendor fedora --delete-original \
 	--dir $RPM_BUILD_ROOT%{_datadir}/applications \
@@ -113,6 +115,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Sat Sep 17 2005 Marcin Garski <mgarski@post.pl> 0.7.4-3
+- Change confusing warning about Big Endian Platform
+
 * Tue Sep 13 2005 Marcin Garski <mgarski@post.pl> 0.7.4-2
 - Spec improvements
 
