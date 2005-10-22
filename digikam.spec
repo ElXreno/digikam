@@ -1,6 +1,6 @@
 Name:		digikam
 Version:	0.7.4
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -70,6 +70,8 @@ desktop-file-install --vendor fedora --delete-original \
 
 %find_lang %{name}
 
+rm -f $RPM_BUILD_ROOT%{_libdir}/libdigikam.la
+
 %post
 /sbin/ldconfig
 update-desktop-database &> /dev/null ||:
@@ -95,7 +97,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-, root, root)
 %doc AUTHORS ChangeLog COPYING HACKING README
 %{_bindir}/*
-%{_libdir}/libdigikam.la
 %{_libdir}/libdigikam.so.*
 %{_libdir}/kde3/digikamimageplugin_core.la
 %{_libdir}/kde3/digikamimageplugin_core.so
@@ -115,6 +116,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Sat Oct 22 2005 Marcin Garski <mgarski@post.pl> 0.7.4-4
+- Exclude libdigikam.la (bug #171503)
+
 * Sat Sep 17 2005 Marcin Garski <mgarski@post.pl> 0.7.4-3
 - Change confusing warning about Big Endian Platform
 
