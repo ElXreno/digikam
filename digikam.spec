@@ -1,17 +1,16 @@
 Name:		digikam
-Version:	0.7.4
-Release:	4%{?dist}
+Version:	0.8.0
+Release:	1%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
 License:	GPL
 URL:		http://www.digikam.org/
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
-Patch0:		digikam-0.7.4-64bit-typo.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:	gphoto2-devel >= 2.0.0 imlib2-devel gdbm-devel >= 1.8.0
-BuildRequires:	libkexif-devel >= 0.2 libkipi-devel >= 0.1 desktop-file-utils
+BuildRequires:	gphoto2-devel >= 2.0.0 imlib2-devel libkexif-devel >= 0.2
+BuildRequires:	libkipi-devel >= 0.1 sqlite-devel >= 3.0.0 desktop-file-utils
 BuildRequires:	gettext
 Requires(post):	desktop-file-utils
 Requires(postun): desktop-file-utils
@@ -24,7 +23,8 @@ chronologically. An easy to use interface is provided to connect to your
 digital camera, preview the images and download and/or delete them.
 
 digiKam buildin image editor makes the common photo correction a simple task.
-The image editor is extensible via plugins.
+The image editor is extensible via plugins, install the digikamimageplugins
+and/or kipi-plugins packages to use them.
 
 %package devel
 Summary:	Development files for %{name}
@@ -37,7 +37,6 @@ needed to develop applications using %{name}.
 
 %prep
 %setup -q
-%patch0 -p1 -b 64bit-typo.patch
 
 %build
 unset QTDIR || : ; . /etc/profile.d/qt.sh
@@ -95,7 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %name.lang
 %defattr(-, root, root)
-%doc AUTHORS ChangeLog COPYING HACKING README
+%doc AUTHORS ChangeLog COPYING HACKING README TODO
 %{_bindir}/*
 %{_libdir}/libdigikam.so.*
 %{_libdir}/kde3/digikamimageplugin_core.la
@@ -116,6 +115,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Thu Dec 01 2005 Marcin Garski <mgarski@post.pl> 0.8.0-1
+- Add description about digikamimageplugins and kipi-plugins
+- Remove 64 bit patch, applied upstream
+- Update to version 0.8.0
+
 * Sat Oct 22 2005 Marcin Garski <mgarski@post.pl> 0.7.4-4
 - Exclude libdigikam.la (bug #171503)
 
