@@ -1,6 +1,6 @@
 Name:		digikam
 Version:	0.8.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -43,6 +43,8 @@ unset QTDIR || : ; . /etc/profile.d/qt.sh
 export QTLIB=${QTDIR}/lib QTINC=${QTDIR}/include
 
 %configure \
+	--with-extra-includes=/usr/share/X11/ \
+	--with-extra-libs=/usr/share/X11/ \
 	--disable-rpath \
 	--disable-debug
 make %{?_smp_mflags}
@@ -115,6 +117,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Fri Dec 09 2005 Marcin Garski <mgarski@post.pl> 0.8.0-2
+- Work around for modular X.Org paths
+
 * Thu Dec 01 2005 Marcin Garski <mgarski@post.pl> 0.8.0-1
 - Add description about digikamimageplugins and kipi-plugins
 - Remove 64 bit patch, applied upstream
