@@ -1,12 +1,13 @@
 Name:		digikam
 Version:	0.8.0
-Release:	7%{?dist}
+Release:	8%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
 License:	GPL
 URL:		http://www.digikam.org/
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
+Patch0:		digikam-0.8.0-gcc41.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	gphoto2-devel >= 2.0.0 imlib2-devel libkexif-devel >= 0.2
@@ -37,6 +38,7 @@ needed to develop applications using %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 unset QTDIR || : ; . /etc/profile.d/qt.sh
@@ -115,6 +117,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Wed Dec 14 2005 Marcin Garski <mgarski@post.pl> 0.8.0-8
+- Fix compile on GCC 4.1
+
 * Tue Dec 13 2005 Marcin Garski <mgarski@post.pl> 0.8.0-7
 - Remove autoreconf
 
