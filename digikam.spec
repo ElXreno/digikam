@@ -1,6 +1,6 @@
 Name:		digikam
 Version:	0.8.0
-Release:	6%{?dist}
+Release:	7%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -41,8 +41,6 @@ needed to develop applications using %{name}.
 %build
 unset QTDIR || : ; . /etc/profile.d/qt.sh
 export QTLIB=${QTDIR}/lib QTINC=${QTDIR}/include
-
-autoreconf
 
 %configure \
 	--disable-rpath \
@@ -117,6 +115,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Tue Dec 13 2005 Marcin Garski <mgarski@post.pl> 0.8.0-7
+- Remove autoreconf
+
 * Tue Dec 13 2005 Marcin Garski <mgarski@post.pl> 0.8.0-6
 - Remove patch
 
