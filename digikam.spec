@@ -1,6 +1,6 @@
 Name:		digikam
 Version:	0.8.0
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -12,7 +12,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	gphoto2-devel >= 2.0.0 imlib2-devel libkexif-devel >= 0.2
 BuildRequires:	libkipi-devel >= 0.1 sqlite-devel >= 3.0.0 desktop-file-utils
-BuildRequires:	gettext autoconf
+BuildRequires:	gettext autoconf libXt-devel
 Requires(post):	desktop-file-utils
 Requires(postun): desktop-file-utils
 
@@ -48,7 +48,8 @@ autoreconf
 
 %configure \
 	--disable-rpath \
-	--disable-debug
+	--disable-debug \
+	--with-extra-libs=%{_libdir}
 make %{?_smp_mflags}
 
 %install
@@ -119,6 +120,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Tue Dec 13 2005 Marcin Garski <mgarski@post.pl> 0.8.0-4
+- Try to build for modular X.Org
+
 * Tue Dec 13 2005 Marcin Garski <mgarski@post.pl> 0.8.0-3
 - Add new paths for modular X.Org
 
