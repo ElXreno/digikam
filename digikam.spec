@@ -37,7 +37,6 @@ needed to develop applications using %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 unset QTDIR || : ; . /etc/profile.d/qt.sh
