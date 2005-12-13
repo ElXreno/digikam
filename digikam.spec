@@ -1,17 +1,18 @@
 Name:		digikam
 Version:	0.8.0
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
 License:	GPL
 URL:		http://www.digikam.org/
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
+Patch0:		digikam-0.8.0-modular-X.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	gphoto2-devel >= 2.0.0 imlib2-devel libkexif-devel >= 0.2
 BuildRequires:	libkipi-devel >= 0.1 sqlite-devel >= 3.0.0 desktop-file-utils
-BuildRequires:	gettext
+BuildRequires:	gettext autoconf
 Requires(post):	desktop-file-utils
 Requires(postun): desktop-file-utils
 
@@ -37,14 +38,15 @@ needed to develop applications using %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 unset QTDIR || : ; . /etc/profile.d/qt.sh
 export QTLIB=${QTDIR}/lib QTINC=${QTDIR}/include
 
+autoreconf
+
 %configure \
-	--with-extra-includes=/usr/share/X11/ \
-	--with-extra-libs=/usr/share/X11/ \
 	--disable-rpath \
 	--disable-debug
 make %{?_smp_mflags}
@@ -117,6 +119,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Tue Dec 13 2005 Marcin Garski <mgarski@post.pl> 0.8.0-3
+- Add new paths for modular X.Org
+
 * Fri Dec 09 2005 Marcin Garski <mgarski@post.pl> 0.8.0-2
 - Work around for modular X.Org paths
 

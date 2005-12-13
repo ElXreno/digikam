@@ -1,0 +1,19 @@
+diff -urN digikam-0.8.0-orig/acinclude.m4 digikam-0.8.0/acinclude.m4
+--- digikam-0.8.0-orig/acinclude.m4	2005-11-21 20:14:06.000000000 +0100
++++ digikam-0.8.0/acinclude.m4	2005-12-13 16:37:55.000000000 +0100
+@@ -44,6 +44,7 @@
+ [# Look for the header file in a standard set of common directories.
+ # Check X11 before X11Rn because it is often a symlink to the current release.
+   for ac_dir in               \
++    /usr/share/X11/include    \
+     /usr/X11/include          \
+     /usr/X11R6/include        \
+     /usr/X11R5/include        \
+@@ -104,6 +105,7 @@
+ # First see if replacing the include by lib works.
+ # Check X11 before X11Rn because it is often a symlink to the current release.
+ for ac_dir in `echo "$ac_x_includes" | sed s/include/lib${kdelibsuff}/` \
++    /usr/share/X11/lib${kdelibsuff}     \
+     /usr/X11/lib${kdelibsuff}           \
+     /usr/X11R6/lib${kdelibsuff}         \
+     /usr/X11R5/lib${kdelibsuff}         \
