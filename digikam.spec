@@ -1,6 +1,6 @@
 Name:		digikam
 Version:	0.8.0
-Release:	10%{?dist}
+Release:	11%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -13,6 +13,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:	gphoto2-devel >= 2.0.0 imlib2-devel libkexif-devel >= 0.2
 BuildRequires:	libkipi-devel >= 0.1 sqlite-devel >= 3.0.0 desktop-file-utils
 BuildRequires:	libXt-devel libtiff-devel libidn-devel libacl-devel gettext
+BuildRequires:	libart_lgpl-devel gamin-devel
 Requires(post):	desktop-file-utils
 Requires(postun): desktop-file-utils
 
@@ -117,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Wed Dec 14 2005 Marcin Garski <mgarski@post.pl> 0.8.0-11
+- Add libart_lgpl-devel and gamin-devel to BR
+
 * Wed Dec 14 2005 Marcin Garski <mgarski@post.pl> 0.8.0-10
 - Add libacl-devel to BR
 
