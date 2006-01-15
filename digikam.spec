@@ -1,6 +1,6 @@
 Name:		digikam
 Version:	0.8.0
-Release:	11%{?dist}
+Release:	12%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -42,12 +42,14 @@ needed to develop applications using %{name}.
 %patch0 -p1
 
 %build
-unset QTDIR || : ; . /etc/profile.d/qt.sh
+unset QTDIR || : ; . %{_sysconfdir}/profile.d/qt.sh
 export QTLIB=${QTDIR}/lib QTINC=${QTDIR}/include
 
 %configure \
 	--disable-rpath \
-	--disable-debug
+	--disable-debug \
+	--disable-dependency-tracking \
+	--enable-final
 make %{?_smp_mflags}
 
 %install
@@ -118,6 +120,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Sun Jan 15 2006 Marcin Garski <mgarski@post.pl> 0.8.0-12
+- Change "/etc/profile.d/qt.sh" to "%{_sysconfdir}/profile.d/qt.sh"
+- Add --disable-dependency-tracking & --enable-final
+
 * Wed Dec 14 2005 Marcin Garski <mgarski@post.pl> 0.8.0-11
 - Add libart_lgpl-devel and gamin-devel to BR
 
