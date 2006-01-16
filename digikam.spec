@@ -1,6 +1,6 @@
 Name:		digikam
 Version:	0.8.0
-Release:	12%{?dist}
+Release:	13%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -48,8 +48,7 @@ export QTLIB=${QTDIR}/lib QTINC=${QTDIR}/include
 %configure \
 	--disable-rpath \
 	--disable-debug \
-	--disable-dependency-tracking \
-	--enable-final
+	--disable-dependency-tracking
 make %{?_smp_mflags}
 
 %install
@@ -120,6 +119,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Mon Jan 16 2006 Marcin Garski <mgarski@post.pl> 0.8.0-13
+- Remove --enable-final (caused compilation errors)
+
 * Sun Jan 15 2006 Marcin Garski <mgarski@post.pl> 0.8.0-12
 - Change "/etc/profile.d/qt.sh" to "%{_sysconfdir}/profile.d/qt.sh"
 - Add --disable-dependency-tracking & --enable-final
