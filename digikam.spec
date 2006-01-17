@@ -1,6 +1,6 @@
 Name:		digikam
 Version:	0.8.0
-Release:	14%{?dist}
+Release:	15%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -12,8 +12,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	gphoto2-devel >= 2.0.0 imlib2-devel libkexif-devel >= 0.2
 BuildRequires:	libkipi-devel >= 0.1 sqlite-devel >= 3.0.0 desktop-file-utils
-BuildRequires:	libXt-devel libtiff-devel libidn-devel libacl-devel gettext
-BuildRequires:	libart_lgpl-devel gamin-devel
+BuildRequires:	gettext libtool-ltdl-devel
 Requires(post):	desktop-file-utils
 Requires(postun): desktop-file-utils
 
@@ -47,7 +46,8 @@ export QTLIB=${QTDIR}/lib QTINC=${QTDIR}/include
 
 %configure \
 	--disable-rpath \
-	--disable-debug
+	--disable-debug \
+	--disable-dependency-tracking
 make %{?_smp_mflags}
 
 %install
@@ -118,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Tue Jan 17 2006 Marcin Garski <mgarski@post.pl> 0.8.0-15
+- Remove redundant BuildRequires (bug #178031)
+
 * Mon Jan 16 2006 Marcin Garski <mgarski@post.pl> 0.8.0-14
 - Remove --disable-dependency-tracking
 
