@@ -1,13 +1,12 @@
 Name:		digikam
-Version:	0.8.0
-Release:	16%{?dist}
+Version:	0.8.1
+Release:	1%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
 License:	GPL
 URL:		http://www.digikam.org/
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
-Patch0:		digikam-0.8.0-gcc41.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	qt-devel kdelibs-devel arts-devel gphoto2-devel >= 2.0.0
@@ -39,7 +38,6 @@ needed to develop applications using %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 unset QTDIR || : ; . %{_sysconfdir}/profile.d/qt.sh
@@ -48,7 +46,8 @@ export QTLIB=${QTDIR}/lib QTINC=${QTDIR}/include
 %configure \
 	--disable-rpath \
 	--disable-debug \
-	--disable-dependency-tracking
+	--disable-dependency-tracking \
+	--enable-final
 make %{?_smp_mflags}
 
 %install
@@ -109,6 +108,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/digikam/
 %{_datadir}/apps/showfoto/
 %{_datadir}/icons/hicolor/*
+%{_datadir}/mimelnk/image/*.desktop
 %{_datadir}/services/digikam*
 %{_datadir}/servicetypes/digikamimageplugin.desktop
 
@@ -119,6 +119,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Mon Jan 23 2006 Marcin Garski <mgarski@post.pl> 0.8.1-1
+- Add --enable-final
+- Remove GCC 4.1 patch, applied upstream
+- Update to version 0.8.1
+
 * Mon Jan 23 2006 Marcin Garski <mgarski@post.pl> 0.8.0-16
 - Add some stuff to BuildRequires (finally fix bug #178031)
 
