@@ -1,6 +1,6 @@
 Name:		digikam
 Version:	0.8.0
-Release:	15%{?dist}
+Release:	16%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -10,9 +10,10 @@ Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
 Patch0:		digikam-0.8.0-gcc41.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:	gphoto2-devel >= 2.0.0 imlib2-devel libkexif-devel >= 0.2
-BuildRequires:	libkipi-devel >= 0.1 sqlite-devel >= 3.0.0 desktop-file-utils
-BuildRequires:	gettext libtool-ltdl-devel
+BuildRequires:	qt-devel kdelibs-devel arts-devel gphoto2-devel >= 2.0.0
+BuildRequires:	imlib2-devel libkexif-devel >= 0.2 libkipi-devel >= 0.1
+BuildRequires:	libtiff-devel sqlite-devel >= 3.0.0 gettext pkgconfig
+BuildRequires:	desktop-file-utils libtool-ltdl-devel
 Requires(post):	desktop-file-utils
 Requires(postun): desktop-file-utils
 
@@ -118,6 +119,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Mon Jan 23 2006 Marcin Garski <mgarski@post.pl> 0.8.0-16
+- Add some stuff to BuildRequires (finally fix bug #178031)
+
 * Tue Jan 17 2006 Marcin Garski <mgarski@post.pl> 0.8.0-15
 - Remove redundant BuildRequires (bug #178031)
 
