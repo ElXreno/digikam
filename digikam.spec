@@ -1,6 +1,6 @@
 Name:		digikam
 Version:	0.8.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -74,6 +74,9 @@ desktop-file-install --vendor fedora --delete-original \
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/libdigikam.la
 
+# Fix bug #179754
+rm -rf $RPM_BUILD_ROOT%{_datadir}/mimelnk/
+
 %post
 /sbin/ldconfig
 update-desktop-database &> /dev/null ||:
@@ -107,8 +110,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/applications/*.desktop
 %{_datadir}/apps/digikam/
 %{_datadir}/apps/showfoto/
-%{_datadir}/icons/hicolor/*
-%{_datadir}/mimelnk/image/*.desktop
+%{_datadir}/icons/hicolor/*/apps/*.png
 %{_datadir}/services/digikam*
 %{_datadir}/servicetypes/digikamimageplugin.desktop
 
@@ -119,76 +121,80 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
-* Mon Jan 23 2006 Marcin Garski <mgarski@post.pl> 0.8.1-1
+* Wed Feb 08 2006 Marcin Garski <mgarski[AT]post.pl> 0.8.1-2
+- Exclude x-raw.desktop (bug #179754)
+- Don't own icons directory
+
+* Mon Jan 23 2006 Marcin Garski <mgarski[AT]post.pl> 0.8.1-1
 - Add --enable-final
 - Remove GCC 4.1 patch, applied upstream
 - Update to version 0.8.1
 
-* Mon Jan 23 2006 Marcin Garski <mgarski@post.pl> 0.8.0-16
+* Mon Jan 23 2006 Marcin Garski <mgarski[AT]post.pl> 0.8.0-16
 - Add some stuff to BuildRequires (finally fix bug #178031)
 
-* Tue Jan 17 2006 Marcin Garski <mgarski@post.pl> 0.8.0-15
+* Tue Jan 17 2006 Marcin Garski <mgarski[AT]post.pl> 0.8.0-15
 - Remove redundant BuildRequires (bug #178031)
 
-* Mon Jan 16 2006 Marcin Garski <mgarski@post.pl> 0.8.0-14
+* Mon Jan 16 2006 Marcin Garski <mgarski[AT]post.pl> 0.8.0-14
 - Remove --disable-dependency-tracking
 
-* Mon Jan 16 2006 Marcin Garski <mgarski@post.pl> 0.8.0-13
+* Mon Jan 16 2006 Marcin Garski <mgarski[AT]post.pl> 0.8.0-13
 - Remove --enable-final (caused compilation errors)
 
-* Sun Jan 15 2006 Marcin Garski <mgarski@post.pl> 0.8.0-12
+* Sun Jan 15 2006 Marcin Garski <mgarski[AT]post.pl> 0.8.0-12
 - Change "/etc/profile.d/qt.sh" to "%{_sysconfdir}/profile.d/qt.sh"
 - Add --disable-dependency-tracking & --enable-final
 
-* Wed Dec 14 2005 Marcin Garski <mgarski@post.pl> 0.8.0-11
+* Wed Dec 14 2005 Marcin Garski <mgarski[AT]post.pl> 0.8.0-11
 - Add libart_lgpl-devel and gamin-devel to BR
 
-* Wed Dec 14 2005 Marcin Garski <mgarski@post.pl> 0.8.0-10
+* Wed Dec 14 2005 Marcin Garski <mgarski[AT]post.pl> 0.8.0-10
 - Add libacl-devel to BR
 
-* Wed Dec 14 2005 Marcin Garski <mgarski@post.pl> 0.8.0-9
+* Wed Dec 14 2005 Marcin Garski <mgarski[AT]post.pl> 0.8.0-9
 - Add libidn-devel to BR
 
-* Wed Dec 14 2005 Marcin Garski <mgarski@post.pl> 0.8.0-8
+* Wed Dec 14 2005 Marcin Garski <mgarski[AT]post.pl> 0.8.0-8
 - Fix compile on GCC 4.1
 
-* Tue Dec 13 2005 Marcin Garski <mgarski@post.pl> 0.8.0-7
+* Tue Dec 13 2005 Marcin Garski <mgarski[AT]post.pl> 0.8.0-7
 - Remove autoreconf
 
-* Tue Dec 13 2005 Marcin Garski <mgarski@post.pl> 0.8.0-6
+* Tue Dec 13 2005 Marcin Garski <mgarski[AT]post.pl> 0.8.0-6
 - Remove patch
 
-* Tue Dec 13 2005 Marcin Garski <mgarski@post.pl> 0.8.0-5
+* Tue Dec 13 2005 Marcin Garski <mgarski[AT]post.pl> 0.8.0-5
 - Last chance to make it right (modular X.Org)
 
-* Tue Dec 13 2005 Marcin Garski <mgarski@post.pl> 0.8.0-4
+* Tue Dec 13 2005 Marcin Garski <mgarski[AT]post.pl> 0.8.0-4
 - Try to build for modular X.Org
 
-* Tue Dec 13 2005 Marcin Garski <mgarski@post.pl> 0.8.0-3
+* Tue Dec 13 2005 Marcin Garski <mgarski[AT]post.pl> 0.8.0-3
 - Add new paths for modular X.Org
 
-* Fri Dec 09 2005 Marcin Garski <mgarski@post.pl> 0.8.0-2
+* Fri Dec 09 2005 Marcin Garski <mgarski[AT]post.pl> 0.8.0-2
 - Work around for modular X.Org paths
 
-* Thu Dec 01 2005 Marcin Garski <mgarski@post.pl> 0.8.0-1
+* Thu Dec 01 2005 Marcin Garski <mgarski[AT]post.pl> 0.8.0-1
 - Add description about digikamimageplugins and kipi-plugins
 - Remove 64 bit patch, applied upstream
 - Update to version 0.8.0
 
-* Sat Oct 22 2005 Marcin Garski <mgarski@post.pl> 0.7.4-4
+* Sat Oct 22 2005 Marcin Garski <mgarski[AT]post.pl> 0.7.4-4
 - Exclude libdigikam.la (bug #171503)
 
-* Sat Sep 17 2005 Marcin Garski <mgarski@post.pl> 0.7.4-3
+* Sat Sep 17 2005 Marcin Garski <mgarski[AT]post.pl> 0.7.4-3
 - Change confusing warning about Big Endian Platform
 
-* Tue Sep 13 2005 Marcin Garski <mgarski@post.pl> 0.7.4-2
+* Tue Sep 13 2005 Marcin Garski <mgarski[AT]post.pl> 0.7.4-2
 - Spec improvements
 
-* Mon Sep 12 2005 Marcin Garski <mgarski@post.pl> 0.7.4-1
+* Mon Sep 12 2005 Marcin Garski <mgarski[AT]post.pl> 0.7.4-1
 - Updated to version 0.7.4 & clean up for Fedora Extras
 
-* Sat Jun 26 2004 Marcin Garski <mgarski@post.pl> 0.6.2-1.fc2
+* Sat Jun 26 2004 Marcin Garski <mgarski[AT]post.pl> 0.6.2-1.fc2
 - Updated to version 0.6.2
 
-* Wed Jun 09 2004 Marcin Garski <mgarski@post.pl> 0.6.2RC-1.fc2
+* Wed Jun 09 2004 Marcin Garski <mgarski[AT]post.pl> 0.6.2RC-1.fc2
 - Initial specfile
