@@ -1,6 +1,6 @@
 Name:		digikam
 Version:	0.8.1
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -11,8 +11,8 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	qt-devel kdelibs-devel arts-devel gphoto2-devel >= 2.0.0
 BuildRequires:	imlib2-devel libkexif-devel >= 0.2 libkipi-devel >= 0.1
-BuildRequires:	libtiff-devel sqlite-devel >= 3.0.0 gettext pkgconfig
-BuildRequires:	desktop-file-utils libtool-ltdl-devel
+BuildRequires:	libtiff-devel libpng-devel sqlite-devel >= 3.0.0 gettext
+BuildRequires:	pkgconfig desktop-file-utils libtool-ltdl-devel
 Requires(post):	desktop-file-utils
 Requires(postun): desktop-file-utils
 
@@ -121,6 +121,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Tue Feb 14 2006 Marcin Garski <mgarski[AT]post.pl> 0.8.1-3
+- Rebuild
+
 * Wed Feb 08 2006 Marcin Garski <mgarski[AT]post.pl> 0.8.1-2
 - Exclude x-raw.desktop (bug #179754)
 - Don't own icons directory
