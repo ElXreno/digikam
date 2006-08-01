@@ -1,6 +1,6 @@
 Name:		digikam
-Version:	0.8.1
-Release:	3%{?dist}
+Version:	0.8.2
+Release:	1%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -10,7 +10,7 @@ Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	qt-devel kdelibs-devel arts-devel gphoto2-devel >= 2.0.0
-BuildRequires:	imlib2-devel libkexif-devel >= 0.2 libkipi-devel >= 0.1
+BuildRequires:	imlib2-devel libkexif-devel >= 0.2.4 libkipi-devel >= 0.1
 BuildRequires:	libtiff-devel libpng-devel sqlite-devel >= 3.0.0 gettext
 BuildRequires:	pkgconfig desktop-file-utils libtool-ltdl-devel
 Requires(post):	desktop-file-utils
@@ -60,7 +60,7 @@ desktop-file-install --vendor fedora --delete-original \
 	--add-category Application \
 	--add-category Photograph \
 	--add-category Graphics \
-	$RPM_BUILD_ROOT%{_datadir}/applnk/Graphics/%{name}.desktop
+	$RPM_BUILD_ROOT%{_datadir}/applications/kde/%{name}.desktop
 
 desktop-file-install --vendor fedora --delete-original \
 	--dir $RPM_BUILD_ROOT%{_datadir}/applications \
@@ -73,9 +73,6 @@ desktop-file-install --vendor fedora --delete-original \
 %find_lang %{name}
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/libdigikam.la
-
-# Fix bug #179754
-rm -rf $RPM_BUILD_ROOT%{_datadir}/mimelnk/
 
 %post
 /sbin/ldconfig
@@ -121,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Tue Aug 01 2006 Marcin Garski <mgarski[AT]post.pl> 0.8.2-1
+- Update to version 0.8.2 (#200932)
+
 * Tue Feb 14 2006 Marcin Garski <mgarski[AT]post.pl> 0.8.1-3
 - Rebuild
 
