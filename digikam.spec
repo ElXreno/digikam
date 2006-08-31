@@ -1,6 +1,6 @@
 Name:		digikam
 Version:	0.8.2
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -118,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Fri Sep 01 2006 Marcin Garski <mgarski[AT]post.pl> 0.8.2-3
+- Rebuild for Fedora Core 6
+
 * Wed Aug 16 2006 Marcin Garski <mgarski[AT]post.pl> 0.8.2-2
 - Release bump (#201756)
 
