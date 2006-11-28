@@ -2,7 +2,7 @@
 
 Name:		digikam
 Version:	0.9.0
-Release:	0.1%{?prever:.%{prever}}%{?dist}
+Release:	0.2%{?prever:.%{prever}}%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -123,6 +123,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Tue Nov 28 2006 Marcin Garski <mgarski[AT]post.pl> 0.9.0-0.2.rc1
+- Rebuild
+
 * Tue Nov 28 2006 Marcin Garski <mgarski[AT]post.pl> 0.9.0-0.1.rc1
 - Update to version 0.9.0-rc1
 
