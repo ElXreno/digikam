@@ -1,17 +1,19 @@
+%define prever rc1
+
 Name:		digikam
-Version:	0.8.2
-Release:	3%{?dist}
+Version:	0.9.0
+Release:	0.1.%{alphatag}%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
 License:	GPL
 URL:		http://www.digikam.org/
-Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
+Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}%{?prever:-%{prever}}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	qt-devel kdelibs-devel arts-devel gphoto2-devel >= 2.0.0
-BuildRequires:	imlib2-devel libkexif-devel >= 0.2.4 libkipi-devel >= 0.1
-BuildRequires:	libtiff-devel libpng-devel sqlite-devel >= 3.0.0 gettext
+BuildRequires:	libkipi-devel >= 0.1 lcms-devel exiv2-devel libtiff-devel
+BuildRequires:	libpng-devel >= 1.2.7 sqlite-devel >= 3.0.0 gettext
 BuildRequires:	pkgconfig desktop-file-utils libtool-ltdl-devel
 Requires(post):	desktop-file-utils
 Requires(postun): desktop-file-utils
@@ -37,7 +39,7 @@ This package contains the libraries, include files and other resources
 needed to develop applications using %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}%{?prever:-%{prever}}
 
 %build
 unset QTDIR || : ; . %{_sysconfdir}/profile.d/qt.sh
@@ -46,8 +48,9 @@ export QTLIB=${QTDIR}/lib QTINC=${QTDIR}/include
 %configure \
 	--disable-rpath \
 	--disable-debug \
-	--disable-dependency-tracking \
-	--enable-final
+	--disable-dependency-tracking
+# Broken on 0.9.0-rc1
+#	--enable-final
 make %{?_smp_mflags}
 
 %install
@@ -97,7 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %name.lang
 %defattr(-, root, root)
-%doc AUTHORS ChangeLog COPYING HACKING README TODO
+%doc AUTHORS ChangeLog COPYING HACKING NEWS README TODO
 %{_bindir}/*
 %{_libdir}/libdigikam.so.*
 %{_libdir}/kde3/digikamimageplugin_core.la
@@ -106,8 +109,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/kio_digikam*.so
 %{_datadir}/applications/*.desktop
 %{_datadir}/apps/digikam/
+%{_datadir}/apps/konqueror/servicemenus/*.desktop
 %{_datadir}/apps/showfoto/
 %{_datadir}/icons/hicolor/*/apps/*.png
+%{_mandir}/man1/*.1*
 %{_datadir}/services/digikam*
 %{_datadir}/servicetypes/digikamimageplugin.desktop
 
@@ -118,6 +123,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Tue Nov 28 2006 Marcin Garski <mgarski[AT]post.pl> 0.9.0-0.1.rc1
+- Update to version 0.9.0-rc1
+
 * Fri Sep 01 2006 Marcin Garski <mgarski[AT]post.pl> 0.8.2-3
 - Rebuild for Fedora Core 6
 
