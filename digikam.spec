@@ -1,20 +1,18 @@
-%define prever rc1
-
 Name:		digikam
 Version:	0.9.0
-Release:	0.2%{?prever:.%{prever}}%{?dist}
+Release:	1%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
 License:	GPL
 URL:		http://www.digikam.org/
-Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}%{?prever:-%{prever}}.tar.bz2
+Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	qt-devel kdelibs-devel arts-devel gphoto2-devel >= 2.0.0
-BuildRequires:	libkipi-devel >= 0.1 lcms-devel exiv2-devel libtiff-devel
-BuildRequires:	libpng-devel >= 1.2.7 sqlite-devel >= 3.0.0 gettext
-BuildRequires:	pkgconfig desktop-file-utils libtool-ltdl-devel
+BuildRequires:	libkipi-devel >= 0.1 lcms-devel exiv2-devel >= 0.12
+BuildRequires:	libtiff-devel libpng-devel >= 1.2.7 sqlite-devel >= 3.0.0
+BuildRequires:	gettext pkgconfig desktop-file-utils libtool-ltdl-devel
 Requires(post):	desktop-file-utils
 Requires(postun): desktop-file-utils
 
@@ -39,7 +37,7 @@ This package contains the libraries, include files and other resources
 needed to develop applications using %{name}.
 
 %prep
-%setup -q -n %{name}-%{version}%{?prever:-%{prever}}
+%setup -q
 
 %build
 unset QTDIR || : ; . %{_sysconfdir}/profile.d/qt.sh
@@ -48,9 +46,8 @@ export QTLIB=${QTDIR}/lib QTINC=${QTDIR}/include
 %configure \
 	--disable-rpath \
 	--disable-debug \
-	--disable-dependency-tracking
-# Broken on 0.9.0-rc1
-#	--enable-final
+	--disable-dependency-tracking \
+	--enable-final
 make %{?_smp_mflags}
 
 %install
@@ -123,6 +120,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Mon Dec 18 2006 Marcin Garski <mgarski[AT]post.pl> 0.9.0-1
+- Update to version 0.9.0
+
 * Tue Nov 28 2006 Marcin Garski <mgarski[AT]post.pl> 0.9.0-0.2.rc1
 - Rebuild
 
