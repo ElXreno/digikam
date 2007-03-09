@@ -1,5 +1,5 @@
 Name:		digikam
-Version:	0.9.0
+Version:	0.9.1
 Release:	1%{?dist}
 Summary:	A digital camera accessing & photo management application
 
@@ -10,9 +10,10 @@ Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	qt-devel kdelibs-devel arts-devel gphoto2-devel >= 2.0.0
-BuildRequires:	libkipi-devel >= 0.1 lcms-devel exiv2-devel >= 0.12
-BuildRequires:	libtiff-devel libpng-devel >= 1.2.7 sqlite-devel >= 3.0.0
-BuildRequires:	gettext pkgconfig desktop-file-utils libtool-ltdl-devel
+BuildRequires:	exiv2-devel >= 0.12 libkexiv2-devel >= 0.1 libkipi-devel >= 0.1
+BuildRequires:	lcms-devel libtiff-devel libpng-devel >= 1.2.7 jasper-devel
+BuildRequires:	sqlite-devel >= 3.0.0 gettext pkgconfig desktop-file-utils
+BuildRequires:	libtool-ltdl-devel
 Requires(post):	desktop-file-utils
 Requires(postun): desktop-file-utils
 
@@ -96,7 +97,7 @@ fi
 rm -rf $RPM_BUILD_ROOT
 
 %files -f %name.lang
-%defattr(-, root, root)
+%defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING HACKING NEWS README TODO
 %{_bindir}/*
 %{_libdir}/libdigikam.so.*
@@ -120,6 +121,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Fri Mar 09 2007 Marcin Garski <mgarski[AT]post.pl> 0.9.1-1
+- Update to version 0.9.1
+- Update BuildRequires
+
 * Mon Dec 18 2006 Marcin Garski <mgarski[AT]post.pl> 0.9.0-1
 - Update to version 0.9.0
 
@@ -163,7 +168,7 @@ rm -rf $RPM_BUILD_ROOT
 - Remove --enable-final (caused compilation errors)
 
 * Sun Jan 15 2006 Marcin Garski <mgarski[AT]post.pl> 0.8.0-12
-- Change "/etc/profile.d/qt.sh" to "%{_sysconfdir}/profile.d/qt.sh"
+- Change "/etc/profile.d/qt.sh" to "%%{_sysconfdir}/profile.d/qt.sh"
 - Add --disable-dependency-tracking & --enable-final
 
 * Wed Dec 14 2005 Marcin Garski <mgarski[AT]post.pl> 0.8.0-11
