@@ -1,6 +1,6 @@
 Name:		digikam
 Version:	0.9.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -9,13 +9,16 @@ URL:		http://www.digikam.org/
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:	qt-devel kdelibs-devel arts-devel gphoto2-devel >= 2.0.0
-BuildRequires:	exiv2-devel >= 0.12 libkexiv2-devel >= 0.1 libkipi-devel >= 0.1
+# http://www.linux.it/~anaselli/kipi-plugins/patches/digikam/digi_libkexiv2.patch.bz2
+Patch1: 	digi_libkexiv2.patch
+
+BuildRequires:	kdelibs-devel gphoto2-devel >= 2.0.0
+BuildRequires:	libkexiv2-devel exiv2-devel >= 0.14 libkipi-devel
 BuildRequires:	lcms-devel libtiff-devel libpng-devel >= 1.2.7 jasper-devel
 BuildRequires:	sqlite-devel >= 3.0.0 gettext pkgconfig desktop-file-utils
+%if 0%{?fedora} > 4 || 0%{?rhel} > 4
 BuildRequires:	libtool-ltdl-devel
-Requires(post):	desktop-file-utils
-Requires(postun): desktop-file-utils
+%endif
 
 %description
 digiKam is an easy to use and powerful digital photo management application,
@@ -40,9 +43,10 @@ needed to develop applications using %{name}.
 %prep
 %setup -q
 
+%patch1 -p0 -b .exiv2
+
 %build
 unset QTDIR || : ; . %{_sysconfdir}/profile.d/qt.sh
-export QTLIB=${QTDIR}/lib QTINC=${QTDIR}/include
 
 %configure \
 	--disable-rpath \
@@ -57,16 +61,12 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 desktop-file-install --vendor fedora --delete-original \
 	--dir $RPM_BUILD_ROOT%{_datadir}/applications \
-	--add-category X-Fedora \
-	--add-category Application \
 	--add-category Photograph \
 	--add-category Graphics \
 	$RPM_BUILD_ROOT%{_datadir}/applications/kde/%{name}.desktop
 
 desktop-file-install --vendor fedora --delete-original \
 	--dir $RPM_BUILD_ROOT%{_datadir}/applications \
-	--add-category X-Fedora \
-	--add-category Application \
 	--add-category Photograph \
 	--add-category Graphics \
 	$RPM_BUILD_ROOT%{_datadir}/applications/kde/showfoto.desktop
@@ -121,6 +121,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Mon Apr 02 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.1-2
+- exiv2-0.14 patch
+- cleanup/simplify BR's,Requires,d-f-i usage
+
 * Fri Mar 09 2007 Marcin Garski <mgarski[AT]post.pl> 0.9.1-1
 - Update to version 0.9.1
 - Update BuildRequires
