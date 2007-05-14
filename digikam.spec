@@ -1,6 +1,6 @@
 Name:		digikam
 Version:	0.9.1
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -12,10 +12,13 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # http://www.linux.it/~anaselli/kipi-plugins/patches/digikam/digi_libkexiv2.patch.bz2
 Patch1: 	digi_libkexiv2.patch
 
-BuildRequires:	kdelibs-devel gphoto2-devel >= 2.0.0
-BuildRequires:	libkexiv2-devel exiv2-devel >= 0.14 libkipi-devel
+BuildRequires:	desktop-file-utils
+BuildRequires:	gettext
+BuildRequires:	kdelibs-devel
+BuildRequires:	gphoto2-devel >= 2.0.0
+BuildRequires:	libkexiv2-devel >= 0.1.5 exiv2-devel >= 0.14 libkipi-devel
 BuildRequires:	lcms-devel libtiff-devel libpng-devel >= 1.2.7 jasper-devel
-BuildRequires:	sqlite-devel >= 3.0.0 gettext pkgconfig desktop-file-utils
+BuildRequires:	sqlite-devel >= 3.0.0
 %if 0%{?fedora} > 4 || 0%{?rhel} > 4
 BuildRequires:	libtool-ltdl-devel
 %endif
@@ -50,7 +53,8 @@ unset QTDIR || : ; . %{_sysconfdir}/profile.d/qt.sh
 
 %configure \
 	--disable-rpath \
-	--disable-debug \
+	--enable-new-ldflags \
+	--disable-debug --disable-warnings \
 	--disable-dependency-tracking \
 	--enable-final
 make %{?_smp_mflags}
@@ -59,14 +63,14 @@ make %{?_smp_mflags}
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 
-desktop-file-install --vendor fedora --delete-original \
-	--dir $RPM_BUILD_ROOT%{_datadir}/applications \
+desktop-file-install --vendor="" \
+	--dir $RPM_BUILD_ROOT%{_datadir}/applications/kde \
 	--add-category Photograph \
 	--add-category Graphics \
 	$RPM_BUILD_ROOT%{_datadir}/applications/kde/%{name}.desktop
 
-desktop-file-install --vendor fedora --delete-original \
-	--dir $RPM_BUILD_ROOT%{_datadir}/applications \
+desktop-file-install --vendor="" \
+	--dir $RPM_BUILD_ROOT%{_datadir}/applications/kde \
 	--add-category Photograph \
 	--add-category Graphics \
 	$RPM_BUILD_ROOT%{_datadir}/applications/kde/showfoto.desktop
@@ -96,7 +100,7 @@ fi
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files -f %name.lang
+%files -f %{name}.lang
 %defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING HACKING NEWS README TODO
 %{_bindir}/*
@@ -105,11 +109,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/digikamimageplugin_core.so
 %{_libdir}/kde3/kio_digikam*.la
 %{_libdir}/kde3/kio_digikam*.so
-%{_datadir}/applications/*.desktop
+%{_datadir}/applications/kde/*.desktop
 %{_datadir}/apps/digikam/
 %{_datadir}/apps/konqueror/servicemenus/*.desktop
 %{_datadir}/apps/showfoto/
-%{_datadir}/icons/hicolor/*/apps/*.png
+%{_datadir}/icons/hicolor/*/*/*
 %{_mandir}/man1/*.1*
 %{_datadir}/services/digikam*
 %{_datadir}/servicetypes/digikamimageplugin.desktop
@@ -121,6 +125,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Mon May 14 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.1-3
+- respin against libkexiv2-0.1.5
+- preserve upstream .desktop vendor (f7 branch at least)
+
 * Mon Apr 02 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.1-2
 - exiv2-0.14 patch
 - cleanup/simplify BR's,Requires,d-f-i usage
