@@ -2,7 +2,7 @@
 
 Name:		digikam
 Version:	0.9.2
-Release:	0.1.%{alphatag}%{?dist}
+Release:	0.2.%{alphatag}%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -12,6 +12,7 @@ Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}-%{alphatag}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Patch0:		digikam-0.9.2-beta3-desktop-utf8-fix.patch
+Patch1:		digikam-0.9.2-beta3-fix-exiv2-dep.patch
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
@@ -52,6 +53,7 @@ needed to develop applications using %{name}.
 %setup -q -n %{name}-%{version}-%{alphatag}
 
 %patch0 -p1
+%patch1 -p1
 
 %build
 unset QTDIR || : ; . %{_sysconfdir}/profile.d/qt.sh
@@ -128,6 +130,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Wed Jun 06 2007 Marcin Garski <mgarski[AT]post.pl> 0.9.2-0.2.beta3
+- Fix broken compilation caused by Exiv2 dependency
+
 * Tue Jun 05 2007 Marcin Garski <mgarski[AT]post.pl> 0.9.2-0.1.beta3
 - Update to version 0.9.2-beta3 (merge with digikamimageplugins)
 - Update description

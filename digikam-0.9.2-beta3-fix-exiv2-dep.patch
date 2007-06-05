@@ -1,0 +1,30 @@
+diff -urN digikam-0.9.2-beta3.orig/digikam/libs/widgets/metadata/makernotewidget.cpp digikam-0.9.2-beta3/digikam/libs/widgets/metadata/makernotewidget.cpp
+--- digikam-0.9.2-beta3.orig/digikam/libs/widgets/metadata/makernotewidget.cpp	2007-06-03 19:24:42.000000000 +0200
++++ digikam-0.9.2-beta3/digikam/libs/widgets/metadata/makernotewidget.cpp	2007-06-06 00:59:07.000000000 +0200
+@@ -22,13 +22,6 @@
+  * 
+  * ============================================================ */
+ 
+-// C++ includes.
+-
+-#include <cstdlib>
+-#include <cstdio>
+-#include <cassert>
+-#include <string>
+-
+ // Qt includes.
+ 
+ #include <qmap.h>
+@@ -38,12 +31,6 @@
+ 
+ #include <klocale.h>
+ 
+-// LibExiv2 includes.
+-
+-#include <exiv2/exif.hpp>
+-#include <exiv2/tags.hpp>
+-#include <exiv2/ifd.hpp>
+-
+ // Local includes.
+ 
+ #include "ddebug.h"
