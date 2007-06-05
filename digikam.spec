@@ -2,7 +2,7 @@
 
 Name:		digikam
 Version:	0.9.2
-Release:	0.2.%{alphatag}%{?dist}
+Release:	0.3.%{alphatag}%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -72,12 +72,12 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 desktop-file-install --vendor="" \
 	--dir $RPM_BUILD_ROOT%{_datadir}/applications/kde \
-	--add-category Photograph \
+	--add-category Photography \
 	$RPM_BUILD_ROOT%{_datadir}/applications/kde/%{name}.desktop
 
 desktop-file-install --vendor="" \
 	--dir $RPM_BUILD_ROOT%{_datadir}/applications/kde \
-	--add-category Photograph \
+	--add-category Photography \
 	$RPM_BUILD_ROOT%{_datadir}/applications/kde/showfoto.desktop
 
 %find_lang %{name}
@@ -130,6 +130,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Wed Jun 06 2007 Marcin Garski <mgarski[AT]post.pl> 0.9.2-0.3.beta3
+- Fix .desktop category
+
 * Wed Jun 06 2007 Marcin Garski <mgarski[AT]post.pl> 0.9.2-0.2.beta3
 - Fix broken compilation caused by Exiv2 dependency
 
