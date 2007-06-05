@@ -1,38 +1,43 @@
+%define	alphatag beta3
+
 Name:		digikam
-Version:	0.9.1
-Release:	3%{?dist}
+Version:	0.9.2
+Release:	0.1.%{alphatag}%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
 License:	GPL
 URL:		http://www.digikam.org/
-Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
+Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}-%{alphatag}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-# http://www.linux.it/~anaselli/kipi-plugins/patches/digikam/digi_libkexiv2.patch.bz2
-Patch1: 	digi_libkexiv2.patch
+Patch0:		digikam-0.9.2-beta3-desktop-utf8-fix.patch
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
 BuildRequires:	kdelibs-devel
 BuildRequires:	gphoto2-devel >= 2.0.0
-BuildRequires:	libkexiv2-devel >= 0.1.5 exiv2-devel >= 0.14 libkipi-devel
+BuildRequires:	libkexiv2-devel >= 0.1.5 libkdcraw-devel >= 0.1 libkipi-devel
 BuildRequires:	lcms-devel libtiff-devel libpng-devel >= 1.2.7 jasper-devel
 BuildRequires:	sqlite-devel >= 3.0.0
 %if 0%{?fedora} > 4 || 0%{?rhel} > 4
 BuildRequires:	libtool-ltdl-devel
 %endif
 
+Provides:	digikamimageplugins = %{version}-%{release}
+Obsoletes:	digikamimageplugins < 0.9.1-2
+
 %description
 digiKam is an easy to use and powerful digital photo management application,
 which makes importing, organizing and manipulating digital photos a "snap".
-The photos can be organized in albums which are automatically sorted
-chronologically. An easy to use interface is provided to connect to your
-digital camera, preview the images and download and/or delete them.
+An easy to use interface is provided to connect to your digital camera,
+preview the images and download and/or delete them.
 
-digiKam buildin image editor makes the common photo correction a simple task.
-The image editor is extensible via plugins, install the digikamimageplugins
-and/or kipi-plugins packages to use them.
+digiKam built-in image editor makes the common photo correction a simple task.
+The image editor is extensible via plugins, can also make use of the KIPI image
+handling plugins to extend its capabilities even further for photo
+manipulations, import and export, etc. Install the kipi-plugins packages
+to use them.
 
 %package devel
 Summary:	Development files for %{name}
@@ -44,9 +49,9 @@ This package contains the libraries, include files and other resources
 needed to develop applications using %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}-%{alphatag}
 
-%patch1 -p0 -b .exiv2
+%patch0 -p1
 
 %build
 unset QTDIR || : ; . %{_sysconfdir}/profile.d/qt.sh
@@ -66,13 +71,11 @@ make install DESTDIR=$RPM_BUILD_ROOT
 desktop-file-install --vendor="" \
 	--dir $RPM_BUILD_ROOT%{_datadir}/applications/kde \
 	--add-category Photograph \
-	--add-category Graphics \
 	$RPM_BUILD_ROOT%{_datadir}/applications/kde/%{name}.desktop
 
 desktop-file-install --vendor="" \
 	--dir $RPM_BUILD_ROOT%{_datadir}/applications/kde \
 	--add-category Photograph \
-	--add-category Graphics \
 	$RPM_BUILD_ROOT%{_datadir}/applications/kde/showfoto.desktop
 
 %find_lang %{name}
@@ -105,8 +108,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog COPYING HACKING NEWS README TODO
 %{_bindir}/*
 %{_libdir}/libdigikam.so.*
-%{_libdir}/kde3/digikamimageplugin_core.la
-%{_libdir}/kde3/digikamimageplugin_core.so
+%{_libdir}/kde3/digikamimageplugin_*.la
+%{_libdir}/kde3/digikamimageplugin_*.so
 %{_libdir}/kde3/kio_digikam*.la
 %{_libdir}/kde3/kio_digikam*.so
 %{_datadir}/applications/kde/*.desktop
@@ -119,12 +122,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/digikamimageplugin.desktop
 
 %files devel
-%defattr(-, root, root)
+%defattr(-,root,root,-)
 %{_includedir}/digikam/
 %{_includedir}/digikam_export.h
 %{_libdir}/libdigikam.so
 
 %changelog
+* Tue Jun 05 2007 Marcin Garski <mgarski[AT]post.pl> 0.9.2-0.1.beta3
+- Update to version 0.9.2-beta3 (merge with digikamimageplugins)
+- Update description
+
 * Mon May 14 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.1-3
 - respin against libkexiv2-0.1.5
 - preserve upstream .desktop vendor (f7 branch at least)
