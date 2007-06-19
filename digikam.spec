@@ -1,8 +1,8 @@
-%define	alphatag beta3
+%define	alphatag final
 
 Name:		digikam
 Version:	0.9.2
-Release:	0.3.%{alphatag}%{?dist}
+Release:	1%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -12,13 +12,12 @@ Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}-%{alphatag}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Patch0:		digikam-0.9.2-beta3-desktop-utf8-fix.patch
-Patch1:		digikam-0.9.2-beta3-fix-exiv2-dep.patch
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
 BuildRequires:	kdelibs-devel
 BuildRequires:	gphoto2-devel >= 2.0.0
-BuildRequires:	libkexiv2-devel >= 0.1.5 libkdcraw-devel >= 0.1 libkipi-devel
+BuildRequires:	libkexiv2-devel >= 0.1.5 libkdcraw-devel >= 0.1.1 libkipi-devel
 BuildRequires:	lcms-devel libtiff-devel libpng-devel >= 1.2.7 jasper-devel
 BuildRequires:	sqlite-devel >= 3.0.0
 %if 0%{?fedora} > 4 || 0%{?rhel} > 4
@@ -53,7 +52,6 @@ needed to develop applications using %{name}.
 %setup -q -n %{name}-%{version}-%{alphatag}
 
 %patch0 -p1
-%patch1 -p1
 
 %build
 unset QTDIR || : ; . %{_sysconfdir}/profile.d/qt.sh
@@ -130,6 +128,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Tue Jun 19 2007 Marcin Garski <mgarski[AT]post.pl> 0.9.2-1
+- Update to version 0.9.2-final
+- Remove digikam-0.9.2-beta3-fix-exiv2-dep.patch, merged upstream
+
 * Wed Jun 06 2007 Marcin Garski <mgarski[AT]post.pl> 0.9.2-0.3.beta3
 - Fix .desktop category
 
