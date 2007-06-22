@@ -2,7 +2,7 @@
 
 Name:		digikam
 Version:	0.9.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -59,7 +59,8 @@ unset QTDIR || : ; . %{_sysconfdir}/profile.d/qt.sh
 %configure \
 	--disable-rpath \
 	--enable-new-ldflags \
-	--disable-debug --disable-warnings \
+	--disable-debug \
+	--disable-warnings \
 	--disable-dependency-tracking \
 	--enable-final
 make %{?_smp_mflags}
@@ -81,6 +82,13 @@ desktop-file-install --vendor="" \
 %find_lang %{name}
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/libdigikam.la
+
+# Create symlinks in pixmaps directory
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
+ln -sf ../icons/hicolor/48x48/apps/digikam.png \
+	$RPM_BUILD_ROOT%{_datadir}/pixmaps/digikam.png
+ln -sf ../icons/hicolor/48x48/apps/showfoto.png \
+	$RPM_BUILD_ROOT%{_datadir}/pixmaps/showfoto.png
 
 %post
 /sbin/ldconfig
@@ -118,6 +126,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/showfoto/
 %{_datadir}/icons/hicolor/*/*/*
 %{_mandir}/man1/*.1*
+%{_datadir}/pixmaps/*.png
 %{_datadir}/services/digikam*
 %{_datadir}/servicetypes/digikamimageplugin.desktop
 
@@ -128,6 +137,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Fri Jun 22 2007 Marcin Garski <mgarski[AT]post.pl> 0.9.2-2
+- Create symlinks in pixmaps directory (#242978)
+
 * Tue Jun 19 2007 Marcin Garski <mgarski[AT]post.pl> 0.9.2-1
 - Update to version 0.9.2-final
 - Remove digikam-0.9.2-beta3-fix-exiv2-dep.patch, merged upstream
