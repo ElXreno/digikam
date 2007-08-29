@@ -2,7 +2,7 @@
 
 Name:		digikam
 Version:	0.9.2
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -137,6 +137,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Wed Aug 29 2007 Fedora Release Engineering <rel-eng at fedoraproject dot org> - 0.9.2-3
+- Rebuild for selinux ppc32 issue.
+
 * Fri Jun 22 2007 Marcin Garski <mgarski[AT]post.pl> 0.9.2-2
 - Create symlinks in pixmaps directory (#242978)
 
