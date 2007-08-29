@@ -2,16 +2,18 @@
 
 Name:		digikam
 Version:	0.9.2
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
-License:	GPL
+License:	GPLv2+
 URL:		http://www.digikam.org/
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}-%{alphatag}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Patch0:		digikam-0.9.2-beta3-desktop-utf8-fix.patch
+# http://bugs.kde.org/148930
+Patch148930: digikam-0.9.2-kde#148930.patch
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
@@ -52,6 +54,7 @@ needed to develop applications using %{name}.
 %setup -q -n %{name}-%{version}-%{alphatag}
 
 %patch0 -p1
+%patch148930 -p1 -b .kde#148930
 
 %build
 unset QTDIR || : ; . %{_sysconfdir}/profile.d/qt.sh
@@ -84,6 +87,7 @@ desktop-file-install --vendor="" \
 rm -f $RPM_BUILD_ROOT%{_libdir}/libdigikam.la
 
 # Create symlinks in pixmaps directory
+# FIXME: this shouldn't be necessary anymore -- Rex
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
 ln -sf ../icons/hicolor/48x48/apps/digikam.png \
 	$RPM_BUILD_ROOT%{_datadir}/pixmaps/digikam.png
@@ -137,6 +141,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Wed Aug 29 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.3-4
+- License: GPLv2+
+- lcms patch (kde bug #148930)
+
 * Wed Aug 29 2007 Fedora Release Engineering <rel-eng at fedoraproject dot org> - 0.9.2-3
 - Rebuild for selinux ppc32 issue.
 
