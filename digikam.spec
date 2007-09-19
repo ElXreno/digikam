@@ -2,7 +2,7 @@
 
 Name:		digikam
 Version:	0.9.2
-Release:	4%{?dist}
+Release:	5%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -141,6 +141,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Tue Sep 18 2007 Marcin Garski <mgarski[AT]post.pl> 0.9.2-5
+- Rebuild
+
 * Wed Aug 29 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.3-4
 - License: GPLv2+
 - lcms patch (kde bug #148930)
