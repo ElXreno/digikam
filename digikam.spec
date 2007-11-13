@@ -1,8 +1,8 @@
-%define	alphatag final
+%define	alphatag beta2 
 
 Name:		digikam
-Version:	0.9.2
-Release:	5%{?dist}
+Version:	0.9.3
+Release:	0.1.%{alphatag}%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -10,10 +10,6 @@ License:	GPLv2+
 URL:		http://www.digikam.org/
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}-%{alphatag}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-
-Patch0:		digikam-0.9.2-beta3-desktop-utf8-fix.patch
-# http://bugs.kde.org/148930
-Patch148930: digikam-0.9.2-kde#148930.patch
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
@@ -53,8 +49,6 @@ needed to develop applications using %{name}.
 %prep
 %setup -q -n %{name}-%{version}-%{alphatag}
 
-%patch0 -p1
-%patch148930 -p1 -b .kde#148930
 
 %build
 unset QTDIR || : ; . %{_sysconfdir}/profile.d/qt.sh
@@ -141,6 +135,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Tue Nov 13 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.3-0.1.beta2
+- digikam-0.9.3-beta2
+
 * Tue Sep 18 2007 Marcin Garski <mgarski[AT]post.pl> 0.9.2-5
 - Rebuild
 
