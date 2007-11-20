@@ -1,8 +1,8 @@
-%define	alphatag beta2 
+%define	alphatag beta3
 
 Name:		digikam
 Version:	0.9.3
-Release:	0.1.%{alphatag}%{?dist}
+Release:	0.2.%{alphatag}%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -135,6 +135,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Thu Nov 20 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.3-0.2.beta3
+- digikam-0.9.3-beta3
+
 * Tue Nov 13 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.3-0.1.beta2
 - digikam-0.9.3-beta2
 
