@@ -2,7 +2,7 @@
 
 Name:		digikam
 Version:	0.9.3
-Release:	0.3.%{alphatag}%{?dist}
+Release:	0.4.%{alphatag}%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -13,7 +13,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
-BuildRequires:	kdelibs-devel
+BuildRequires:	kdelibs3-devel
 BuildRequires:	gphoto2-devel >= 2.0.0
 BuildRequires:	libkexiv2-devel >= 0.1.5 libkdcraw-devel >= 0.1.1 libkipi-devel
 BuildRequires:	lcms-devel libtiff-devel libpng-devel >= 1.2.7 jasper-devel
@@ -135,8 +135,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
-* Sat Dec 08 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.3-0.3.rc1
+* Sat Dec 08 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.3-0.4.rc1
 - digikam-0.9.3-rc1
+- BR: kdelibs3-devel
 
 * Thu Nov 20 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.3-0.2.beta3
 - digikam-0.9.3-beta3
