@@ -2,7 +2,7 @@
 
 Name:		digikam
 Version:	0.9.3
-Release:	0.4.%{alphatag}%{?dist}
+Release:	0.5.%{alphatag}%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -76,7 +76,7 @@ desktop-file-install --vendor="" \
 	--add-category Photography \
 	$RPM_BUILD_ROOT%{_datadir}/applications/kde/showfoto.desktop
 
-%find_lang %{name}
+%find_lang %{name} || touch %{name}.lang
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/libdigikam.la
 
@@ -135,7 +135,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
-* Sat Dec 08 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.3-0.4.rc1
+* Sat Dec 08 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.3-0.5.rc1
 - digikam-0.9.3-rc1
 - BR: kdelibs3-devel
 
