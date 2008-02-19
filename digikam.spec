@@ -1,6 +1,6 @@
 Name:		digikam
 Version:	0.9.3
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -133,6 +133,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
+* Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 0.9.3-2
+- Autorebuild for GCC 4.3
+
 * Sat Dec 22 2007 Marcin Garski <mgarski[AT]post.pl> 0.9.3-1
 - Update to 0.9.3
 - BR: libkexiv2-devel >= 0.1.6 libkdcraw-devel >= 0.1.2
