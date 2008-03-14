@@ -16,7 +16,7 @@ BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
 BuildRequires:	kdelibs3-devel
 BuildRequires:	gphoto2-devel >= 2.0.0
-BuildRequires:	libkexiv2-devel >= 0.1.6 libkdcraw-devel >= 0.1.4 libkipi-devel
+BuildRequires:	libkexiv2-devel >= 0.1.6 libkdcraw-devel >= 0.1.2 libkipi-devel
 BuildRequires:	lcms-devel libtiff-devel libpng-devel >= 1.2.7 jasper-devel
 BuildRequires:	sqlite-devel >= 3.0.0
 %if 0%{?fedora} > 4 || 0%{?rhel} > 4
