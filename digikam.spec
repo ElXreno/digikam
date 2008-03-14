@@ -1,9 +1,9 @@
 
-%define beta beta1
+#define beta beta1
 
 Name:		digikam
-Version:	0.9.4
-Release:	0.1.%{beta}%{?dist}
+Version:	0.9.3
+Release: 	3	
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -136,8 +136,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdigikam.so
 
 %changelog
-* Fri Mar 14 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-0.1.beta1
-- digikam-0.9.4-beta1
+* Fri Mar 14 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.3-3
+- respin (for libkdcraw)
 
 * Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 0.9.3-2
 - Autorebuild for GCC 4.3
