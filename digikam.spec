@@ -3,7 +3,7 @@
 
 Name:		digikam
 Version:	0.9.3
-Release: 	3	
+Release: 	3%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
