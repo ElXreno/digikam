@@ -1,9 +1,9 @@
+%define beta beta4 
 
-#define beta beta1
 
 Name:		digikam
-Version:	0.9.3
-Release: 	3%{?dist}
+Version:	0.9.4
+Release: 	0.1.%{beta}%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -16,8 +16,13 @@ BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
 BuildRequires:	kdelibs3-devel
 BuildRequires:	gphoto2-devel >= 2.0.0
-BuildRequires:	libkexiv2-devel >= 0.1.6 libkdcraw-devel >= 0.1.2 libkipi-devel
-BuildRequires:	lcms-devel libtiff-devel libpng-devel >= 1.2.7 jasper-devel
+BuildRequires:  jasper-devel
+BuildRequires:  libkdcraw-devel >= 0.1.4
+BuildRequires:	libkexiv2-devel >= 0.1.7 
+BuildRequires:  libkipi-devel >= 0.1.6
+BuildRequires:	lcms-devel
+BuildRequires:  libtiff-devel
+BuildRequires:  libpng-devel >= 1.2.7
 BuildRequires:	sqlite-devel >= 3.0.0
 %if 0%{?fedora} > 4 || 0%{?rhel} > 4
 BuildRequires:	libtool-ltdl-devel
@@ -135,7 +140,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/digikam_export.h
 %{_libdir}/libdigikam.so
 
+
 %changelog
+* Thu May 08 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-0.1.beta4
+- digikam-0.9.4-beta4
+
 * Fri Mar 14 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.3-3
 - respin (for libkdcraw)
 
