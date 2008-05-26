@@ -1,9 +1,8 @@
-%define beta beta4 
-
+%define beta beta5
 
 Name:		digikam
 Version:	0.9.4
-Release: 	0.1.%{beta}%{?dist}
+Release: 	0.2.%{beta}%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -142,6 +141,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon May 26 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-0.2.beta5
+- digikam-0.9.4-beta5
+
 * Thu May 08 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-0.1.beta4
 - digikam-0.9.4-beta4
 
