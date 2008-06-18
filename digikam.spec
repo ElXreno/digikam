@@ -1,8 +1,8 @@
-%define beta beta5
+%define beta rc1 
 
 Name:		digikam
 Version:	0.9.4
-Release: 	0.2.%{beta}%{?dist}
+Release: 	0.3.%{beta}%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -22,7 +22,6 @@ BuildRequires:  libkipi-devel >= 0.1.6
 BuildRequires:	lcms-devel
 BuildRequires:  libtiff-devel
 BuildRequires:  libpng-devel >= 1.2.7
-BuildRequires:	sqlite-devel >= 3.0.0
 %if 0%{?fedora} > 4 || 0%{?rhel} > 4
 BuildRequires:	libtool-ltdl-devel
 %endif
@@ -141,6 +140,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jun 18 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-0.3.rc1
+- digikam-0.9.4-rc1
+
 * Mon May 26 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-0.2.beta5
 - digikam-0.9.4-beta5
 
