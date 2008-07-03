@@ -1,14 +1,15 @@
-%define beta rc1 
+%define beta rc2
 
 Name:		digikam
 Version:	0.9.4
-Release: 	0.3.%{beta}%{?dist}
+Release: 	0.4.%{beta}%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
 License:	GPLv2+
 URL:		http://www.digikam.org/
-Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}%{?beta:-%{beta}}.tar.bz2
+#Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}%{?beta:-%{beta}}.tar.bz2
+Source0:	http://digikam3rdparty.free.fr/0.9.x-releases/digikam-0.9.4-rc2.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	desktop-file-utils
@@ -140,6 +141,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jul 03 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-0.4.rc2
+- digikam-0.9.4-rc2
+
 * Wed Jun 18 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-0.3.rc1
 - digikam-0.9.4-rc1
 
