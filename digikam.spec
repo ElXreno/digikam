@@ -8,8 +8,7 @@ Summary:	A digital camera accessing & photo management application
 Group:		Applications/Multimedia
 License:	GPLv2+
 URL:		http://www.digikam.org/
-#Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}%{?beta:-%{beta}}.tar.bz2
-Source0:	http://digikam3rdparty.free.fr/0.9.x-releases/digikam-0.9.4-rc2.tar.bz2
+Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}%{?beta:-%{beta}}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	desktop-file-utils
