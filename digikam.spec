@@ -1,8 +1,7 @@
-%define beta rc2
 
 Name:		digikam
 Version:	0.9.4
-Release: 	0.4.%{beta}%{?dist}
+Release: 	1%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -14,7 +13,11 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
 BuildRequires:	kdelibs3-devel
-BuildRequires:	gphoto2-devel >= 2.0.0
+%if 0%{?fedora} > 9
+BuildRequires:  libgphoto2-devel
+%else
+BuildRequires:  gphoto2-devel
+%endif
 BuildRequires:  jasper-devel
 BuildRequires:  libkdcraw-devel >= 0.1.4
 BuildRequires:	libkexiv2-devel >= 0.1.7 
