@@ -143,6 +143,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jul 17 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-1
+- digikam-0.9.4
+
 * Thu Jul 03 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-0.4.rc2
 - digikam-0.9.4-rc2
 
