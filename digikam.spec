@@ -1,7 +1,7 @@
 
 Name:		digikam
 Version:	0.9.4
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 Summary:	A digital camera accessing & photo management application
 
 Group:		Applications/Multimedia
@@ -10,9 +10,9 @@ URL:		http://www.digikam.org/
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}%{?beta:-%{beta}}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:	desktop-file-utils
-BuildRequires:	gettext
-BuildRequires:	kdelibs3-devel
+BuildRequires:  desktop-file-utils
+BuildRequires:  gettext
+BuildRequires:  kdelibs3-devel
 %if 0%{?fedora} > 9
 BuildRequires:  libgphoto2-devel
 %else
@@ -20,14 +20,15 @@ BuildRequires:  gphoto2-devel
 %endif
 BuildRequires:  jasper-devel
 BuildRequires:  libkdcraw-devel >= 0.1.4
-BuildRequires:	libkexiv2-devel >= 0.1.7 
+BuildRequires:  libkexiv2-devel >= 0.1.7 
 BuildRequires:  libkipi-devel >= 0.1.6
-BuildRequires:	lcms-devel
+BuildRequires:  lcms-devel
 BuildRequires:  libtiff-devel
 BuildRequires:  libpng-devel >= 1.2.7
 %if 0%{?fedora} > 4 || 0%{?rhel} > 4
 BuildRequires:	libtool-ltdl-devel
 %endif
+BuildRequires:  sqlite-devel
 
 Provides:	digikamimageplugins = %{version}-%{release}
 Obsoletes:	digikamimageplugins < 0.9.1-2
@@ -53,6 +54,7 @@ Requires:	%{name} = %{version}-%{release}
 This package contains the libraries, include files and other resources
 needed to develop applications using %{name}.
 
+
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
@@ -66,8 +68,11 @@ unset QTDIR || : ; . %{_sysconfdir}/profile.d/qt.sh
 	--disable-debug \
 	--disable-warnings \
 	--disable-dependency-tracking \
-	--enable-final
+	--enable-final \
+	--without-included-sqlite3
+
 make %{?_smp_mflags}
+
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -98,7 +103,6 @@ ln -sf ../icons/hicolor/48x48/apps/showfoto.png \
 %post
 /sbin/ldconfig
 update-desktop-database &> /dev/null ||:
-
 touch --no-create %{_datadir}/icons/hicolor || :
 if [ -x %{_bindir}/gtk-update-icon-cache ]; then
 	%{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
@@ -107,14 +111,15 @@ fi
 %postun
 /sbin/ldconfig
 update-desktop-database &> /dev/null ||:
-
 touch --no-create %{_datadir}/icons/hicolor || :
 if [ -x %{_bindir}/gtk-update-icon-cache ]; then
 	%{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
 fi
 
+
 %clean
 rm -rf $RPM_BUILD_ROOT
+
 
 %files -f %{name}.lang
 %defattr(-,root,root,-)
@@ -143,20 +148,14 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jul 18 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-2
+- --without-included-sqlite3, BR: sqlite-devel
+
 * Thu Jul 17 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-1
 - digikam-0.9.4
 
-* Thu Jul 03 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-0.4.rc2
-- digikam-0.9.4-rc2
-
-* Wed Jun 18 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-0.3.rc1
-- digikam-0.9.4-rc1
-
-* Mon May 26 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-0.2.beta5
-- digikam-0.9.4-beta5
-
-* Thu May 08 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-0.1.beta4
-- digikam-0.9.4-beta4
+* Mon Jul 07 2008 Marcin Garski <mgarski[AT]post.pl> 0.9.3-5
+- Don't lose some photos during import (#448235)
 
 * Fri Mar 14 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.3-3
 - respin (for libkdcraw)
