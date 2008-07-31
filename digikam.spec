@@ -1,37 +1,47 @@
+%define beta beta2
 
-Name:		digikam
-Version:	0.9.4
-Release: 	2%{?dist}
-Summary:	A digital camera accessing & photo management application
+Name:	 digikam
+Version: 0.10.0
+Release: 0.1.%{beta}%{?dist}
+Summary: A digital camera accessing & photo management application
 
-Group:		Applications/Multimedia
-License:	GPLv2+
-URL:		http://www.digikam.org/
-Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}%{?beta:-%{beta}}.tar.bz2
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Group:	 Applications/Multimedia
+License: GPLv2+
+URL:	 http://www.digikam.org/
+Source0: http://digikam3rdparty.free.fr/0.10.x-releases/digikam-%{version}%{?beta:-%{beta}}.tar.bz2
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:  desktop-file-utils
-BuildRequires:  gettext
-BuildRequires:  kdelibs3-devel
+Patch1: digikam-0.10.0-beta2-man1.patch
+
+BuildRequires: cmake
+BuildRequires: desktop-file-utils
+BuildRequires: gettext
 %if 0%{?fedora} > 9
-BuildRequires:  libgphoto2-devel
+BuildRequires: libgphoto2-devel
 %else
-BuildRequires:  gphoto2-devel
+BuildRequires: gphoto2-devel
 %endif
-BuildRequires:  jasper-devel
-BuildRequires:  libkdcraw-devel >= 0.1.4
-BuildRequires:  libkexiv2-devel >= 0.1.7 
-BuildRequires:  libkipi-devel >= 0.1.6
-BuildRequires:  lcms-devel
-BuildRequires:  libtiff-devel
-BuildRequires:  libpng-devel >= 1.2.7
-%if 0%{?fedora} > 4 || 0%{?rhel} > 4
-BuildRequires:	libtool-ltdl-devel
-%endif
-BuildRequires:  sqlite-devel
+## switch to this when kdegraphics is ready -- Rex
+#BuildRequires: libkdcraw-devel >= 0.2.0
+#BuildRequires: libkexiv2-devel >= 0.2.0
+#BuildRequires: libkipi-devel >= 0.2.0
+BuildRequires: jasper-devel
+BuildRequires: kdeedu4-devel
+BuildRequires: kdegraphics4-devel >= 4.1.0
+BuildRequires: kdelibs4-devel
+BuildRequires: kdepimlibs-devel
+BuildRequires: lcms-devel
+## TODO
+#BuildRequires: liblensfun-devel
+BuildRequires: libtiff-devel
+BuildRequires: libpng-devel >= 1.2.7
+BuildRequires: sqlite-devel
 
-Provides:	digikamimageplugins = %{version}-%{release}
-Obsoletes:	digikamimageplugins < 0.9.1-2
+Obsoletes: digikamimageplugins < 0.9.1-2
+
+Requires: %{name}-libs = %{version}-%{release}
+Requires(post): xdg-utils
+Requires(postun): xdg-utils
 
 %description
 digiKam is an easy to use and powerful digital photo management application,
@@ -45,11 +55,17 @@ handling plugins to extend its capabilities even further for photo
 manipulations, import and export, etc. Install the kipi-plugins packages
 to use them.
 
-%package devel
-Summary:	Development files for %{name}
-Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+%package libs
+Summary: Runtime libraries for %{name}
+Group:   System Environment/Libraries
+Requires: %{name} = %{version}-%{release}
+%description libs
+%{summary}.
 
+%package devel
+Summary: Development files for %{name}
+Group:	 Development/Libraries
+Requires: %{name}-libs = %{version}-%{release}
 %description devel
 This package contains the libraries, include files and other resources
 needed to develop applications using %{name}.
@@ -58,96 +74,83 @@ needed to develop applications using %{name}.
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
+%patch1 -p1 -b .man1
+
 
 %build
-unset QTDIR || : ; . %{_sysconfdir}/profile.d/qt.sh
 
-%configure \
-	--disable-rpath \
-	--enable-new-ldflags \
-	--disable-debug \
-	--disable-warnings \
-	--disable-dependency-tracking \
-	--enable-final \
-	--without-included-sqlite3
+mkdir -p %{_target_platform}
+pushd %{_target_platform}
+%{cmake_kde4} ..
+popd
 
-make %{?_smp_mflags}
+make %{?_smp_mflags} -C %{_target_platform}
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
+rm -rf %{buildroot}
+
+make install DESTDIR=%{buildroot} -C %{_target_platform}
 
 desktop-file-install --vendor="" \
-	--dir $RPM_BUILD_ROOT%{_datadir}/applications/kde \
-	--add-category Photography \
-	$RPM_BUILD_ROOT%{_datadir}/applications/kde/%{name}.desktop
+  --dir=%{buildroot}%{_datadir}/applications/kde4 \
+  --add-category="Photography" \
+  $RPM_BUILD_ROOT%{_datadir}/applications/kde4/digikam.desktop
 
 desktop-file-install --vendor="" \
-	--dir $RPM_BUILD_ROOT%{_datadir}/applications/kde \
-	--add-category Photography \
-	$RPM_BUILD_ROOT%{_datadir}/applications/kde/showfoto.desktop
+ --dir $RPM_BUILD_ROOT%{_datadir}/applications/kde4 \
+ --add-category="Photography" \
+ %{buildroot}%{_datadir}/applications/kde4/showfoto.desktop
 
 %find_lang %{name} || touch %{name}.lang
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/libdigikam.la
-
-# Create symlinks in pixmaps directory
-# FIXME: this shouldn't be necessary anymore -- Rex
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
-ln -sf ../icons/hicolor/48x48/apps/digikam.png \
-	$RPM_BUILD_ROOT%{_datadir}/pixmaps/digikam.png
-ln -sf ../icons/hicolor/48x48/apps/showfoto.png \
-	$RPM_BUILD_ROOT%{_datadir}/pixmaps/showfoto.png
 
 %post
-/sbin/ldconfig
-update-desktop-database &> /dev/null ||:
-touch --no-create %{_datadir}/icons/hicolor || :
-if [ -x %{_bindir}/gtk-update-icon-cache ]; then
-	%{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
-fi
+xdg-icon-resource forceupdate --theme hicolor 2> /dev/null || :
+xdg-desktop-menu forceupdate 2> /dev/null || :
 
 %postun
-/sbin/ldconfig
-update-desktop-database &> /dev/null ||:
-touch --no-create %{_datadir}/icons/hicolor || :
-if [ -x %{_bindir}/gtk-update-icon-cache ]; then
-	%{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
-fi
+xdg-icon-resource forceupdate --theme hicolor 2> /dev/null || :
+xdg-desktop-menu forceupdate 2> /dev/null || :
+
+%post libs -p /sbin/ldconfig
+
+%postun libs -p /sbin/ldconfig
 
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 
 %files -f %{name}.lang
 %defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING HACKING NEWS README TODO
-%{_bindir}/*
-%{_libdir}/libdigikam.so.*
-%{_libdir}/kde3/digikamimageplugin_*.la
-%{_libdir}/kde3/digikamimageplugin_*.so
-%{_libdir}/kde3/kio_digikam*.la
-%{_libdir}/kde3/kio_digikam*.so
-%{_datadir}/applications/kde/*.desktop
-%{_datadir}/apps/digikam/
-%{_datadir}/apps/konqueror/servicemenus/*.desktop
-%{_datadir}/apps/showfoto/
-%{_datadir}/icons/hicolor/*/*/*
+%{_kde4_bindir}/*
+%{_kde4_libdir}/kde4/*.so
+%{_kde4_appsdir}/digikam/
+%{_kde4_appsdir}/showfoto/
+%{_kde4_datadir}/applications/kde4/*.desktop
+%{_kde4_iconsdir}/hicolor/*/*/*
+%{_kde4_iconsdir}/oxygen/*/*/*
 %{_mandir}/man1/*.1*
-%{_datadir}/pixmaps/*.png
-%{_datadir}/services/digikam*
-%{_datadir}/servicetypes/digikamimageplugin.desktop
+%{_kde4_datadir}/kde4/services/*
+%{_kde4_datadir}/kde4/servicetypes/*
+
+%files libs
+%defattr(-,root,root,-)
+%{_kde4_libdir}/lib*.so.*
 
 %files devel
 %defattr(-,root,root,-)
-%{_includedir}/digikam/
-%{_includedir}/digikam_export.h
-%{_libdir}/libdigikam.so
+%{_kde4_includedir}/digikam/
+%{_kde4_includedir}/digikam_export.h
+%{_kde4_libdir}/lib*.so
 
 
 %changelog
+* Thu Jul 31 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.1.beta2
+- digikam-0.10.0-beta2
+
 * Fri Jul 18 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.9.4-2
 - --without-included-sqlite3, BR: sqlite-devel
 
