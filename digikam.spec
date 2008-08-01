@@ -8,7 +8,7 @@ Summary: A digital camera accessing & photo management application
 Group:	 Applications/Multimedia
 License: GPLv2+
 URL:	 http://www.digikam.org/
-Source0: http://digikam3rdparty.free.fr/0.10.x-releases/digikam-%{version}%{?beta:-%{beta}}.tar.bz2
+Source0: http://downloads.sourceforge.net/digikam/digikam-%{version}%{?beta:-%{beta}}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Patch1: digikam-0.10.0-beta2-man1.patch
@@ -36,6 +36,8 @@ BuildRequires: lcms-devel
 BuildRequires: libtiff-devel
 BuildRequires: libpng-devel >= 1.2.7
 BuildRequires: sqlite-devel
+# extraneous/bogus deps ?  -- Rex
+BuildRequires: openldap-devel
 
 Obsoletes: digikamimageplugins < 0.9.1-2
 
