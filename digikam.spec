@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 0.10.0
-Release: 0.1.%{beta}%{?dist}
+Release: 0.2.%{beta}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -106,6 +106,9 @@ desktop-file-install --vendor="" \
 
 %find_lang %{name} || touch %{name}.lang
 
+# omit conflicts with oxygen-icon-theme
+rm -f %{buildroot}%{_kde4_iconsdir}/oxygen/*/apps/digikam.*
+
 
 %post
 xdg-icon-resource forceupdate --theme hicolor 2> /dev/null || :
@@ -150,6 +153,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sat Aug 02 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.2.beta2
+- omit conflicts with oxygen-icon-theme
+
 * Thu Jul 31 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.1.beta2
 - digikam-0.10.0-beta2
 
