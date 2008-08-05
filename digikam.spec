@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 0.10.0
-Release: 0.2.%{beta}%{?dist}
+Release: 0.3.%{beta}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -16,17 +16,14 @@ Patch1: digikam-0.10.0-beta2-man1.patch
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
-%if 0%{?fedora} > 9
-BuildRequires: libgphoto2-devel
-%else
 BuildRequires: gphoto2-devel
-%endif
 ## switch to this when kdegraphics is ready -- Rex
 #BuildRequires: libkdcraw-devel >= 0.2.0
 #BuildRequires: libkexiv2-devel >= 0.2.0
 #BuildRequires: libkipi-devel >= 0.2.0
 BuildRequires: jasper-devel
-BuildRequires: kdeedu4-devel
+# marble integraiton, not ready yet (crashes)
+#BuildRequires: kdeedu4-devel
 BuildRequires: kdegraphics4-devel >= 4.1.0
 BuildRequires: kdelibs4-devel
 BuildRequires: kdepimlibs-devel
@@ -153,6 +150,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Aug 04 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.3.beta2
+- disable marble integration
+
 * Sat Aug 02 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.2.beta2
 - omit conflicts with oxygen-icon-theme
 
