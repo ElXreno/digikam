@@ -34,7 +34,7 @@ BuildRequires: libtiff-devel
 BuildRequires: libpng-devel >= 1.2.7
 BuildRequires: sqlite-devel
 # extraneous/bogus deps ?  -- Rex
-BuildRequires: openldap-devel giflib-devel 
+BuildRequires: giflib-devel openldap-devel pcre-devel
 
 Obsoletes: digikamimageplugins < 0.9.1-2
 
