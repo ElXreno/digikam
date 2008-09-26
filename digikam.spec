@@ -1,8 +1,8 @@
-%define beta beta2
+%define beta beta3
 
 Name:	 digikam
 Version: 0.10.0
-Release: 0.3.%{beta}%{?dist}
+Release: 0.4.%{beta}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -11,20 +11,18 @@ URL:	 http://www.digikam.org/
 Source0: http://downloads.sourceforge.net/digikam/digikam-%{version}%{?beta:-%{beta}}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-Patch1: digikam-0.10.0-beta2-man1.patch
-
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
 BuildRequires: gphoto2-devel
 ## switch to this when kdegraphics is ready -- Rex
-#BuildRequires: libkdcraw-devel >= 0.2.0
-#BuildRequires: libkexiv2-devel >= 0.2.0
-#BuildRequires: libkipi-devel >= 0.2.0
+BuildRequires: libkdcraw-devel >= 0.2.0
+BuildRequires: libkexiv2-devel >= 0.2.0
+BuildRequires: libkipi-devel >= 0.2.0
 BuildRequires: jasper-devel
 # marble integraiton, not ready yet (crashes)
 #BuildRequires: kdeedu4-devel
-BuildRequires: kdegraphics4-devel >= 4.1.0
+BuildRequires: kdegraphics4-devel >= 4.1.2
 BuildRequires: kdelibs4-devel
 BuildRequires: kdepimlibs-devel
 BuildRequires: lcms-devel
@@ -72,8 +70,6 @@ needed to develop applications using %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
-
-%patch1 -p1 -b .man1
 
 
 %build
@@ -150,6 +146,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Sep 26 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.4.beta3
+- digikam-0.10.0-beta3
+
 * Mon Aug 04 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.3.beta2
 - disable marble integration
 

@@ -1,9 +1,0 @@
-diff -up digikam-0.10.0-beta2/utilities/scripts/CMakeLists.txt.man1 digikam-0.10.0-beta2/utilities/scripts/CMakeLists.txt
---- digikam-0.10.0-beta2/utilities/scripts/CMakeLists.txt.man1	2008-07-31 02:13:35.000000000 -0500
-+++ digikam-0.10.0-beta2/utilities/scripts/CMakeLists.txt	2008-07-31 12:36:10.000000000 -0500
-@@ -1,4 +1,4 @@
- 
- install( PROGRAMS digitaglinktree DESTINATION ${BIN_INSTALL_DIR} )
--install( FILES digitaglinktree.1 DESTINATION ${MAN_INSTALL_DIR} )
-+install( FILES digitaglinktree.1 DESTINATION ${MAN_INSTALL_DIR}/man1 )
- 
