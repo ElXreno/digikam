@@ -27,7 +27,8 @@ BuildRequires: kdelibs4-devel
 BuildRequires: kdepimlibs-devel
 BuildRequires: lcms-devel
 ## TODO
-#BuildRequires: liblensfun-devel
+# lensfun review: http://bugzilla.redhat.com/466764
+#BuildRequires: lensfun-devel
 BuildRequires: libtiff-devel
 BuildRequires: libpng-devel >= 1.2.7
 BuildRequires: sqlite-devel
