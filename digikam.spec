@@ -1,8 +1,8 @@
-%define beta beta4
+%define beta beta5
 
 Name:	 digikam
 Version: 0.10.0
-Release: 0.5.%{beta}%{?dist}
+Release: 0.6.%{beta}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -15,14 +15,14 @@ BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
 BuildRequires: gphoto2-devel
-BuildRequires: libkdcraw-devel >= 0.4.0
-BuildRequires: libkexiv2-devel >= 0.2.0
+BuildRequires: libkdcraw-devel >= 0.4.0-2
+BuildRequires: libkexiv2-devel >= 0.4.0-2
 BuildRequires: libkipi-devel >= 0.2.0
 BuildRequires: jasper-devel
 # marble integration, not ready yet (crashes)
 # FIXME: does it still? -- Kevin Kofler
 #BuildRequires: kdeedu4-devel
-BuildRequires: kdegraphics4-devel >= 4.1.2
+BuildRequires: kdegraphics4-devel >= 4.1.2-4
 BuildRequires: kdelibs4-devel
 BuildRequires: kdepimlibs-devel
 BuildRequires: lcms-devel
@@ -86,7 +86,7 @@ make %{?_smp_mflags} -C %{_target_platform}
 %install
 rm -rf %{buildroot}
 
-make install DESTDIR=%{buildroot} -C %{_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 desktop-file-install --vendor="" \
   --dir=%{buildroot}%{_datadir}/applications/kde4 \
@@ -147,6 +147,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Oct 27 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.6.beta5
+- digikam-0.10.0-beta5
+
 * Mon Oct 06 2008 Kevin Kofler <Kevin@tigcc.ticalc.org> - 0.10.0-0.5.beta4
 - update to 0.10.0 beta 4
 - build against latest kdegraphics
