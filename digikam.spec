@@ -1,14 +1,15 @@
-%define beta beta5
+%define beta beta6
 
 Name:	 digikam
 Version: 0.10.0
-Release: 0.6.%{beta}%{?dist}
+Release: 0.7.%{beta}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
 License: GPLv2+
 URL:	 http://www.digikam.org/
-Source0: http://downloads.sourceforge.net/digikam/digikam-%{version}%{?beta:-%{beta}}.tar.bz2
+#Source0: http://downloads.sourceforge.net/digikam/digikam-%{version}%{?beta:-%{beta}}.tar.bz2
+Source0: http://digikam3rdparty.free.fr/0.10.x-releases/digikam-0.10.0-beta6.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires: cmake
@@ -19,16 +20,12 @@ BuildRequires: libkdcraw-devel >= 0.4.0-2
 BuildRequires: libkexiv2-devel >= 0.4.0-2
 BuildRequires: libkipi-devel >= 0.2.0
 BuildRequires: jasper-devel
-# marble integration, not ready yet (crashes)
-# FIXME: does it still? -- Kevin Kofler
+## FIXME: marble integration, http://bugzilla.redhat.com/470578 
 #BuildRequires: kdeedu4-devel
-BuildRequires: kdegraphics4-devel >= 4.1.2-4
 BuildRequires: kdelibs4-devel
 BuildRequires: kdepimlibs-devel
 BuildRequires: lcms-devel
-## TODO
-# lensfun review: http://bugzilla.redhat.com/466764
-#BuildRequires: lensfun-devel
+BuildRequires: lensfun-devel
 BuildRequires: libtiff-devel
 BuildRequires: libpng-devel >= 1.2.7
 BuildRequires: sqlite-devel
@@ -147,6 +144,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Nov 25 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.7.beta6
+- digikam-0.10.0-beta6
+- lensfun support
+
 * Mon Oct 27 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.6.beta5
 - digikam-0.10.0-beta5
 
