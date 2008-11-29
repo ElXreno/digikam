@@ -8,8 +8,7 @@ Summary: A digital camera accessing & photo management application
 Group:	 Applications/Multimedia
 License: GPLv2+
 URL:	 http://www.digikam.org/
-#Source0: http://downloads.sourceforge.net/digikam/digikam-%{version}%{?beta:-%{beta}}.tar.bz2
-Source0: http://digikam3rdparty.free.fr/0.10.x-releases/digikam-0.10.0-beta6.tar.bz2
+Source0: http://downloads.sourceforge.net/digikam/digikam-%{version}%{?beta:-%{beta}}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires: cmake
@@ -17,7 +16,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: gettext
 BuildRequires: gphoto2-devel
 BuildRequires: libkdcraw-devel >= 0.4.0-2
-BuildRequires: libkexiv2-devel >= 0.4.0-2
+BuildRequires: libkexiv2-devel >= 0.5.0
 BuildRequires: libkipi-devel >= 0.2.0
 BuildRequires: jasper-devel
 ## FIXME: marble integration, http://bugzilla.redhat.com/470578 
@@ -77,7 +76,7 @@ pushd %{_target_platform}
 %{cmake_kde4} ..
 popd
 
-make %{?_smp_mflags} -C %{_target_platform}
+make %{?_smp_mflags} -C %{_target_platform} VERBOSE=1
 
 
 %install
