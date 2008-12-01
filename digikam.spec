@@ -1,8 +1,12 @@
 %define beta beta6
 
+%if 0%{?fedora} > 10
+%define omit_kde42_conflicts 1
+%endif
+
 Name:	 digikam
 Version: 0.10.0
-Release: 0.7.%{beta}%{?dist}
+Release: 0.8.%{beta}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -98,6 +102,11 @@ desktop-file-install --vendor="" \
 
 # omit conflicts with oxygen-icon-theme
 rm -f %{buildroot}%{_kde4_iconsdir}/oxygen/*/apps/digikam.*
+%if 0%{?omit_kde42_conflicts}
+rm -f %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/transform-crop-and-resize.png
+rm -f %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/view-object-histogram-logarithmic.png
+rm -f %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/view-object-histogram-linear.png
+%endif
 
 
 %post
@@ -143,6 +152,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Dec 01 2008 Rex Dieter <rdieter@fedoraprojectd.org> - 0.10.0-0.8.beta6
+- omit kde42 (icon) conflicts (F-10+)
+
 * Tue Nov 25 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.7.beta6
 - digikam-0.10.0-beta6
 - lensfun support
