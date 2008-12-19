@@ -99,7 +99,7 @@ desktop-file-install --vendor="" \
 
 # omit conflicts with oxygen-icon-theme
 rm -vf %{buildroot}%{_kde4_iconsdir}/oxygen/*/apps/digikam.*
-%if "%{kdelibs4_version}" >= "4.2.0"
+%if "%{kdelibs4_version}" >= "4.1.80"
 rm -vf %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/transform-crop-and-resize.png
 rm -vf %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/view-object-histogram-logarithmic.png
 rm -vf %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/view-object-histogram-linear.png
