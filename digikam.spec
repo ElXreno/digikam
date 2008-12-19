@@ -1,4 +1,4 @@
-%define beta beta6
+%define beta beta7
 
 %if 0%{?fedora} > 10
 %define omit_kde42_conflicts 1
@@ -6,7 +6,7 @@
 
 Name:	 digikam
 Version: 0.10.0
-Release: 0.8.%{beta}%{?dist}
+Release: 0.9.%{beta}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -24,7 +24,7 @@ BuildRequires: libkexiv2-devel >= 0.5.0
 BuildRequires: libkipi-devel >= 0.2.0
 BuildRequires: jasper-devel
 ## FIXME: marble integration, http://bugzilla.redhat.com/470578 
-#BuildRequires: kdeedu4-devel
+#BuildRequires: marble-devel
 BuildRequires: kdelibs4-devel
 BuildRequires: kdepimlibs-devel
 BuildRequires: lcms-devel
@@ -152,7 +152,10 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Mon Dec 01 2008 Rex Dieter <rdieter@fedoraprojectd.org> - 0.10.0-0.8.beta6
+* Thu Dec 18 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.9.beta7
+- digikam-0.10.0-beta7
+
+* Mon Dec 01 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.8.beta6
 - omit kde42 (icon) conflicts (F-10+)
 
 * Tue Nov 25 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.7.beta6
