@@ -1,9 +1,5 @@
 %define beta beta7
 
-%if 0%{?fedora} > 10
-%define omit_kde42_conflicts 1
-%endif
-
 Name:	 digikam
 Version: 0.10.0
 Release: 0.9.%{beta}%{?dist}
@@ -26,6 +22,7 @@ BuildRequires: jasper-devel
 ## FIXME: marble integration, http://bugzilla.redhat.com/470578 
 #BuildRequires: marble-devel
 BuildRequires: kdelibs4-devel
+%global kdelibs4_version %((kde4-config --version 2>/dev/null || echo "KDE 4.1.0") | grep ^KDE | cut -d' ' -f2)
 BuildRequires: kdepimlibs-devel
 BuildRequires: lcms-devel
 BuildRequires: lensfun-devel
@@ -101,11 +98,11 @@ desktop-file-install --vendor="" \
 %find_lang %{name} || touch %{name}.lang
 
 # omit conflicts with oxygen-icon-theme
-rm -f %{buildroot}%{_kde4_iconsdir}/oxygen/*/apps/digikam.*
-%if 0%{?omit_kde42_conflicts}
-rm -f %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/transform-crop-and-resize.png
-rm -f %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/view-object-histogram-logarithmic.png
-rm -f %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/view-object-histogram-linear.png
+rm -vf %{buildroot}%{_kde4_iconsdir}/oxygen/*/apps/digikam.*
+%if "%{kdelibs4_version}" >= "4.2.0"
+rm -vf %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/transform-crop-and-resize.png
+rm -vf %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/view-object-histogram-logarithmic.png
+rm -vf %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/view-object-histogram-linear.png
 %endif
 
 
@@ -156,7 +153,7 @@ rm -rf %{buildroot}
 - digikam-0.10.0-beta7
 
 * Mon Dec 01 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.8.beta6
-- omit kde42 (icon) conflicts (F-10+)
+- omit kde42 (icon) conflicts
 
 * Tue Nov 25 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.7.beta6
 - digikam-0.10.0-beta6
