@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 0.10.0
-Release: 0.10.%{beta}%{?dist}
+Release: 0.11.%{beta}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -149,7 +149,7 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Mon Dec 22 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.10.beta7
+* Mon Dec 22 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.11.beta7
 - BR: libkipi-devel >= 0.3.0
 
 * Thu Dec 18 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.9.beta7
