@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 0.10.0
-Release: 0.9.%{beta}%{?dist}
+Release: 0.10.%{beta}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -17,12 +17,12 @@ BuildRequires: gettext
 BuildRequires: gphoto2-devel
 BuildRequires: libkdcraw-devel >= 0.4.0-2
 BuildRequires: libkexiv2-devel >= 0.5.0
-BuildRequires: libkipi-devel >= 0.2.0
+BuildRequires: libkipi-devel >= 0.3.0
 BuildRequires: jasper-devel
 ## FIXME: marble integration, http://bugzilla.redhat.com/470578 
 #BuildRequires: marble-devel
 BuildRequires: kdelibs4-devel
-%global kdelibs4_version %((kde4-config --version 2>/dev/null || echo "KDE 4.1.0") | grep ^KDE | cut -d' ' -f2)
+#global kdelibs4_version %((kde4-config --version 2>/dev/null || echo "KDE 4.1.0") | grep ^KDE | cut -d' ' -f2)
 BuildRequires: kdepimlibs-devel
 BuildRequires: lcms-devel
 BuildRequires: lensfun-devel
@@ -99,11 +99,11 @@ desktop-file-install --vendor="" \
 
 # omit conflicts with oxygen-icon-theme
 rm -vf %{buildroot}%{_kde4_iconsdir}/oxygen/*/apps/digikam.*
-%if "%{kdelibs4_version}" >= "4.1.80"
+#if "%{kdelibs4_version}" >= "4.1.80"
 rm -vf %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/transform-crop-and-resize.png
 rm -vf %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/view-object-histogram-logarithmic.png
 rm -vf %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/view-object-histogram-linear.png
-%endif
+#endif
 
 
 %post
@@ -149,6 +149,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Dec 22 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.10.beta7
+- BR: libkipi-devel >= 0.3.0
+
 * Thu Dec 18 2008 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.9.beta7
 - digikam-0.10.0-beta7
 
