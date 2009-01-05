@@ -130,6 +130,7 @@ rm -rf %{buildroot}
 %{_kde4_libdir}/kde4/*.so
 %{_kde4_appsdir}/digikam/
 %{_kde4_appsdir}/showfoto/
+%{_kde4_appsdir}/solid/actions/*.desktop
 %{_kde4_datadir}/applications/kde4/*.desktop
 %{_kde4_iconsdir}/hicolor/*/*/*
 %{_kde4_iconsdir}/oxygen/*/*/*
