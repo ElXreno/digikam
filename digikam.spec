@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 0.10.0
-Release: 0.12.%{beta}%{?dist}
+Release: 0.13.%{beta}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -19,8 +19,8 @@ BuildRequires: libkdcraw-devel >= 0.4.0-2
 BuildRequires: libkexiv2-devel >= 0.5.0
 BuildRequires: libkipi-devel >= 0.3.0
 BuildRequires: jasper-devel
-## FIXME: marble integration, http://bugzilla.redhat.com/470578 
-#BuildRequires: marble-devel
+# marble integration, http://bugzilla.redhat.com/470578 
+BuildRequires: kdeedu-devel 
 BuildRequires: kdelibs4-devel
 #global kdelibs4_version %((kde4-config --version 2>/dev/null || echo "KDE 4.1.0") | grep ^KDE | cut -d' ' -f2)
 BuildRequires: kdepimlibs-devel
@@ -29,8 +29,6 @@ BuildRequires: lensfun-devel
 BuildRequires: libtiff-devel
 BuildRequires: libpng-devel >= 1.2.7
 BuildRequires: sqlite-devel
-# extraneous/bogus deps ?  -- Rex
-BuildRequires: giflib-devel openldap-devel pcre-devel
 
 Obsoletes: digikamimageplugins < 0.9.1-2
 
@@ -150,6 +148,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Jan 12 2009 Rex Dieter <rdieter@fedoraproject.org> - 0.10-0.13.beta8
+- re-enable marble integration, kde42+ (bug #470578)
+
 * Mon Jan 05 2009 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.12.beta8
 - digikam-0.10.0-beta8
 
