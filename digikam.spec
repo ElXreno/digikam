@@ -1,14 +1,14 @@
-%define beta rc1 
+%define pre rc1 
 
 Name:	 digikam
 Version: 0.10.0
-Release: 0.14.%{beta}%{?dist}
+Release: 0.15.%{pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
 License: GPLv2+
 URL:	 http://www.digikam.org/
-Source0: http://downloads.sourceforge.net/digikam/digikam-%{version}%{?beta:-%{beta}}.tar.bz2
+Source0: http://downloads.sourceforge.net/digikam/digikam-%{version}%{?pre:-%{pre}}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires: cmake
@@ -19,12 +19,16 @@ BuildRequires: libkdcraw-devel >= 0.4.0-2
 BuildRequires: libkexiv2-devel >= 0.5.0
 BuildRequires: libkipi-devel >= 0.3.0
 BuildRequires: jasper-devel
-%if 0%{?fedora} > 10
+
 # marble integration, http://bugzilla.redhat.com/470578 
-BuildRequires: kdeedu-devel 
-%endif
+BuildRequires: kdeedu-devel >= 4.2.0
+Requires: kdeedu-marble >= 4.2.0
+
 BuildRequires: kdelibs4-devel
-#global kdelibs4_version %((kde4-config --version 2>/dev/null || echo "KDE 4.1.0") | grep ^KDE | cut -d' ' -f2)
+# Add min kdelibs Req, FIXME/TODO, come up with cleaner solution -- Rex
+%global kdelibs4_version %((kde4-config --version 2>/dev/null || echo "KDE 4.2.0") | grep ^KDE | cut -d' ' -f2)
+Requires: kdelibs4 >= %{kdelibs4_version}
+
 BuildRequires: kdepimlibs-devel
 BuildRequires: lcms-devel
 BuildRequires: lensfun-devel
@@ -34,7 +38,7 @@ BuildRequires: sqlite-devel
 
 Obsoletes: digikamimageplugins < 0.9.1-2
 
-Requires: %{name}-libs = %{version}-%{release}
+Requires: %{name}-libs  = %{version}-%{release}
 Requires(post): xdg-utils
 Requires(postun): xdg-utils
 
@@ -67,7 +71,7 @@ needed to develop applications using %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{version}%{?beta:-%{beta}}
+%setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 
 %build
@@ -77,7 +81,7 @@ pushd %{_target_platform}
 %{cmake_kde4} ..
 popd
 
-make %{?_smp_mflags} -C %{_target_platform} VERBOSE=1
+make %{?_smp_mflags} -C %{_target_platform}
 
 
 %install
@@ -150,6 +154,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Feb 04 2009 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.15.rc1
+- BR: kdeedu-devel >= 4.2.0, Req: kdeedu-marble >= 4.2.0
+- add min Req: kdelibs4 dep too 
+
 * Thu Jan 22 2009 Rex Dieter <rdieter@fedoraproject.org> - 0.10-0-0.14.rc1
 - digikam-0.10.0-rc1
 
