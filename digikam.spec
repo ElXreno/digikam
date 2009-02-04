@@ -38,7 +38,7 @@ BuildRequires: sqlite-devel
 
 Obsoletes: digikamimageplugins < 0.9.1-2
 
-Requires: %{name}-libs  = %{version}-%{release}
+Requires: %{name}-libs = %{version}-%{release}
 Requires(post): xdg-utils
 Requires(postun): xdg-utils
 
