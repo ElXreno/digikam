@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 0.10.0
-Release: 0.15.%{pre}%{?dist}
+Release: 0.16.%{pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -26,8 +26,12 @@ Requires: kdeedu-marble >= 4.2.0
 
 BuildRequires: kdelibs4-devel
 # Add min kdelibs Req, FIXME/TODO, come up with cleaner solution -- Rex
-%global kdelibs4_version %((kde4-config --version 2>/dev/null || echo "KDE 4.2.0") | grep ^KDE | cut -d' ' -f2)
-Requires: kdelibs4 >= %{kdelibs4_version}
+%global kde4_version %((kde4-config --version 2>/dev/null || echo "KDE 4.2.0") | grep ^KDE | cut -d' ' -f2)
+#Requires: kdelibs4 >= %{kde4_version}
+
+# trash protocol support needed
+# FIXME: should probably be handled lower in the stack
+Requires: kdebase-runtime >= %{kde4_version}
 
 BuildRequires: kdepimlibs-devel
 BuildRequires: lcms-devel
@@ -154,6 +158,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Feb 09 2009 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.16.rc1
+- Req: kdebase-runtime
+
 * Wed Feb 04 2009 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.15.rc1
 - BR: kdeedu-devel >= 4.2.0, Req: kdeedu-marble >= 4.2.0
 - add min Req: kdelibs4 dep too 
