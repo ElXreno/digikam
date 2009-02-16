@@ -1,8 +1,8 @@
-%define pre rc1 
+%define pre rc2
 
 Name:	 digikam
 Version: 0.10.0
-Release: 0.16.%{pre}%{?dist}
+Release: 0.17.%{pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -158,6 +158,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sat Feb 14 2009 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.17.rc2
+- digikam-0.10.0-rc2
+
 * Mon Feb 09 2009 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-0.16.rc1
 - Req: kdebase-runtime
 
