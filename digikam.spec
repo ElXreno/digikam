@@ -1,8 +1,7 @@
-%define pre rc2
 
 Name:	 digikam
 Version: 0.10.0
-Release: 0.18.%{pre}%{?dist}
+Release: 1%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -93,25 +92,19 @@ rm -rf %{buildroot}
 
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
-desktop-file-install --vendor="" \
-  --dir=%{buildroot}%{_datadir}/applications/kde4 \
-  --add-category="Photography" \
-  $RPM_BUILD_ROOT%{_datadir}/applications/kde4/digikam.desktop
+%find_lang digikam 
 
-desktop-file-install --vendor="" \
- --dir $RPM_BUILD_ROOT%{_datadir}/applications/kde4 \
- --add-category="Photography" \
- %{buildroot}%{_datadir}/applications/kde4/showfoto.desktop
+# hack in hicolor icons
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
+pushd %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
+ln -s %{_kde4_appsdir}/digikam/icons/oxygen/48x48/apps/digikam.png  .
+ln -s %{_kde4_appsdir}/digikam/icons/oxygen/48x48/apps/showfoto.png .
+popd
 
-%find_lang %{name} || touch %{name}.lang
 
-# omit conflicts with oxygen-icon-theme
-rm -vf %{buildroot}%{_kde4_iconsdir}/oxygen/*/apps/digikam.*
-#if "%{kdelibs4_version}" >= "4.1.80"
-rm -vf %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/transform-crop-and-resize.png
-rm -vf %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/view-object-histogram-logarithmic.png
-rm -vf %{buildroot}%{_kde4_iconsdir}/oxygen/*/actions/view-object-histogram-linear.png
-#endif
+%check
+desktop-file-validate %{buildroot}%{_datadir}/applications/kde4/digikam.desktop
+desktop-file-validate %{buildroot}%{_datadir}/applications/kde4/showfoto.desktop
 
 
 %post
@@ -131,7 +124,7 @@ xdg-desktop-menu forceupdate 2> /dev/null || :
 rm -rf %{buildroot}
 
 
-%files -f %{name}.lang
+%files -f digikam.lang
 %defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING HACKING NEWS README TODO
 %{_kde4_bindir}/*
@@ -140,11 +133,11 @@ rm -rf %{buildroot}
 %{_kde4_appsdir}/showfoto/
 %{_kde4_appsdir}/solid/actions/*.desktop
 %{_kde4_datadir}/applications/kde4/*.desktop
-%{_kde4_iconsdir}/hicolor/*/*/*
-%{_kde4_iconsdir}/oxygen/*/*/*
-%{_mandir}/man1/*.1*
-%{_kde4_datadir}/kde4/services/*
-%{_kde4_datadir}/kde4/servicetypes/*
+%{_kde4_datadir}/kde4/services/*.desktop
+%{_kde4_datadir}/kde4/services/*.protocol
+%{_kde4_datadir}/kde4/servicetypes/*.desktop
+%{_mandir}/man1/digitaglinktree.1*
+%{_datadir}/icons/hicolor/*/*/*
 
 %files libs
 %defattr(-,root,root,-)
@@ -158,6 +151,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Mar 17 2009 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-1
+- digikam-0.10.0 (final)
+
 * Tue Feb 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.10.0-0.18.rc2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
 
