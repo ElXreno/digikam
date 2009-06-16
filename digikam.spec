@@ -1,7 +1,9 @@
 
+%define pre beta1
+
 Name:	 digikam
-Version: 0.10.0
-Release: 1%{?dist}
+Version: 1.0.0
+Release: 0.1.%{pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -94,13 +96,6 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 %find_lang digikam 
 
-# hack in hicolor icons
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
-pushd %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
-ln -s %{_kde4_appsdir}/digikam/icons/oxygen/48x48/apps/digikam.png  .
-ln -s %{_kde4_appsdir}/digikam/icons/oxygen/48x48/apps/showfoto.png .
-popd
-
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/kde4/digikam.desktop
@@ -108,12 +103,19 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/kde4/showfoto.desktop
 
 
 %post
-xdg-icon-resource forceupdate --theme hicolor 2> /dev/null || :
-xdg-desktop-menu forceupdate 2> /dev/null || :
+touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
 
 %postun
-xdg-icon-resource forceupdate --theme hicolor 2> /dev/null || :
-xdg-desktop-menu forceupdate 2> /dev/null || :
+if [ $1 -eq 0 ] ; then
+  update-desktop-database -q &> /dev/null
+  touch --no-create %{_datadir}/icons/hicolor &> /dev/null
+  gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
+fi
+
+%posttrans
+update-desktop-database -q &> /dev/null
+gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
+
 
 %post libs -p /sbin/ldconfig
 
@@ -136,8 +138,8 @@ rm -rf %{buildroot}
 %{_kde4_datadir}/kde4/services/*.desktop
 %{_kde4_datadir}/kde4/services/*.protocol
 %{_kde4_datadir}/kde4/servicetypes/*.desktop
-%{_mandir}/man1/digitaglinktree.1*
-%{_datadir}/icons/hicolor/*/*/*
+%{_mandir}/man1/*
+%{_kde4_iconsdir}/hicolor/*/*/*
 
 %files libs
 %defattr(-,root,root,-)
@@ -151,6 +153,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Jun 12 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.1.beta1
+- digikam-1.0.0-beta1
+
 * Tue Mar 17 2009 Rex Dieter <rdieter@fedoraproject.org> - 0.10.0-1
 - digikam-0.10.0 (final)
 
