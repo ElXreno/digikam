@@ -39,6 +39,7 @@ BuildRequires: lcms-devel
 BuildRequires: lensfun-devel
 BuildRequires: libtiff-devel
 BuildRequires: libpng-devel >= 1.2.7
+BuildRequires: soprano-devel
 BuildRequires: sqlite-devel
 
 Obsoletes: digikamimageplugins < 0.9.1-2
