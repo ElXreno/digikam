@@ -15,6 +15,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
+BuildRequires: glib2-devel
 BuildRequires: gphoto2-devel
 BuildRequires: libkdcraw-devel >= 0.4.0-2
 BuildRequires: libkexiv2-devel >= 0.5.0
