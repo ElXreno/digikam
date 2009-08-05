@@ -23,13 +23,11 @@ BuildRequires: libkipi-devel >= 0.3.0
 BuildRequires: jasper-devel
 
 # marble integration, http://bugzilla.redhat.com/470578 
-BuildRequires: kdeedu-devel >= 4.2.0
-Requires: kdeedu-marble >= 4.2.0
+%define marble_version 4.3.0
+BuildRequires: kdeedu-devel >= %{marble_version} 
 
 BuildRequires: kdelibs4-devel
-# Add min kdelibs Req, FIXME/TODO, come up with cleaner solution -- Rex
 %global kde4_version %((kde4-config --version 2>/dev/null || echo "KDE 4.2.0") | grep ^KDE | cut -d' ' -f2)
-#Requires: kdelibs4 >= %{kde4_version}
 
 # trash protocol support needed
 # FIXME: should probably be handled lower in the stack
@@ -45,9 +43,7 @@ BuildRequires: sqlite-devel
 
 Obsoletes: digikamimageplugins < 0.9.1-2
 
-Requires: %{name}-libs = %{version}-%{release}
-Requires(post): xdg-utils
-Requires(postun): xdg-utils
+Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description
 digiKam is an easy to use and powerful digital photo management application,
@@ -65,13 +61,15 @@ to use them.
 Summary: Runtime libraries for %{name}
 Group:   System Environment/Libraries
 Requires: %{name} = %{version}-%{release}
+Requires: kdelibs4%{?_isa} >= %{kde4_version}
+Requires: kdeedu-marble%{?_isa} >= %{marble_version}
 %description libs
 %{summary}.
 
 %package devel
 Summary: Development files for %{name}
 Group:	 Development/Libraries
-Requires: %{name}-libs = %{version}-%{release}
+Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 %description devel
 This package contains the libraries, include files and other resources
 needed to develop applications using %{name}.
@@ -145,7 +143,8 @@ rm -rf %{buildroot}
 
 %files libs
 %defattr(-,root,root,-)
-%{_kde4_libdir}/lib*.so.*
+%{_kde4_libdir}/libdigikamcore.so.1*
+%{_kde4_libdir}/libdigikamdatabase.so.1*
 
 %files devel
 %defattr(-,root,root,-)
@@ -155,6 +154,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Aug 05 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.4.beta3
+- drop xdg-utils references 
+- tighten -libs related deps via %%{?_isa}
+
 * Fri Jul 24 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.3.beta3
 - digikam-1.0.0-beta3
 
