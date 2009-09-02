@@ -20,6 +20,7 @@ BuildRequires: gphoto2-devel
 BuildRequires: libkdcraw-devel >= 0.4.0-2
 BuildRequires: libkexiv2-devel >= 0.5.0
 BuildRequires: libkipi-devel >= 0.3.0
+BuildRequires: liblqr-1-devel
 BuildRequires: jasper-devel
 
 # marble integration, http://bugzilla.redhat.com/470578 
@@ -156,6 +157,7 @@ rm -rf %{buildroot}
 %changelog
 * Mon Aug 31 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.5.beta4
 - digikam-1.0.0-beta4
+- BR: liblqr-1-devel
 
 * Wed Aug 05 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.4.beta3
 - drop xdg-utils references 
