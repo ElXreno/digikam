@@ -1,9 +1,9 @@
 
-%define pre beta3
+%define pre beta4
 
 Name:	 digikam
 Version: 1.0.0
-Release: 0.4.%{pre}%{?dist}
+Release: 0.5.%{pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -154,6 +154,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Aug 31 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.5.beta4
+- digikam-1.0.0-beta4
+
 * Wed Aug 05 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.4.beta3
 - drop xdg-utils references 
 - tighten -libs related deps via %%{?_isa}
