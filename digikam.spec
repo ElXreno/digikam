@@ -63,7 +63,7 @@ Summary: Runtime libraries for %{name}
 Group:   System Environment/Libraries
 Requires: %{name} = %{version}-%{release}
 Requires: kdelibs4%{?_isa} >= %{kde4_version}
-Requires: kdeedu-marble-libs%{?_isa} >= %{marble_version}
+Requires: kdeedu-marble >= %{marble_version}
 %description libs
 %{summary}.
 
