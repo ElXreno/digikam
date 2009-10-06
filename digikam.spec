@@ -63,7 +63,7 @@ Summary: Runtime libraries for %{name}
 Group:   System Environment/Libraries
 Requires: %{name} = %{version}-%{release}
 Requires: kdelibs4%{?_isa} >= %{kde4_version}
-Requires: kdeedu-marble >= %{marble_version}
+Requires: kdeedu-marble-libs%{?_isa} >= %{marble_version}
 %description libs
 %{summary}.
 
@@ -146,6 +146,7 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 %{_kde4_libdir}/libdigikamcore.so.1*
 %{_kde4_libdir}/libdigikamdatabase.so.1*
+%{_kde4_libdir}/kde4/plugins/marble/ExternalDraw.so
 
 %files devel
 %defattr(-,root,root,-)
@@ -155,7 +156,9 @@ rm -rf %{buildroot}
 
 
 %changelog
-
+* Tue Oct 06 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.7.beta5
+- digikam-1.0.0-beta5
+- tweak marble deps (again)
 
 * Tue Sep 29 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.6.beta4
 - fix marble dep(s)
