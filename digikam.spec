@@ -1,9 +1,9 @@
 
-%define pre beta5 
+%define pre beta6
 
 Name:	 digikam
 Version: 1.0.0
-Release: 0.7.%{pre}%{?dist}
+Release: 0.8.%{pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -156,6 +156,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Nov 08 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.8.beta6
+- digikam-1.0.0-beta6
+
 * Tue Oct 06 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.7.beta5
 - digikam-1.0.0-beta5
 - tweak marble deps (again)
