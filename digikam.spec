@@ -99,7 +99,7 @@ rm -rf %{buildroot}
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 desktop-file-install \
-  --vendir="" \
+  --vendor="" \
   --dir=%{buildroot}%{_datadir}/applications/kde4 \
   %{SOURCE1}
 
