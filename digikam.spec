@@ -3,7 +3,7 @@
 
 Name:	 digikam
 Version: 1.0.0
-Release: 0.9.%{pre}%{?dist}
+Release: 0.10.%{pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -164,6 +164,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Nov 25 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.10.beta6
+- rebuild (kdegraphics)
+
 * Sat Nov 14 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.9.beta6
 - digiKam not listed as a media handler for pictures in Nautilus (#516447)
 
