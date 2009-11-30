@@ -1,9 +1,9 @@
 
-%define pre beta6
+%define pre rc 
 
 Name:	 digikam
 Version: 1.0.0
-Release: 0.10.%{pre}%{?dist}
+Release: 0.11.%{pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -103,7 +103,7 @@ desktop-file-install \
   --dir=%{buildroot}%{_datadir}/applications/kde4 \
   %{SOURCE1}
 
-%find_lang digikam 
+%find_lang digikam --with-kde
 
 
 %check
@@ -164,6 +164,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Nov 30 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.11.rc
+- digikam-1.0.0-rc
+
 * Wed Nov 25 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.10.beta6
 - rebuild (kdegraphics)
 
