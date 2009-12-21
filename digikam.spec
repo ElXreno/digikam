@@ -1,9 +1,7 @@
 
-%define pre rc 
-
 Name:	 digikam
 Version: 1.0.0
-Release: 0.11.%{pre}%{?dist}
+Release: 1%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -164,6 +162,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Dec 21 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-1
+- digikam-1.0.0
+
 * Mon Nov 30 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.11.rc
 - digikam-1.0.0-rc
 
