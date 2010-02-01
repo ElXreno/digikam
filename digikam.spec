@@ -1,7 +1,7 @@
 
 Name:	 digikam
-Version: 1.0.0
-Release: 2%{?dist}
+Version: 1.1.0
+Release: 1%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -95,8 +95,7 @@ rm -rf %{buildroot}
 
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
-desktop-file-install \
-  --vendor="" \
+desktop-file-install --vendor="" \
   --dir=%{buildroot}%{_datadir}/applications/kde4 \
   %{SOURCE1}
 
@@ -161,6 +160,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Feb 01 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.1.0-1
+- digikam-1.1.0
+
 * Thu Jan 28 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-2
 - use %%{_kde4_version}
 
