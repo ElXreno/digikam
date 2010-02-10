@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 1.1.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -63,7 +63,7 @@ Summary: Runtime libraries for %{name}
 Group:   System Environment/Libraries
 Requires: %{name} = %{version}-%{release}
 %{?_kde4_version:Requires: kdelibs4%{?_isa} >= %{_kde4_version}}
-Requires: kdeedu-marble-libs%{?_isa} >= %{marble_version}
+Requires: kdeedu-marble-libs%{?_isa}%{?_kde4_version: >= %{_kde4_version}} 
 %description libs
 %{summary}.
 
@@ -160,6 +160,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Feb 10 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.1.0-2
+- touch up marble-related deps
+
 * Mon Feb 01 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.1.0-1
 - digikam-1.1.0
 
