@@ -1,7 +1,7 @@
 
 Name:	 digikam
-Version: 1.1.0
-Release: 3%{?dist}
+Version: 1.2.0
+Release: 1%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -11,6 +11,7 @@ Source0: http://downloads.sourceforge.net/digikam/digikam-%{version}%{?pre:-%{pr
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
+# TODO: upstream me
 Source1: digikam-import.desktop
 
 BuildRequires: cmake
@@ -160,6 +161,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Mar 29 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.2.0-1
+- digikam-1.2.0
+
 * Mon Mar 22 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.1.0-3
 - -libs: drop extraneous deps
 - -devel: Req: kdelibs4-devel
