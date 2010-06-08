@@ -1,7 +1,7 @@
 
 Name:	 digikam
-Version: 1.2.0
-Release: 2%{?dist}
+Version: 1.3.0
+Release: 1%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -15,15 +15,13 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Source1: digikam-import.desktop
 
 ## upstream patches
-# http://bugs.kde.org/232628
-Patch100: digikam-1.2.0-kde232628.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
 BuildRequires: glib2-devel
 BuildRequires: gphoto2-devel
-BuildRequires: libkdcraw-devel >= 0.4.0-2
-BuildRequires: libkexiv2-devel >= 0.5.0
+BuildRequires: libkdcraw-devel >= 1.1.0 
+BuildRequires: libkexiv2-devel >= 1.1.0 
 BuildRequires: libkipi-devel >= 0.3.0
 BuildRequires: liblqr-1-devel
 BuildRequires: jasper-devel
@@ -82,8 +80,6 @@ needed to develop applications using %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
-
-%patch100 -p4 -b .kde232628
 
 
 %build
@@ -166,6 +162,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Jun 08 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.3.0-1
+- digikam-1.3.0
+
 * Tue Mar 30 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.2.0-2
 - crash on startup in RatingWidget (kde#232628)
 
