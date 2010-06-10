@@ -147,6 +147,7 @@ rm -rf %{buildroot}
 %{_kde4_datadir}/kde4/servicetypes/*.desktop
 %{_mandir}/man1/*
 %{_kde4_iconsdir}/hicolor/*/*/*
+%{_kde4_libexecdir}/*
 
 %files libs
 %defattr(-,root,root,-)
