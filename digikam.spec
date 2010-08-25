@@ -1,6 +1,6 @@
 
 Name:	 digikam
-Version: 1.3.0
+Version: 1.4.0
 Release: 1%{?dist}
 Summary: A digital camera accessing & photo management application
 
@@ -14,39 +14,38 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # TODO: upstream me
 Source1: digikam-import.desktop
 
+## upstreamable patches
+Patch50: digikam-1.4.0_marble_plugin_rpath.patch
+
 ## upstream patches
 
 BuildRequires: desktop-file-utils
+BuildRequires: doxygen
 BuildRequires: gettext
 BuildRequires: glib2-devel
 BuildRequires: gphoto2-devel
-BuildRequires: libkdcraw-devel >= 1.1.0 
-BuildRequires: libkexiv2-devel >= 1.1.0 
-BuildRequires: libkipi-devel >= 0.3.0
-BuildRequires: liblqr-1-devel
 BuildRequires: jasper-devel
-
 # marble integration, http://bugzilla.redhat.com/470578 
 %define marble_version 4.3.0
 BuildRequires: kdeedu-devel >= %{marble_version} 
-
 BuildRequires: kdelibs4-devel
-
-# trash protocol support needed
-# FIXME: should probably be handled lower in the stack
-Requires: kdebase-runtime%{?_kde4_version: >= %{_kde4_version}}
-
 BuildRequires: kdepimlibs-devel
 BuildRequires: lcms-devel
 BuildRequires: lensfun-devel
+BuildRequires: libkdcraw-devel >= 1.1.0
+BuildRequires: libkexiv2-devel >= 1.1.0
+BuildRequires: libkipi-devel >= 0.3.0
+BuildRequires: liblqr-1-devel
 BuildRequires: libtiff-devel
 BuildRequires: libpng-devel >= 1.2.7
+BuildRequires: mysql-devel mysql-server
 BuildRequires: soprano-devel
 BuildRequires: sqlite-devel
 
 Obsoletes: digikamimageplugins < 0.9.1-2
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
+Requires: kdebase-runtime%{?_kde4_version: >= %{_kde4_version}}
 
 %description
 digiKam is an easy to use and powerful digital photo management application,
@@ -80,6 +79,8 @@ needed to develop applications using %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
+
+%patch50 -p1 -b .marble_plugin_rpath
 
 
 %build
@@ -163,6 +164,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Aug 25 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.4.0-1
+- digikam-1.4.0
+
 * Tue Jun 08 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.3.0-1
 - digikam-1.3.0
 
