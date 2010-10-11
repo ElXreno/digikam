@@ -1,6 +1,6 @@
 
 Name:	 digikam
-Version: 1.4.0
+Version: 1.5.0
 Release: 1%{?dist}
 Summary: A digital camera accessing & photo management application
 
@@ -164,6 +164,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Oct 11 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.5.0-1
+- digikam-1.5.0
+
 * Wed Aug 25 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.4.0-1
 - digikam-1.4.0
 
