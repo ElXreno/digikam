@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 1.5.0
-Release: 1%{?dist}
+Release: 1%{?dist}.1
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -64,6 +64,7 @@ Summary: Runtime libraries for %{name}
 Group:   System Environment/Libraries
 Requires: %{name} = %{version}-%{release}
 Requires: kdeedu-marble-libs%{?_isa}%{?_kde4_version: >= %{_kde4_version}} 
+Requires: kdegraphics-libs%{?_isa}%{?_kde4_version: >= %{_kde4_version}}
 %description libs
 %{summary}.
 
@@ -164,6 +165,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Nov 02 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.5.0-1.1
+- -libs: add minimal kdegraphics-libs dep (#648741)
+
 * Mon Oct 11 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.5.0-1
 - digikam-1.5.0
 
