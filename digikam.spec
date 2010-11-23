@@ -1,7 +1,7 @@
 
 Name:	 digikam
-Version: 1.5.0
-Release: 1%{?dist}.1
+Version: 1.6.0
+Release: 1%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -165,6 +165,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Nov 23 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.6.0-1
+- digikam-1.6.0 (#628156)
+
 * Tue Nov 02 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.5.0-1.1
 - -libs: add minimal kdegraphics-libs dep (#648741)
 
