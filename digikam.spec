@@ -1,6 +1,6 @@
 
 Name:	 digikam
-Version: 1.6.0
+Version: 1.7.0
 Release: 1%{?dist}
 Summary: A digital camera accessing & photo management application
 
@@ -41,8 +41,9 @@ BuildRequires: libpng-devel >= 1.2.7
 BuildRequires: mysql-devel mysql-server
 BuildRequires: soprano-devel
 BuildRequires: sqlite-devel
-
-Obsoletes: digikamimageplugins < 0.9.1-2
+## TODO: new deps
+#--  libpgf library found..................... NO  (optional - internal version used instead)
+#--  libclapack library found................. NO  (optional - internal version used instead)
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kdebase-runtime%{?_kde4_version: >= %{_kde4_version}}
@@ -165,6 +166,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Dec 22 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.7.0-1
+- digikam-1.7.0
+
 * Tue Nov 23 2010 Rex Dieter <rdieter@fedoraproject.org> - 1.6.0-1
 - digikam-1.6.0 (#628156)
 
