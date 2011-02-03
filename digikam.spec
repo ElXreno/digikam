@@ -16,6 +16,8 @@ Source1: digikam-import.desktop
 
 ## upstreamable patches
 Patch50: digikam-1.4.0_marble_plugin_rpath.patch
+# fix for libjpeg-turbo, needs love
+Patch51: digikam-1.8.0-libjpeg_version.patch
 
 ## upstream patches
 
@@ -83,6 +85,7 @@ needed to develop applications using %{name}.
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch50 -p1 -b .marble_plugin_rpath
+%patch51 -p1 -b .libjpeg_version
 
 
 %build
