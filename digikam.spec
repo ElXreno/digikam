@@ -88,7 +88,7 @@ needed to develop applications using %{name}.
 
 %patch50 -p1 -b .marble_plugin_rpath
 %patch51 -p1 -b .libjpeg_version
-%patch51 -p1 -b .gcc46
+%patch52 -p1 -b .gcc46
 
 
 %build
