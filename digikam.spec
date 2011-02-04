@@ -18,8 +18,10 @@ Source1: digikam-import.desktop
 Patch50: digikam-1.4.0_marble_plugin_rpath.patch
 # fix for libjpeg-turbo, needs love
 Patch51: digikam-1.8.0-libjpeg_version.patch
+# a more upstreamable version, see https://bugs.kde.org/show_bug.cgi?id=265431
+Patch52: digikam-1.8.0-libjpeg_version-2.patch
 # gcc-4.6-ism , error: control reaches end of non-void function [-Werror=return-type]
-Patch52: digikam-1.8.0-gcc46.patch
+Patch53: digikam-1.8.0-gcc46.patch
 
 ## upstream patches
 
@@ -87,8 +89,8 @@ needed to develop applications using %{name}.
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch50 -p1 -b .marble_plugin_rpath
-%patch51 -p1 -b .libjpeg_version
-%patch52 -p1 -b .gcc46
+%patch52 -p1 -b .libjpeg_version
+%patch53 -p1 -b .gcc46
 
 
 %build
