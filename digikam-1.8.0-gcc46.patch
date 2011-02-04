@@ -1,14 +1,14 @@
 diff -up digikam-1.8.0/libs/threads/dynamicthread.cpp.gcc46 digikam-1.8.0/libs/threads/dynamicthread.cpp
 --- digikam-1.8.0/libs/threads/dynamicthread.cpp.gcc46	2011-01-23 13:27:56.000000000 -0600
-+++ digikam-1.8.0/libs/threads/dynamicthread.cpp	2011-02-04 09:10:10.461384295 -0600
++++ digikam-1.8.0/libs/threads/dynamicthread.cpp	2011-02-04 10:05:11.969447213 -0600
 @@ -257,6 +257,12 @@ bool DynamicThread::DynamicThreadPriv::t
              kDebug() << "Transition to Running: Invalid Inactive state" << q;
              return false;
          }
 +	// fix gcc-4.6 failure --  error: control reaches end of non-void function [-Werror=return-type]
-+	case default:
++	default:
 +        {
-+            kDebug() << "libs/threads/dynanamicthread.cpp : Should never reach here: assert?"	
++            kDebug() << "libs/threads/dynanamicthread.cpp : Should never reach here: assert?" << q;
 +            return false;
 +        }
      }
