@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 1.8.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -174,6 +174,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.8.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Thu Feb 03 2011 Rex Dieter <rdieter@fedoraproject.org> 1.8.0-1
 - 1.8.0
 
