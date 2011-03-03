@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 1.8.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -17,9 +17,10 @@ Source1: digikam-import.desktop
 ## upstreamable patches
 Patch50: digikam-1.4.0_marble_plugin_rpath.patch
 # fix for libjpeg-turbo,  see https://bugs.kde.org/show_bug.cgi?id=265431 
+# hardcode libjpeg-62
 Patch51: digikam-1.8.0-libjpeg_version.patch
-# a more minimal, upstreamable version
-Patch52: digikam-1.8.0-libjpeg_version-3.patch
+# use try-compile test
+Patch52: digikam-1.8.0-libjpeg_version-2.patch
 # gcc-4.6-ism , error: control reaches end of non-void function [-Werror=return-type]
 Patch53: digikam-1.8.0-gcc46.patch
 
@@ -174,6 +175,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Mar 03 2011 Rex Dieter <rdieter@fedoraproject.org> 1.8.0-3
+- use safer check for libjpeg version, using cmake_try_compile (kde#265431)
+
 * Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.8.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
