@@ -1,7 +1,7 @@
 
 Name:	 digikam
-Version: 1.8.0
-Release: 3%{?dist}
+Version: 1.9.0
+Release: 1%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -21,8 +21,6 @@ Patch50: digikam-1.4.0_marble_plugin_rpath.patch
 Patch51: digikam-1.8.0-libjpeg_version.patch
 # use try-compile test
 Patch52: digikam-1.8.0-libjpeg_version-2.patch
-# gcc-4.6-ism , error: control reaches end of non-void function [-Werror=return-type]
-Patch53: digikam-1.8.0-gcc46.patch
 
 ## upstream patches
 
@@ -91,7 +89,6 @@ needed to develop applications using %{name}.
 
 %patch50 -p1 -b .marble_plugin_rpath
 %patch52 -p1 -b .libjpeg_version
-%patch53 -p1 -b .gcc46
 
 
 %build
@@ -175,6 +172,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Mar 17 2011 Rex Dieter <rdieter@fedoraproject.org> 1.9.0-1
+- 1.9.0
+
 * Thu Mar 03 2011 Rex Dieter <rdieter@fedoraproject.org> 1.8.0-3
 - use safer check for libjpeg version, using cmake_try_compile (kde#265431)
 
