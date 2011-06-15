@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 1.9.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -172,6 +172,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Jun 15 2011 Rex Dieter <rdieter@fedoraproject.org> 1.9.0-2
+- rebuild (marble)
+
 * Thu Mar 17 2011 Rex Dieter <rdieter@fedoraproject.org> 1.9.0-1
 - 1.9.0
 
