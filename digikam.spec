@@ -28,7 +28,7 @@ BuildRequires: glib2-devel
 BuildRequires: gphoto2-devel
 BuildRequires: jasper-devel
 # marble integration, http://bugzilla.redhat.com/470578
-%define marble_version 4.3.0
+%define marble_version 4.6.80
 BuildRequires: kdeedu-devel >= %{marble_version}
 BuildRequires: kdelibs4-devel
 BuildRequires: kdepimlibs-devel
@@ -102,8 +102,11 @@ needed to develop applications using %{name}.
 Summary: Plugins to use with Kipi
 License: GPLv2+ and Adobe
 Group:   Applications/Multimedia
-Obsoletes: kipi-plugins < 2.0.0
-Requires: %{name}-libs%{?_isa} = %{version}-%{release}
+Requires: kipi-plugins-libs%{?_isa} = %{version}-%{release}
+## jpeglossless plugin
+Requires: ImageMagick
+## expoblending
+Requires: hugin-base
 %description -n kipi-plugins
 This package contains plugins to use with Kipi, the KDE Image Plugin
 Interface.  Currently implemented plugins are:
@@ -132,16 +135,10 @@ ShwupExport        : export images to a remote Shwup web service
 SmugExport         : export images to a remote SmugMug web service
 TimeAdjust         : adjust date and time
 
-## jpeglossless plugin
-Requires: ImageMagick
-## expoblending
-Requires: hugin-base
-
 %package -n kipi-plugins-libs
 Summary: Runtime libraries for kipi-plugins
 License: GPLv2+ and Adobe
 Group:   System Environment/Libraries
-Obsoletes: kipi-plugins-libs < 2.0.0
 Requires: kipi-plugins = %{version}-%{release}
 %{?_kde4_version:Requires: kdelibs4%{?_isa} >= %{_kde4_version}}
 %{?_qt4_version:Requires: qt4%{?_isa} >= %{_qt4_version}}
@@ -154,16 +151,17 @@ Requires: kipi-plugins = %{version}-%{release}
 
 %patch51 -p0 -b .s390
 
+# nuke bundled code
 rm -rf cmake
 rm -rf extra/libksane
 rm -rf extra/libkipi
 rm -rf extra/libkexiv2
 rm -rf extra/libkdcraw
-
 sed -i "/libksane/d" extra/CMakeLists.txt
 sed -i "/libkipi/d" extra/CMakeLists.txt
 sed -i "/libkexiv2/d" extra/CMakeLists.txt
 sed -i "/libkdcraw/d" extra/CMakeLists.txt
+
 
 %build
 
