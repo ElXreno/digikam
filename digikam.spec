@@ -1,7 +1,8 @@
+%define pre rc
 
 Name:	 digikam
-Version: 1.9.0
-Release: 2%{?dist}
+Version: 2.0.0
+Release: 0.1.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -15,14 +16,10 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Source1: digikam-import.desktop
 
 ## upstreamable patches
-Patch50: digikam-1.4.0_marble_plugin_rpath.patch
-# fix for libjpeg-turbo,  see https://bugs.kde.org/show_bug.cgi?id=265431 
-# hardcode libjpeg-62
-Patch51: digikam-1.8.0-libjpeg_version.patch
-# use try-compile test
-Patch52: digikam-1.8.0-libjpeg_version-2.patch
 
 ## upstream patches
+# mark s390(x) as big endian machine
+Patch51: kipi-plugins-2.0.0-s390.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
@@ -30,9 +27,9 @@ BuildRequires: gettext
 BuildRequires: glib2-devel
 BuildRequires: gphoto2-devel
 BuildRequires: jasper-devel
-# marble integration, http://bugzilla.redhat.com/470578 
+# marble integration, http://bugzilla.redhat.com/470578
 %define marble_version 4.3.0
-BuildRequires: kdeedu-devel >= %{marble_version} 
+BuildRequires: kdeedu-devel >= %{marble_version}
 BuildRequires: kdelibs4-devel
 BuildRequires: kdepimlibs-devel
 BuildRequires: lcms-devel
@@ -49,6 +46,24 @@ BuildRequires: sqlite-devel
 ## TODO: new deps
 #--  libpgf library found..................... NO  (optional - internal version used instead)
 #--  libclapack library found................. NO  (optional - internal version used instead)
+
+BuildRequires: exiv2-devel
+## DNG converter
+BuildRequires: expat-devel
+BuildRequires: libgpod-devel >= 0.7.0
+# until when/if libksane-devel grows a depn on sane-backends-devel
+BuildRequires: libksane-devel >= 0.3.0
+BuildRequires: sane-backends-devel
+## htmlexport plugin
+BuildRequires: libxslt-devel
+## DNG converter
+BuildRequires: expat-devel
+## RemoveRedeye
+BuildRequires: opencv-devel
+## Shwup
+BuildRequires: qca2-devel
+## debianscreenshorts
+BuildRequires: qjson-devel
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kdebase-runtime%{?_kde4_version: >= %{_kde4_version}}
@@ -83,13 +98,72 @@ Requires: kdelibs4-devel
 This package contains the libraries, include files and other resources
 needed to develop applications using %{name}.
 
+%package -n kipi-plugins
+Summary: Plugins to use with Kipi
+License: GPLv2+ and Adobe
+Group:   Applications/Multimedia
+Obsoletes: kipi-plugins < 2.0.0
+Requires: %{name}-libs%{?_isa} = %{version}-%{release}
+%description -n kipi-plugins
+This package contains plugins to use with Kipi, the KDE Image Plugin
+Interface.  Currently implemented plugins are:
+AcquireImages      : acquire images using flat scanner
+AdvancedSlideshow  : slide images with 2D and 3D effects using OpenGL
+Calendar           : create calendars
+DngConverter       : convert Raw Image to Digital NeGative
+ExpoBlending       : blend bracketed images
+FbExport           : export images to a remote Facebook web service
+FlickrExport       : export images to a remote Flickr web service
+GalleryExport      : export images to a remote Gallery server
+GPSSync            : geolocalize pictures
+HTMLExport         : export images collections into a static XHTML page
+ImageViewer        : preview images using OpenGL
+IpodExport         : export pictures to an Ipod device
+JpegLossLess       : rotate/flip images without losing quality
+KioExportImport    : export/imports pictures to/from accessible via KIO
+MetadataEdit       : edit EXIF, IPTC and XMP metadata
+PicasaWebExport    : export images to a remote Picasa web service
+PrintWizard        : print images in various format
+RemoveRedEyes      : remove red eyes on image automatically
+RawConverter       : convert Raw Image to JPEG/PNG/TIFF
+SendImages         : send images by e-mail
+SimpleViewerExport : export images to Flash using SimpleViewer
+ShwupExport        : export images to a remote Shwup web service
+SmugExport         : export images to a remote SmugMug web service
+TimeAdjust         : adjust date and time
+
+## jpeglossless plugin
+Requires: ImageMagick
+## expoblending
+Requires: hugin-base
+
+%package -n kipi-plugins-libs
+Summary: Runtime libraries for kipi-plugins
+License: GPLv2+ and Adobe
+Group:   System Environment/Libraries
+Obsoletes: kipi-plugins-libs < 2.0.0
+Requires: kipi-plugins = %{version}-%{release}
+%{?_kde4_version:Requires: kdelibs4%{?_isa} >= %{_kde4_version}}
+%{?_qt4_version:Requires: qt4%{?_isa} >= %{_qt4_version}}
+%description -n kipi-plugins-libs
+%{summary}.
+
 
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
-%patch50 -p1 -b .marble_plugin_rpath
-%patch52 -p1 -b .libjpeg_version
+%patch51 -p0 -b .s390
 
+rm -rf cmake
+rm -rf extra/libksane
+rm -rf extra/libkipi
+rm -rf extra/libkexiv2
+rm -rf extra/libkdcraw
+
+sed -i "/libksane/d" extra/CMakeLists.txt
+sed -i "/libkipi/d" extra/CMakeLists.txt
+sed -i "/libkexiv2/d" extra/CMakeLists.txt
+sed -i "/libkdcraw/d" extra/CMakeLists.txt
 
 %build
 
@@ -111,11 +185,25 @@ desktop-file-install --vendor="" \
   %{SOURCE1}
 
 %find_lang digikam --with-kde
+%find_lang showfoto --with-kde
+%find_lang kipi-plugins --with-kde
+cat showfoto.lang >> digikam.lang
 
+## unpackaged files
+rm -f %{buildroot}%{_kde4_libdir}/libdigikamcore.so
+rm -f %{buildroot}%{_kde4_libdir}/libdigikamdatabase.so
+rm -f %{buildroot}%{_kde4_libdir}/libkipiplugins.so
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/kde4/digikam.desktop
 desktop-file-validate %{buildroot}%{_datadir}/applications/kde4/showfoto.desktop
+
+desktop-file-validate %{buildroot}%{_kde4_datadir}/applications/kde4/dngconverter.desktop
+desktop-file-validate %{buildroot}%{_kde4_datadir}/applications/kde4/kipiplugins.desktop
+desktop-file-validate %{buildroot}%{_kde4_datadir}/applications/kde4/expoblending.desktop
+%ifnarch s390 s390x
+desktop-file-validate %{buildroot}%{_kde4_datadir}/applications/kde4/scangui.desktop
+%endif
 
 
 %post
@@ -137,6 +225,27 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 
 %postun libs -p /sbin/ldconfig
 
+%post -n kipi-plugins
+touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null  ||:
+touch --no-create %{_kde4_iconsdir}/oxygen &> /dev/null ||:
+
+%postun -n kipi-plugins
+if [ $1 -eq 0 ] ; then
+  update-desktop-database -q &> /dev/null
+  touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null ||:
+  touch --no-create %{_kde4_iconsdir}/oxygen  &> /dev/null ||:
+  gtk-update-icon-cache %{_kde4_iconsdir}/hicolor >& /dev/null ||:
+  gtk-update-icon-cache %{_kde4_iconsdir}/oxygen >& /dev/null ||:
+fi
+
+%posttrans -n kipi-plugins
+update-desktop-database -q &> /dev/null
+gtk-update-icon-cache %{_kde4_iconsdir}/hicolor >& /dev/null ||:
+gtk-update-icon-cache %{_kde4_iconsdir}/oxygen >& /dev/null ||:
+
+%post -n kipi-plugins-libs -p /sbin/ldconfig
+
+%postun -n kipi-plugins-libs -p /sbin/ldconfig
 
 %clean
 rm -rf %{buildroot}
@@ -144,34 +253,121 @@ rm -rf %{buildroot}
 
 %files -f digikam.lang
 %defattr(-,root,root,-)
-%doc AUTHORS ChangeLog COPYING HACKING NEWS README TODO
-%{_kde4_bindir}/*
-%{_kde4_libdir}/kde4/*.so
+%doc core/AUTHORS core/ChangeLog core/COPYING core/NEWS core/README core/TODO core/README.FACE core/TODO.FACE core/TODO.MYSQLPORT
+%{_kde4_bindir}/digikam
+%{_kde4_bindir}/digitaglinktree
+%{_kde4_bindir}/cleanup_digikamdb
+%{_kde4_bindir}/libkmap_demo
+%{_kde4_bindir}/showfoto
+%{_kde4_libdir}/kde4/digikam*.so
+%{_kde4_libdir}/kde4/kio_digikam*.so
 %{_kde4_appsdir}/digikam/
 %{_kde4_appsdir}/showfoto/
-%{_kde4_appsdir}/solid/actions/*.desktop
-%{_kde4_datadir}/applications/kde4/*.desktop
-%{_kde4_datadir}/kde4/services/*.desktop
-%{_kde4_datadir}/kde4/services/*.protocol
-%{_kde4_datadir}/kde4/servicetypes/*.desktop
-%{_mandir}/man1/*
-%{_kde4_iconsdir}/hicolor/*/*/*
-%{_kde4_libexecdir}/*
+%{_kde4_appsdir}/libkface/
+%{_kde4_appsdir}/libkmap/
+%{_kde4_appsdir}/solid/actions/digikam*.desktop
+%{_kde4_datadir}/applications/kde4/digikam-import.desktop
+%{_kde4_datadir}/applications/kde4/digikam.desktop
+%{_kde4_datadir}/applications/kde4/showfoto.desktop
+%{_kde4_datadir}/kde4/services/digikam*.desktop
+%{_kde4_datadir}/kde4/services/digikam*.protocol
+%{_kde4_datadir}/kde4/servicetypes/digikam*.desktop
+%{_mandir}/man1/digitaglinktree.1*
+%{_mandir}/man1/cleanup_digikamdb.1*
+%{_kde4_iconsdir}/hicolor/*/apps/digikam*
+%{_kde4_iconsdir}/hicolor/*/apps/showfoto*
+%{_kde4_libexecdir}/digikamdatabaseserver
 
 %files libs
 %defattr(-,root,root,-)
-%{_kde4_libdir}/libdigikamcore.so.1*
-%{_kde4_libdir}/libdigikamdatabase.so.1*
-%{_kde4_libdir}/kde4/plugins/marble/ExternalDraw.so
+%{_kde4_libdir}/libdigikamcore.so.2*
+%{_kde4_libdir}/libdigikamdatabase.so.2*
+%{_kde4_libdir}/libkface.so.1*
+%{_kde4_libdir}/libkmap.so.1*
+%{_kde4_libdir}/libmediawiki.so.1*
 
 %files devel
 %defattr(-,root,root,-)
-%{_kde4_includedir}/digikam/
-%{_kde4_includedir}/digikam_export.h
-%{_kde4_libdir}/lib*.so
+%{_kde4_includedir}/libkface/
+%{_kde4_includedir}/libkmap/
+%{_kde4_includedir}/libmediawiki/
+%{_kde4_libdir}/libkface.so
+%{_kde4_libdir}/libkmap.so
+%{_kde4_libdir}/libmediawiki.so
+%{_kde4_appsdir}/cmake/modules/FindKface.cmake
+%{_kde4_appsdir}/cmake/modules/FindKmap.cmake
+%{_kde4_appsdir}/cmake/modules/FindMediawiki.cmake
+%{_libdir}/pkgconfig/libkface.pc
+%{_libdir}/pkgconfig/libkmap.pc
+%{_libdir}/pkgconfig/libmediawiki.pc
+
+%files -n kipi-plugins -f kipi-plugins.lang
+%defattr(-,root,root,-)
+%doc extra/kipi-plugins/AUTHORS extra/kipi-plugins/COPYING extra/kipi-plugins/COPYING-ADOBE extra/kipi-plugins/ChangeLog extra/kipi-plugins/README extra/kipi-plugins/TODO extra/kipi-plugins/NEWS
+%{_kde4_bindir}/dngconverter
+%{_kde4_bindir}/dnginfo
+%{_kde4_bindir}/expoblending
+%{_kde4_bindir}/scangui
+%{_kde4_libdir}/kde4/kipiplugin_acquireimages.so
+%{_kde4_libdir}/kde4/kipiplugin_advancedslideshow.so
+%{_kde4_libdir}/kde4/kipiplugin_batchprocessimages.so
+%{_kde4_libdir}/kde4/kipiplugin_calendar.so
+%{_kde4_libdir}/kde4/kipiplugin_debianscreenshots.so
+%{_kde4_libdir}/kde4/kipiplugin_dngconverter.so
+%{_kde4_libdir}/kde4/kipiplugin_facebook.so
+%{_kde4_libdir}/kde4/kipiplugin_flickrexport.so
+%{_kde4_libdir}/kde4/kipiplugin_flashexport.so
+%{_kde4_libdir}/kde4/kipiplugin_galleryexport.so
+%{_kde4_libdir}/kde4/kipiplugin_gpssync.so
+%{_kde4_libdir}/kde4/kipiplugin_htmlexport.so
+%{_kde4_libdir}/kde4/kipiplugin_imageviewer.so
+%{_kde4_libdir}/kde4/kipiplugin_ipodexport.so
+%{_kde4_libdir}/kde4/kipiplugin_jpeglossless.so
+%{_kde4_libdir}/kde4/kipiplugin_kioexportimport.so
+%{_kde4_libdir}/kde4/kipiplugin_kmlexport.so
+%{_kde4_libdir}/kde4/kipiplugin_kopete.so
+%{_kde4_libdir}/kde4/kipiplugin_metadataedit.so
+%{_kde4_libdir}/kde4/kipiplugin_picasawebexport.so
+%{_kde4_libdir}/kde4/kipiplugin_piwigoexport.so
+%{_kde4_libdir}/kde4/kipiplugin_printimages.so
+%{_kde4_libdir}/kde4/kipiplugin_rajceexport.so
+%{_kde4_libdir}/kde4/kipiplugin_rawconverter.so
+%{_kde4_libdir}/kde4/kipiplugin_sendimages.so
+%{_kde4_libdir}/kde4/kipiplugin_shwup.so
+%{_kde4_libdir}/kde4/kipiplugin_smug.so
+%{_kde4_libdir}/kde4/kipiplugin_timeadjust.so
+%{_kde4_libdir}/kde4/kipiplugin_yandexfotki.so
+%{_kde4_appsdir}/gpssync/
+%{_kde4_appsdir}/kipiplugin_flashexport/
+%{_kde4_appsdir}/kipiplugin_galleryexport/
+%{_kde4_appsdir}/kipiplugin_htmlexport/
+%{_kde4_appsdir}/kipiplugin_imageviewer/
+%{_kde4_appsdir}/kipiplugin_piwigoexport/
+%{_kde4_appsdir}/kipiplugin_printimages/
+%{_kde4_datadir}/applications/kde4/dngconverter.desktop
+%{_kde4_datadir}/applications/kde4/kipiplugins.desktop
+%{_kde4_datadir}/applications/kde4/expoblending.desktop
+%{_kde4_datadir}/applications/kde4/scangui.desktop
+%{_kde4_datadir}/kde4/services/kipiplugin*.desktop
+%{_kde4_iconsdir}/hicolor/*/actions/*
+%{_kde4_iconsdir}/oxygen/*/apps/dngconverter*
+%{_kde4_iconsdir}/oxygen/*/apps/rawconverter*
+%{_kde4_bindir}/expoblending
+%{_kde4_libdir}/kde4/kipiplugin_expoblending.so
+%{_kde4_appsdir}/kipiplugin_expoblending/
+%{_kde4_libdir}/kde4/kipiplugin_removeredeyes.so
+%{_kde4_appsdir}/kipiplugin_removeredeyes/
+
+%files -n kipi-plugins-libs
+%defattr(-,root,root,-)
+%{_kde4_libdir}/libkipiplugins.so.2*
 
 
 %changelog
+* Thu Jun 30 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.0.0-0.1.rc
+- digikam-2.0.0-rc
+- merge with kipi-plugins.spec
+
 * Wed Jun 15 2011 Rex Dieter <rdieter@fedoraproject.org> 1.9.0-2
 - rebuild (marble)
 

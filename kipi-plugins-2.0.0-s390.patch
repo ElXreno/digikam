@@ -1,0 +1,12 @@
+--- extra/kipi-plugins/dngconverter/dngwriter/extra/dng_sdk/dng_flags.h	2010-11-22 11:24:52.000000000 -0600
++++ extra/kipi-plugins/dngconverter/dngwriter/extra/dng_sdk/dng_flags.h	2010-11-23 10:33:53.593920682 -0600
+@@ -73,6 +73,9 @@
+ #elif defined(__POWERPC__)
+ #define qDNGBigEndian 1
+ 
++#elif defined(__s390__)
++#define qDNGBigEndian 1
++
+ #elif defined(__sparc__)
+ #define qDNGBigEndian 1
+ 
