@@ -192,16 +192,11 @@ rm -f %{buildroot}%{_kde4_libdir}/libdigikamcore.so
 rm -f %{buildroot}%{_kde4_libdir}/libdigikamdatabase.so
 rm -f %{buildroot}%{_kde4_libdir}/libkipiplugins.so
 
-%check
-desktop-file-validate %{buildroot}%{_datadir}/applications/kde4/digikam.desktop
-desktop-file-validate %{buildroot}%{_datadir}/applications/kde4/showfoto.desktop
 
-desktop-file-validate %{buildroot}%{_kde4_datadir}/applications/kde4/dngconverter.desktop
-desktop-file-validate %{buildroot}%{_kde4_datadir}/applications/kde4/kipiplugins.desktop
-desktop-file-validate %{buildroot}%{_kde4_datadir}/applications/kde4/expoblending.desktop
-%ifnarch s390 s390x
-desktop-file-validate %{buildroot}%{_kde4_datadir}/applications/kde4/scangui.desktop
-%endif
+%check
+for i in %{buildroot}%{_kde4_datadir}/applications/kde4/*.desktop ; do
+desktop-file-validate $i
+done
 
 
 %post
