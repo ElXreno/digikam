@@ -37,7 +37,7 @@ BuildRequires: lensfun-devel
 BuildRequires: liblqr-1-devel
 BuildRequires: libtiff-devel
 BuildRequires: libpng-devel >= 1.2.7
-BuildRequires: pkgconfig(libkcdraw)
+BuildRequires: pkgconfig(libkdcraw)
 BuildRequires: pkgconfig(libkexiv2)
 BuildRequires: pkgconfig(libkipi)
 BuildRequires: mysql-devel mysql-server
