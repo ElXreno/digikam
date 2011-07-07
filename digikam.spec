@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 2.0.0
-Release: 0.1.%{?pre}%{?dist}
+Release: 0.2.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -34,12 +34,12 @@ BuildRequires: kdelibs4-devel
 BuildRequires: kdepimlibs-devel
 BuildRequires: lcms-devel
 BuildRequires: lensfun-devel
-BuildRequires: libkdcraw-devel >= 1.1.0
-BuildRequires: libkexiv2-devel >= 1.1.0
-BuildRequires: libkipi-devel >= 0.3.0
 BuildRequires: liblqr-1-devel
 BuildRequires: libtiff-devel
 BuildRequires: libpng-devel >= 1.2.7
+BuildRequires: pkgconfig(libkcdraw)
+BuildRequires: pkgconfig(libkexiv2)
+BuildRequires: pkgconfig(libkipi)
 BuildRequires: mysql-devel mysql-server
 BuildRequires: soprano-devel
 BuildRequires: sqlite-devel
@@ -52,7 +52,7 @@ BuildRequires: exiv2-devel
 BuildRequires: expat-devel
 BuildRequires: libgpod-devel >= 0.7.0
 # until when/if libksane-devel grows a depn on sane-backends-devel
-BuildRequires: libksane-devel >= 0.3.0
+BuildRequires: pkgconfig(libksane) 
 BuildRequires: sane-backends-devel
 ## htmlexport plugin
 BuildRequires: libxslt-devel
@@ -85,7 +85,8 @@ Summary: Runtime libraries for %{name}
 Group:   System Environment/Libraries
 Requires: %{name} = %{version}-%{release}
 Requires: kdeedu-marble-libs%{?_isa}%{?_kde4_version: >= %{_kde4_version}} 
-Requires: kdegraphics-libs%{?_isa}%{?_kde4_version: >= %{_kde4_version}}
+# grow versioned deps on libkipi (and friends instead?) -- rex
+#Requires: kdegraphics-libs%{?_isa}%{?_kde4_version: >= %{_kde4_version}}
 %description libs
 %{summary}.
 
@@ -357,6 +358,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Jul 07 2011 Rex Dieter <rdieter@fedoraproject.org> 2.0.0-0.2.rc
+- use pkgconfig()-style deps for libkdcraw, libkexiv2, libkipi, libksane
+- -libs: drop (versioned) dep on kdegraphics-libs
+
 * Thu Jun 30 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.0.0-0.1.rc
 - digikam-2.0.0-rc
 - merge with kipi-plugins.spec
