@@ -1,8 +1,8 @@
-%define pre rc
+#define pre rc
 
 Name:	 digikam
 Version: 2.0.0
-Release: 0.2.%{?pre}%{?dist}
+Release: 1%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 Group:	 Applications/Multimedia
@@ -18,8 +18,6 @@ Source1: digikam-import.desktop
 ## upstreamable patches
 
 ## upstream patches
-# mark s390(x) as big endian machine
-Patch51: kipi-plugins-2.0.0-s390.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
@@ -150,18 +148,12 @@ Requires: kipi-plugins = %{version}-%{release}
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
-%patch51 -p0 -b .s390
-
 # nuke bundled code
 rm -rf cmake
 rm -rf extra/libksane
 rm -rf extra/libkipi
 rm -rf extra/libkexiv2
 rm -rf extra/libkdcraw
-sed -i "/libksane/d" extra/CMakeLists.txt
-sed -i "/libkipi/d" extra/CMakeLists.txt
-sed -i "/libkexiv2/d" extra/CMakeLists.txt
-sed -i "/libkdcraw/d" extra/CMakeLists.txt
 
 
 %build
@@ -185,8 +177,48 @@ desktop-file-install --vendor="" \
 
 %find_lang digikam --with-kde
 %find_lang showfoto --with-kde
-%find_lang kipi-plugins --with-kde
 cat showfoto.lang >> digikam.lang
+
+%find_lang kipi-plugins --with-kde
+%find_lang kipiplugin_acquireimages
+%find_lang kipiplugin_advancedslideshow
+%find_lang kipiplugin_batchprocessimages
+%find_lang kipiplugin_calendar
+%find_lang kipiplugin_dngconverter
+%find_lang kipiplugin_expoblending
+%find_lang kipiplugin_facebook
+%find_lang kipiplugin_flashexport
+%find_lang kipiplugin_flickrexport
+%find_lang kipiplugin_galleryexport
+%find_lang kipiplugin_gpssync
+%find_lang kipiplugin_htmlexport
+%find_lang kipiplugin_imageviewer
+%find_lang kipiplugin_ipodexport
+%find_lang kipiplugin_jpeglossless
+%find_lang kipiplugin_kioexportimport
+%find_lang kipiplugin_metadataedit
+%find_lang kipiplugin_picasawebexport
+%find_lang kipiplugin_piwigoexport
+%find_lang kipiplugin_printimages
+%find_lang kipiplugin_rawconverter
+%find_lang kipiplugin_removeredeyes
+%find_lang kipiplugin_sendimages
+%find_lang kipiplugin_shwup
+%find_lang kipiplugin_timeadjust
+%find_lang kipiplugin_wallpaper
+cat kipiplugin_acquireimages.lang kipiplugin_advancedslideshow.lang \
+kipiplugin_batchprocessimages.lang kipiplugin_calendar.lang \
+kipiplugin_dngconverter.lang kipiplugin_expoblending.lang \
+kipiplugin_facebook.lang kipiplugin_flashexport.lang \
+kipiplugin_flickrexport.lang kipiplugin_galleryexport.lang \
+kipiplugin_gpssync.lang kipiplugin_htmlexport.lang \
+kipiplugin_imageviewer.lang kipiplugin_ipodexport.lang \
+kipiplugin_jpeglossless.lang kipiplugin_kioexportimport.lang \
+kipiplugin_metadataedit.lang kipiplugin_picasawebexport.lang \
+kipiplugin_piwigoexport.lang kipiplugin_printimages.lang \
+kipiplugin_rawconverter.lang kipiplugin_removeredeyes.lang \
+kipiplugin_sendimages.lang kipiplugin_shwup.lang \
+kipiplugin_timeadjust.lang kipiplugin_wallpaper.lang >> kipi-plugins.lang
 
 ## unpackaged files
 rm -f %{buildroot}%{_kde4_libdir}/libdigikamcore.so
@@ -251,14 +283,14 @@ rm -rf %{buildroot}
 %{_kde4_bindir}/digikam
 %{_kde4_bindir}/digitaglinktree
 %{_kde4_bindir}/cleanup_digikamdb
-%{_kde4_bindir}/libkmap_demo
+%{_kde4_bindir}/libkgeomap_demo
 %{_kde4_bindir}/showfoto
 %{_kde4_libdir}/kde4/digikam*.so
 %{_kde4_libdir}/kde4/kio_digikam*.so
 %{_kde4_appsdir}/digikam/
 %{_kde4_appsdir}/showfoto/
 %{_kde4_appsdir}/libkface/
-%{_kde4_appsdir}/libkmap/
+%{_kde4_appsdir}/libkgeomap/
 %{_kde4_appsdir}/solid/actions/digikam*.desktop
 %{_kde4_datadir}/applications/kde4/digikam-import.desktop
 %{_kde4_datadir}/applications/kde4/digikam.desktop
@@ -277,22 +309,22 @@ rm -rf %{buildroot}
 %{_kde4_libdir}/libdigikamcore.so.2*
 %{_kde4_libdir}/libdigikamdatabase.so.2*
 %{_kde4_libdir}/libkface.so.1*
-%{_kde4_libdir}/libkmap.so.1*
+%{_kde4_libdir}/libkgeomap.so.1*
 %{_kde4_libdir}/libmediawiki.so.1*
 
 %files devel
 %defattr(-,root,root,-)
 %{_kde4_includedir}/libkface/
-%{_kde4_includedir}/libkmap/
+%{_kde4_includedir}/libkgeomap/
 %{_kde4_includedir}/libmediawiki/
 %{_kde4_libdir}/libkface.so
-%{_kde4_libdir}/libkmap.so
+%{_kde4_libdir}/libkgeomap.so
 %{_kde4_libdir}/libmediawiki.so
 %{_kde4_appsdir}/cmake/modules/FindKface.cmake
-%{_kde4_appsdir}/cmake/modules/FindKmap.cmake
+%{_kde4_appsdir}/cmake/modules/FindKGeoMap.cmake
 %{_kde4_appsdir}/cmake/modules/FindMediawiki.cmake
 %{_libdir}/pkgconfig/libkface.pc
-%{_libdir}/pkgconfig/libkmap.pc
+%{_libdir}/pkgconfig/libkgeomap.pc
 %{_libdir}/pkgconfig/libmediawiki.pc
 
 %files -n kipi-plugins -f kipi-plugins.lang
@@ -358,6 +390,11 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Jul 29 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.0.0-1
+- digikam-2.0.0
+- drop s390 patch included upstream
+- bundled code not used by default (DIGIKAMSC_USE_PRIVATE_KDEGRAPHICS not defined)
+
 * Thu Jul 07 2011 Rex Dieter <rdieter@fedoraproject.org> 2.0.0-0.2.rc
 - use pkgconfig()-style deps for libkdcraw, libkexiv2, libkipi, libksane
 - -libs: drop (versioned) dep on kdegraphics-libs
