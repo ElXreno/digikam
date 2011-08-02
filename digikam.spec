@@ -1,11 +1,9 @@
-#define pre rc
 
 Name:	 digikam
 Version: 2.0.0
-Release: 1%{?pre}%{?dist}
+Release: 2%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
-Group:	 Applications/Multimedia
 License: GPLv2+
 URL:	 http://www.digikam.org/
 Source0: http://downloads.sourceforge.net/digikam/digikam-%{version}%{?pre:-%{pre}}.tar.bz2
@@ -27,7 +25,7 @@ BuildRequires: gphoto2-devel
 BuildRequires: jasper-devel
 # marble integration, http://bugzilla.redhat.com/470578
 %define marble_version 4.6.80
-BuildRequires: kdeedu-devel >= %{marble_version}
+BuildRequires: marble-devel >= %{marble_version}
 BuildRequires: kdelibs4-devel
 BuildRequires: kdepimlibs-devel
 BuildRequires: lcms-devel
@@ -63,6 +61,9 @@ BuildRequires: qca2-devel
 ## debianscreenshorts
 BuildRequires: qjson-devel
 
+# when lib(-devel) subpkgs were split
+Obsoletes: digikam-devel < 2.0.0-2
+
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kdebase-runtime%{?_kde4_version: >= %{_kde4_version}}
 
@@ -80,9 +81,7 @@ to use them.
 
 %package libs
 Summary: Runtime libraries for %{name}
-Group:   System Environment/Libraries
 Requires: %{name} = %{version}-%{release}
-Requires: kdeedu-marble-libs%{?_isa}%{?_kde4_version: >= %{_kde4_version}} 
 # grow versioned deps on libkipi (and friends instead?) -- rex
 #Requires: kdegraphics-libs%{?_isa}%{?_kde4_version: >= %{_kde4_version}}
 %description libs
@@ -90,17 +89,52 @@ Requires: kdeedu-marble-libs%{?_isa}%{?_kde4_version: >= %{_kde4_version}}
 
 %package devel
 Summary: Development files for %{name}
-Group:	 Development/Libraries
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kdelibs4-devel
 %description devel
 This package contains the libraries, include files and other resources
 needed to develop applications using %{name}.
 
+%package -n libkface
+Summary: A C++ wrapper around LibFace library to perform face recognition over pictures.  
+# when libs were split 
+Conflicts: digikam-libs < 2.0.0-2
+%description -n libkface 
+%{summary}.
+
+%package -n libkface-devel
+Summary: Development files for libkface 
+%description -n libkface-devel
+%{summary}.
+
+%package -n libkgeomap
+Summary: A world map library
+# when libs were split 
+Conflicts: digikam-libs < 2.0.0-2
+Requires: marble%{?_kde4_version: >= %{_kde4_version}}
+%description -n libkgeomap
+%{summary}.
+
+%package -n libkgeomap-devel
+Summary: Development files for libkgeomap
+%description -n libkgeomap-devel
+%{summary}.
+
+%package -n libmediawiki
+Summary: a MediaWiki C++ interface
+# when libs were split 
+Conflicts: digikam-libs < 2.0.0-2
+%description -n libmediawiki
+%{summary}.
+
+%package -n libmediawiki-devel
+Summary: Development files for libmediawiki
+%description -n libmediawiki-devel
+%{summary}.
+
 %package -n kipi-plugins
 Summary: Plugins to use with Kipi
 License: GPLv2+ and Adobe
-Group:   Applications/Multimedia
 Requires: kipi-plugins-libs%{?_isa} = %{version}-%{release}
 ## jpeglossless plugin
 Requires: ImageMagick
@@ -137,7 +171,6 @@ TimeAdjust         : adjust date and time
 %package -n kipi-plugins-libs
 Summary: Runtime libraries for kipi-plugins
 License: GPLv2+ and Adobe
-Group:   System Environment/Libraries
 Requires: kipi-plugins = %{version}-%{release}
 %{?_kde4_version:Requires: kdelibs4%{?_isa} >= %{_kde4_version}}
 %{?_qt4_version:Requires: qt4%{?_isa} >= %{_qt4_version}}
@@ -147,13 +180,6 @@ Requires: kipi-plugins = %{version}-%{release}
 
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
-
-# nuke bundled code
-rm -rf cmake
-rm -rf extra/libksane
-rm -rf extra/libkipi
-rm -rf extra/libkexiv2
-rm -rf extra/libkdcraw
 
 
 %build
@@ -233,64 +259,29 @@ done
 
 
 %post
-touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
+touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null || :
 
 %postun
 if [ $1 -eq 0 ] ; then
+  touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null
+  gtk-update-icon-cache %{_kde4_iconsdir}/hicolor &> /dev/null || :
   update-desktop-database -q &> /dev/null
-  touch --no-create %{_datadir}/icons/hicolor &> /dev/null
-  gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 fi
 
 %posttrans
+gtk-update-icon-cache %{_kde4_iconsdir}/hicolor &> /dev/null || :
 update-desktop-database -q &> /dev/null
-gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
-
-
-%post libs -p /sbin/ldconfig
-
-%postun libs -p /sbin/ldconfig
-
-%post -n kipi-plugins
-touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null  ||:
-touch --no-create %{_kde4_iconsdir}/oxygen &> /dev/null ||:
-
-%postun -n kipi-plugins
-if [ $1 -eq 0 ] ; then
-  update-desktop-database -q &> /dev/null
-  touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null ||:
-  touch --no-create %{_kde4_iconsdir}/oxygen  &> /dev/null ||:
-  gtk-update-icon-cache %{_kde4_iconsdir}/hicolor >& /dev/null ||:
-  gtk-update-icon-cache %{_kde4_iconsdir}/oxygen >& /dev/null ||:
-fi
-
-%posttrans -n kipi-plugins
-update-desktop-database -q &> /dev/null
-gtk-update-icon-cache %{_kde4_iconsdir}/hicolor >& /dev/null ||:
-gtk-update-icon-cache %{_kde4_iconsdir}/oxygen >& /dev/null ||:
-
-%post -n kipi-plugins-libs -p /sbin/ldconfig
-
-%postun -n kipi-plugins-libs -p /sbin/ldconfig
-
-%clean
-rm -rf %{buildroot}
-
 
 %files -f digikam.lang
-%defattr(-,root,root,-)
 %doc core/AUTHORS core/ChangeLog core/COPYING core/NEWS core/README core/TODO core/README.FACE core/TODO.FACE core/TODO.MYSQLPORT
 %{_kde4_bindir}/digikam
 %{_kde4_bindir}/digitaglinktree
 %{_kde4_bindir}/cleanup_digikamdb
-%{_kde4_bindir}/libkgeomap_demo
 %{_kde4_bindir}/showfoto
 %{_kde4_libdir}/kde4/digikam*.so
 %{_kde4_libdir}/kde4/kio_digikam*.so
 %{_kde4_appsdir}/digikam/
 %{_kde4_appsdir}/showfoto/
-%{_kde4_appsdir}/libkface/
-%{_kde4_appsdir}/libkgeomap/
 %{_kde4_appsdir}/solid/actions/digikam*.desktop
 %{_kde4_datadir}/applications/kde4/digikam-import.desktop
 %{_kde4_datadir}/applications/kde4/digikam.desktop
@@ -304,31 +295,71 @@ rm -rf %{buildroot}
 %{_kde4_iconsdir}/hicolor/*/apps/showfoto*
 %{_kde4_libexecdir}/digikamdatabaseserver
 
+%post libs -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
+
 %files libs
-%defattr(-,root,root,-)
 %{_kde4_libdir}/libdigikamcore.so.2*
 %{_kde4_libdir}/libdigikamdatabase.so.2*
+
+%post -n libkface -p /sbin/ldconfig
+%postun -n libkface -p /sbin/ldconfig
+
+%files -n libkface
+%{_kde4_appsdir}/libkface/
 %{_kde4_libdir}/libkface.so.1*
+
+%files -n libkface-devel
+%{_kde4_includedir}/libkface/
+%{_kde4_libdir}/libkface.so
+%{_kde4_appsdir}/cmake/modules/FindKface.cmake
+%{_libdir}/pkgconfig/libkface.pc
+
+%post -n libkgeomap -p /sbin/ldconfig
+%postun -n libkgeomap -p /sbin/ldconfig
+
+%files -n libkgeomap
+%{_kde4_bindir}/libkgeomap_demo
+%{_kde4_appsdir}/libkgeomap/
 %{_kde4_libdir}/libkgeomap.so.1*
+
+%files -n libkgeomap-devel
+%{_kde4_includedir}/libkgeomap/
+%{_kde4_libdir}/libkgeomap.so
+%{_kde4_appsdir}/cmake/modules/FindKGeoMap.cmake
+%{_libdir}/pkgconfig/libkgeomap.pc
+
+%post -n libmediawiki -p /sbin/ldconfig
+%postun -n libmediawiki -p /sbin/ldconfig
+
+%files -n libmediawiki
 %{_kde4_libdir}/libmediawiki.so.1*
 
-%files devel
-%defattr(-,root,root,-)
-%{_kde4_includedir}/libkface/
-%{_kde4_includedir}/libkgeomap/
+%files -n libmediawiki-devel
 %{_kde4_includedir}/libmediawiki/
-%{_kde4_libdir}/libkface.so
-%{_kde4_libdir}/libkgeomap.so
 %{_kde4_libdir}/libmediawiki.so
-%{_kde4_appsdir}/cmake/modules/FindKface.cmake
-%{_kde4_appsdir}/cmake/modules/FindKGeoMap.cmake
 %{_kde4_appsdir}/cmake/modules/FindMediawiki.cmake
-%{_libdir}/pkgconfig/libkface.pc
-%{_libdir}/pkgconfig/libkgeomap.pc
 %{_libdir}/pkgconfig/libmediawiki.pc
 
+%post -n kipi-plugins
+touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null  ||:
+touch --no-create %{_kde4_iconsdir}/oxygen &> /dev/null ||:
+
+%postun -n kipi-plugins
+if [ $1 -eq 0 ] ; then
+  touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null ||:
+  touch --no-create %{_kde4_iconsdir}/oxygen  &> /dev/null ||:
+  gtk-update-icon-cache %{_kde4_iconsdir}/hicolor >& /dev/null ||:
+  gtk-update-icon-cache %{_kde4_iconsdir}/oxygen >& /dev/null ||:
+  update-desktop-database -q &> /dev/null
+fi
+
+%posttrans -n kipi-plugins
+gtk-update-icon-cache %{_kde4_iconsdir}/hicolor >& /dev/null ||:
+gtk-update-icon-cache %{_kde4_iconsdir}/oxygen >& /dev/null ||:
+update-desktop-database -q &> /dev/null
+
 %files -n kipi-plugins -f kipi-plugins.lang
-%defattr(-,root,root,-)
 %doc extra/kipi-plugins/AUTHORS extra/kipi-plugins/COPYING extra/kipi-plugins/COPYING-ADOBE extra/kipi-plugins/ChangeLog extra/kipi-plugins/README extra/kipi-plugins/TODO extra/kipi-plugins/NEWS
 %{_kde4_bindir}/dngconverter
 %{_kde4_bindir}/dnginfo
@@ -384,12 +415,18 @@ rm -rf %{buildroot}
 %{_kde4_libdir}/kde4/kipiplugin_removeredeyes.so
 %{_kde4_appsdir}/kipiplugin_removeredeyes/
 
+%post -n kipi-plugins-libs -p /sbin/ldconfig
+%postun -n kipi-plugins-libs -p /sbin/ldconfig
+
 %files -n kipi-plugins-libs
-%defattr(-,root,root,-)
 %{_kde4_libdir}/libkipiplugins.so.2*
 
 
 %changelog
+* Tue Aug 02 2011 Rex Dieter <rdieter@fedoraproject.org> 2.0.0-2
+- new libkface, libkgeomap, libmediawiki subpkgs (#727570)
+- remove rpm cruft (%%clean, %%defattr, Group:, BuildRoot:)
+
 * Fri Jul 29 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.0.0-1
 - digikam-2.0.0
 - drop s390 patch included upstream
