@@ -1,0 +1,93 @@
+commit 2b739c70f008ac2538eb635b7334104167ad0a50
+Author: Marcel Wiesweg <marcel.wiesweg@gmx.de>
+Date:   Sat Aug 6 16:51:41 2011 +0200
+
+    Pass a persistent QImage to QPixmap::fromImage when paint engine is raster.
+    For native engines, a temporary QImage can be provided, but raster will just take
+    and store the QImage, so a memcpy is needed.
+    The paint engine relevant for pixmaps can be detected by opening a painter on a
+    1x1 pixmap and querying the QPaintEngine. For optimization, this is done only once
+    per application lifetime because DImg::convertToPixmap is very time critical.
+    
+    BUG: 278320
+
+--- a/libs/dimg/dimg.cpp
++++ b/libs/dimg/dimg.cpp
+@@ -47,6 +47,8 @@ extern "C"
+ #include <QFile>
+ #include <QFileInfo>
+ #include <QMap>
++#include <QPaintEngine>
++#include <QPainter>
+ #include <QPixmap>
+ #include <QSysInfo>
+ #include <QDebug>
+@@ -55,6 +57,7 @@ extern "C"
+ // KDE includes
+ 
+ #include <kdebug.h>
++#include <kglobal.h>
+ 
+ // LibKDcraw includes
+ 
+@@ -1768,6 +1771,34 @@ QImage DImg::copyQImage(int x, int y, int w, int h) const
+     return img.copyQImage();
+ }
+ 
++class PixmapPaintEngineDetector
++{
++public:
++
++    PixmapPaintEngineDetector()
++        : m_isRaster(detectRasterFromPixmap())
++    {
++    }
++
++    bool isRaster() const
++    {
++        return m_isRaster;
++    }
++
++private:
++
++    static bool detectRasterFromPixmap()
++    {
++        QPixmap pix(1,1);
++        QPainter p(&pix);
++        return p.paintEngine() && p.paintEngine()->type() == QPaintEngine::Raster;
++    }
++
++    const bool m_isRaster;
++};
++
++K_GLOBAL_STATIC(PixmapPaintEngineDetector, pixmapPaintEngineDetector)
++
+ QPixmap DImg::convertToPixmap() const
+ {
+     if (isNull())
+@@ -1796,18 +1827,21 @@ QPixmap DImg::convertToPixmap() const
+             sptr += 4;
+         }
+ 
+-        // NOTE: Qt4 do not provide anymore QImage::setAlphaChannel() because
+         // alpha channel is auto-detected during QImage->QPixmap conversion
+-
+         return QPixmap::fromImage(img);
+     }
+     else
+     {
++        // This is a temporary image operating on the DImg buffer
+         QImage img(bits(), width(), height(), hasAlpha() ? QImage::Format_ARGB32 : QImage::Format_RGB32);
+ 
+-        // NOTE: Qt4 do not provide anymore QImage::setAlphaChannel() because
+-        // alpha channel is auto-detected during QImage->QPixmap conversion
++        // For paint engines which base the QPixmap internally on a QImage, we must use a persistent QImage
++        if (pixmapPaintEngineDetector->isRaster())
++        {
++            img = img.copy();
++        }
+ 
++        // alpha channel is auto-detected during QImage->QPixmap conversion
+         return QPixmap::fromImage(img);
+     }
+ }
