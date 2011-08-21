@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 2.0.0
-Release: 3%{?pre}%{?dist}
+Release: 4%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -428,6 +428,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sun Aug 21 2011 Rex Dieter <rdieter@fedoraproject.org> 2.0.0-4
+- rebuild (opencv)
+
 * Thu Aug 18 2011 Rex Dieter <rdieter@fedoraproject.org> 2.0.0-3
 - digikam crashes with "-graphicssystem raster" (#726971)
 
