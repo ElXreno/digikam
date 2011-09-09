@@ -138,7 +138,7 @@ Summary: Development files for libmediawiki
 Summary: Library implementing VKontakte.ru API
 %description -n libkvkontakte
 KDE C++ library for asynchronous interaction with
-kontakte.ru social network via its open API.
+vkontakte.ru social network via its open API.
 
 %package -n libkvkontakte-devel
 Summary: Development files for libkvkontakte
@@ -360,6 +360,9 @@ update-desktop-database -q &> /dev/null
 %{_kde4_appsdir}/cmake/modules/FindMediawiki.cmake
 %{_libdir}/pkgconfig/libmediawiki.pc
 
+%post -n libkvkontakte -p /sbin/ldconfig
+%postun -n libkvkontakte -p /sbin/ldconfig
+
 %files -n libkvkontakte -f libkvkontakte.lang
 %{_libdir}/libkvkontakte.so.1*
 
@@ -367,9 +370,6 @@ update-desktop-database -q &> /dev/null
 %{_includedir}/libkvkontakte/
 %{_libdir}/libkvkontakte.so
 %{_libdir}/cmake/LibKVkontakte/
-
-%post -n libkvkontakte -p /sbin/ldconfig
-%postun -n libkvkontakte -p /sbin/ldconfig
 
 %post -n kipi-plugins
 touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null  ||:
