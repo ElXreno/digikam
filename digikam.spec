@@ -1,7 +1,7 @@
 
 Name:	 digikam
-Version: 2.0.0
-Release: 4%{?pre}%{?dist}
+Version: 2.1.0
+Release: 1%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -16,7 +16,6 @@ Source1: digikam-import.desktop
 ## upstreamable patches
 
 ## upstream patches
-Patch100: digikam-2.0.0-qt_rasterengine.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
@@ -181,10 +180,6 @@ Requires: kipi-plugins = %{version}-%{release}
 
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
-
-pushd core
-%patch100 -p1 -b .qt_rasterengine
-popd
 
 
 %build
@@ -428,6 +423,10 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Fri Sep  9 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.1.0-1
+- digikam-2.1.0
+- drop qt_rasterengine patch
+
 * Sun Aug 21 2011 Rex Dieter <rdieter@fedoraproject.org> 2.0.0-4
 - rebuild (opencv)
 
