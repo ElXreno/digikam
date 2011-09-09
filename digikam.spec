@@ -231,7 +231,7 @@ cat showfoto.lang >> digikam.lang
 %find_lang kipiplugin_sendimages
 %find_lang kipiplugin_shwup
 %find_lang kipiplugin_timeadjust
-%find_lang kipiplugin_wallpaper
+#find_lang kipiplugin_wallpaper
 cat kipiplugin_acquireimages.lang kipiplugin_advancedslideshow.lang \
 kipiplugin_batchprocessimages.lang kipiplugin_calendar.lang \
 kipiplugin_dngconverter.lang kipiplugin_expoblending.lang \
@@ -244,7 +244,7 @@ kipiplugin_metadataedit.lang kipiplugin_picasawebexport.lang \
 kipiplugin_piwigoexport.lang kipiplugin_printimages.lang \
 kipiplugin_rawconverter.lang kipiplugin_removeredeyes.lang \
 kipiplugin_sendimages.lang kipiplugin_shwup.lang \
-kipiplugin_timeadjust.lang kipiplugin_wallpaper.lang >> kipi-plugins.lang
+kipiplugin_timeadjust.lang >> kipi-plugins.lang
 
 ## unpackaged files
 rm -f %{buildroot}%{_kde4_libdir}/libdigikamcore.so
