@@ -355,7 +355,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_appsdir}/cmake/modules/FindMediawiki.cmake
 %{_libdir}/pkgconfig/libmediawiki.pc
 
-%files -n libkvkontakte -f libkvkontakte
+%files -n libkvkontakte -f libkvkontakte.lang
 %{_kde4_libdir}/libkvkontakte.so.1*
 
 %files -n libkvkontakte-devel
@@ -436,7 +436,6 @@ update-desktop-database -q &> /dev/null
 %{_kde4_iconsdir}/hicolor/*/actions/*
 %{_kde4_iconsdir}/oxygen/*/apps/dngconverter*
 %{_kde4_iconsdir}/oxygen/*/apps/rawconverter*
-%{_kde4_bindir}/expoblending
 %{_kde4_libdir}/kde4/kipiplugin_expoblending.so
 %{_kde4_appsdir}/kipiplugin_expoblending/
 %{_kde4_libdir}/kde4/kipiplugin_removeredeyes.so
