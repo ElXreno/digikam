@@ -132,6 +132,17 @@ Summary: Development files for libmediawiki
 %description -n libmediawiki-devel
 %{summary}.
 
+%package -n libkvkontakte
+Summary: Library implementing VKontakte.ru API
+%description -n libkvkontakte
+KDE C++ library for asynchronous interaction with
+kontakte.ru social network via its open API.
+
+%package -n libkvkontakte-devel
+Summary: Development files for libkvkontakte
+%description -n libkvkontakte-devel
+%{summary}.
+
 %package -n kipi-plugins
 Summary: Plugins to use with Kipi
 License: GPLv2+ and Adobe
@@ -204,6 +215,9 @@ desktop-file-install --vendor="" \
 %find_lang digikam --with-kde
 %find_lang showfoto --with-kde
 cat showfoto.lang >> digikam.lang
+
+%find_lang libkgeomap
+%find_lang libkvkontakte
 
 %find_lang kipi-plugins --with-kde
 %find_lang kipiplugin_acquireimages
@@ -318,7 +332,7 @@ update-desktop-database -q &> /dev/null
 %post -n libkgeomap -p /sbin/ldconfig
 %postun -n libkgeomap -p /sbin/ldconfig
 
-%files -n libkgeomap
+%files -n libkgeomap -f libkgeomap.lang
 %{_kde4_bindir}/libkgeomap_demo
 %{_kde4_appsdir}/libkgeomap/
 %{_kde4_libdir}/libkgeomap.so.1*
@@ -339,6 +353,15 @@ update-desktop-database -q &> /dev/null
 %{_kde4_includedir}/libmediawiki/
 %{_kde4_libdir}/libmediawiki.so
 %{_kde4_appsdir}/cmake/modules/FindMediawiki.cmake
+%{_libdir}/pkgconfig/libmediawiki.pc
+
+%files -n libkvkontakte -f libkvkontakte
+%{_kde4_libdir}/libkvkontakte.so.1*
+
+%files -n libkvkontakte-devel
+%{_kde4_includedir}/libkvkontakte/
+%{_kde4_libdir}/libkvkontakte.so
+%{_kde4_appsdir}/cmake/LibKVkontakte/
 %{_libdir}/pkgconfig/libmediawiki.pc
 
 %post -n kipi-plugins
@@ -364,6 +387,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_bindir}/dngconverter
 %{_kde4_bindir}/dnginfo
 %{_kde4_bindir}/expoblending
+%{_kde4_bindir}/panoramagui
 %{_kde4_bindir}/scangui
 %{_kde4_libdir}/kde4/kipiplugin_acquireimages.so
 %{_kde4_libdir}/kde4/kipiplugin_advancedslideshow.so
@@ -384,6 +408,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_kmlexport.so
 %{_kde4_libdir}/kde4/kipiplugin_kopete.so
 %{_kde4_libdir}/kde4/kipiplugin_metadataedit.so
+%{_kde4_libdir}/kde4/kipiplugin_panorama.so
 %{_kde4_libdir}/kde4/kipiplugin_picasawebexport.so
 %{_kde4_libdir}/kde4/kipiplugin_piwigoexport.so
 %{_kde4_libdir}/kde4/kipiplugin_printimages.so
@@ -393,17 +418,20 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_shwup.so
 %{_kde4_libdir}/kde4/kipiplugin_smug.so
 %{_kde4_libdir}/kde4/kipiplugin_timeadjust.so
+%{_kde4_libdir}/kde4/kipiplugin_vkontakte.so
 %{_kde4_libdir}/kde4/kipiplugin_yandexfotki.so
 %{_kde4_appsdir}/gpssync/
 %{_kde4_appsdir}/kipiplugin_flashexport/
 %{_kde4_appsdir}/kipiplugin_galleryexport/
 %{_kde4_appsdir}/kipiplugin_htmlexport/
 %{_kde4_appsdir}/kipiplugin_imageviewer/
+%{_kde4_appsdir}/kipiplugin_panorama/
 %{_kde4_appsdir}/kipiplugin_piwigoexport/
 %{_kde4_appsdir}/kipiplugin_printimages/
 %{_kde4_datadir}/applications/kde4/dngconverter.desktop
 %{_kde4_datadir}/applications/kde4/kipiplugins.desktop
 %{_kde4_datadir}/applications/kde4/expoblending.desktop
+%{_kde4_datadir}/applications/kde4/panoramagui.desktop
 %{_kde4_datadir}/applications/kde4/scangui.desktop
 %{_kde4_datadir}/kde4/services/kipiplugin*.desktop
 %{_kde4_iconsdir}/hicolor/*/actions/*
@@ -426,6 +454,7 @@ update-desktop-database -q &> /dev/null
 * Fri Sep  9 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.1.0-1
 - digikam-2.1.0
 - drop qt_rasterengine patch
+- add libkvkontakte subpkg
 
 * Sun Aug 21 2011 Rex Dieter <rdieter@fedoraproject.org> 2.0.0-4
 - rebuild (opencv)
