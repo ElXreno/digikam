@@ -17,7 +17,7 @@ Source1: digikam-import.desktop
 
 ## upstream patches
 #https://projects.kde.org/projects/kdereview/libkvkontakte/repository/revisions/bf9ffc8d808676f0ed371fbe190e10e2f85888e0
-Patch100: difikam-2.1.0-libkvkontakte-libdir.patch
+Patch100: digikam-2.1.0-libkvkontakte-libdir.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
