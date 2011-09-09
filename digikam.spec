@@ -362,7 +362,6 @@ update-desktop-database -q &> /dev/null
 %{_kde4_includedir}/libkvkontakte/
 %{_kde4_libdir}/libkvkontakte.so
 %{_kde4_appsdir}/cmake/LibKVkontakte/
-%{_libdir}/pkgconfig/libmediawiki.pc
 
 %post -n kipi-plugins
 touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null  ||:
