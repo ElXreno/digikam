@@ -1,6 +1,6 @@
 
 Name:	 digikam
-Version: 2.1.0
+Version: 2.1.1
 Release: 1%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
@@ -202,7 +202,7 @@ popd
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kde4} ..
+%{cmake_kde4} -DDIGIKAMSC_USE_PRIVATE_KDEGRAPHICS:BOOL=0 ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -457,6 +457,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed Sep 14 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.1.1-1
+- digikam-2.1.1
+
 * Fri Sep  9 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.1.0-1
 - digikam-2.1.0
 - drop qt_rasterengine patch
