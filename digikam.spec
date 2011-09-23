@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 2.1.1
-Release: 1%{?pre}%{?dist}
+Release: 2%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -19,6 +19,7 @@ Source1: digikam-import.desktop
 #https://projects.kde.org/projects/kdereview/libkvkontakte/repository/revisions/bf9ffc8d808676f0ed371fbe190e10e2f85888e0
 Patch100: digikam-2.1.0-libkvkontakte-libdir.patch
 
+BuildRequires: atlas-devel
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
 BuildRequires: gettext
@@ -43,7 +44,8 @@ BuildRequires: soprano-devel
 BuildRequires: sqlite-devel
 ## TODO: new deps
 #--  libpgf library found..................... NO  (optional - internal version used instead)
-#--  libclapack library found................. NO  (optional - internal version used instead)
+# Hey, why did this get imported in that state? This is a blocker and the
+# package should never have been built into Rawhide without that fixed. -- Kevin
 
 BuildRequires: exiv2-devel
 ## DNG converter
@@ -457,6 +459,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Fri Sep 23 2011 Kevin Kofler <Kevin@tigcc.ticalc.org> - 2.1.1-2
+- BuildRequires: atlas-devel (for clapack, instead of the bundled version)
+
 * Wed Sep 14 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.1.1-1
 - digikam-2.1.1
 
