@@ -13,22 +13,22 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # TODO: upstream me
 Source1: digikam-import.desktop
 
-## upstreamable patches
 # fix FindCLAPACK.cmake to search %%{_libdir}/atlas
-# This should be upstreamable, it just adds a possible libdir suffix to search.
-Patch50: digikam-2.1.1-clapack-atlas.patch
+# also patch matrix.cpp for the ATLAS clapack API
+# The latter part is probably not upstreamable as is, and the former on its own
+# isn't helpful.
+Patch0: digikam-2.1.1-clapack-atlas.patch
+
+## upstreamable patches
 
 ## upstream patches
 #https://projects.kde.org/projects/kdereview/libkvkontakte/repository/revisions/bf9ffc8d808676f0ed371fbe190e10e2f85888e0
 Patch100: digikam-2.1.0-libkvkontakte-libdir.patch
 
-# for clapack
+# for clapack, see also the clapack-atlas patch
 BuildRequires: atlas-devel
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
-# for f2c.h (undocumented dependency)
-# f2c.h is included in the bundled clapack, but not in atlas-devel
-BuildRequires: f2c
 BuildRequires: gettext
 BuildRequires: glib2-devel
 BuildRequires: gphoto2-devel
@@ -203,7 +203,7 @@ Requires: kipi-plugins = %{version}-%{release}
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
-%patch50 -p1 -b .clapack-atlas
+%patch0 -p1 -b .clapack-atlas
 
 pushd extra/libkvkontakte
 %patch100 -p1 -b .libkvkontakte-libdir
@@ -471,7 +471,7 @@ update-desktop-database -q &> /dev/null
 * Fri Sep 23 2011 Kevin Kofler <Kevin@tigcc.ticalc.org> - 2.1.1-2
 - BuildRequires: atlas-devel (for clapack, instead of the bundled version)
 - fix FindCLAPACK.cmake to search %%{_libdir}/atlas
-- BuildRequires: f2c for f2c.h
+- patch matrix.cpp for the ATLAS clapack API
 
 * Wed Sep 14 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.1.1-1
 - digikam-2.1.1
