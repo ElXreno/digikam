@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 2.1.1
-Release: 2%{?pre}%{?dist}
+Release: 3%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -30,47 +30,43 @@ BuildRequires: atlas-devel
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
 BuildRequires: gettext
-BuildRequires: glib2-devel
-BuildRequires: gphoto2-devel
-BuildRequires: jasper-devel
 # marble integration, http://bugzilla.redhat.com/470578
-%define marble_version 4.6.80
-BuildRequires: marble-devel >= %{marble_version}
+BuildRequires: marble-devel >= 4.6.80 
 BuildRequires: kdelibs4-devel
 BuildRequires: kdepimlibs-devel
-BuildRequires: lcms-devel
-BuildRequires: lensfun-devel
-BuildRequires: liblqr-1-devel
 BuildRequires: libtiff-devel
-BuildRequires: libpng-devel >= 1.2.7
+BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(jasper)
+BuildRequires: pkgconfig(lcms)
+BuildRequires: pkgconfig(lensfun)
+BuildRequires: pkgconfig(libgphoto2_port)
+BuildRequires: pkgconfig(lqr-1)
+BuildRequires: pkgconfig(libpng) >= 1.2.7
 BuildRequires: pkgconfig(libkdcraw)
 BuildRequires: pkgconfig(libkexiv2)
 BuildRequires: pkgconfig(libkipi)
+BuildRequires: pkgconfig(sqlite3)
 BuildRequires: mysql-devel mysql-server
-BuildRequires: soprano-devel
-BuildRequires: sqlite-devel
 ## TODO: new deps
 #--  libpgf library found..................... NO  (optional - internal version used instead)
 # Hey, why did this get imported in that state? This is a blocker and the
 # package should never have been built into Rawhide without that fixed. -- Kevin
 
-BuildRequires: exiv2-devel
+BuildRequires: pkgconfig(exiv2)
 ## DNG converter
 BuildRequires: expat-devel
-BuildRequires: libgpod-devel >= 0.7.0
+BuildRequires: pkgconfig(libgpod-1.0)
 # until when/if libksane-devel grows a depn on sane-backends-devel
 BuildRequires: pkgconfig(libksane) 
 BuildRequires: sane-backends-devel
 ## htmlexport plugin
-BuildRequires: libxslt-devel
-## DNG converter
-BuildRequires: expat-devel
+BuildRequires: pkgconfig(libxslt)
 ## RemoveRedeye
-BuildRequires: opencv-devel
+BuildRequires: pkgconfig(opencv)
 ## Shwup
-BuildRequires: qca2-devel
+BuildRequires: pkgconfig(qca2)
 ## debianscreenshorts
-BuildRequires: qjson-devel
+BuildRequires: pkgconfig(QJson) 
 
 # when lib(-devel) subpkgs were split
 Obsoletes: digikam-devel < 2.0.0-2
@@ -468,6 +464,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Sep 26 2011 Rex Dieter <rdieter@fedoraproject.org> 2.1.1-3
+- pkgconfig-style deps
+
 * Fri Sep 23 2011 Kevin Kofler <Kevin@tigcc.ticalc.org> - 2.1.1-2
 - BuildRequires: atlas-devel (for clapack, instead of the bundled version)
 - fix FindCLAPACK.cmake to search %%{_libdir}/atlas
