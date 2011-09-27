@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 2.1.1
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -41,17 +41,13 @@ BuildRequires: pkgconfig(lcms)
 BuildRequires: pkgconfig(lensfun)
 BuildRequires: pkgconfig(libgphoto2_port)
 BuildRequires: pkgconfig(lqr-1)
+BuildRequires: pkgconfig(libpgf)
 BuildRequires: pkgconfig(libpng) >= 1.2.7
 BuildRequires: pkgconfig(libkdcraw)
 BuildRequires: pkgconfig(libkexiv2)
 BuildRequires: pkgconfig(libkipi)
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: mysql-devel mysql-server
-## TODO: new deps
-#--  libpgf library found..................... NO  (optional - internal version used instead)
-# Hey, why did this get imported in that state? This is a blocker and the
-# package should never have been built into Rawhide without that fixed. -- Kevin
-
 BuildRequires: pkgconfig(exiv2)
 ## DNG converter
 BuildRequires: expat-devel
@@ -464,6 +460,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Sep 26 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.1.1-4
+- BR: pkgconfig(libpgf)
+
 * Mon Sep 26 2011 Rex Dieter <rdieter@fedoraproject.org> 2.1.1-3
 - pkgconfig-style deps
 
