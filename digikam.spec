@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 2.1.1
-Release: 4%{?dist}
+Release: 5%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -31,7 +31,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: doxygen
 BuildRequires: gettext
 # marble integration, http://bugzilla.redhat.com/470578
-BuildRequires: marble-devel >= 4.6.80 
+BuildRequires: marble-devel >= 1:4.6.80 
 BuildRequires: kdelibs4-devel
 BuildRequires: kdepimlibs-devel
 BuildRequires: libtiff-devel
@@ -114,7 +114,7 @@ Summary: Development files for libkface
 Summary: A world map library
 # when libs were split 
 Conflicts: digikam-libs < 2.0.0-2
-Requires: marble%{?_kde4_version: >= %{_kde4_version}}
+Requires: marble%{?_kde4_version: >= 1:%{_kde4_version}}
 %description -n libkgeomap
 %{summary}.
 
@@ -460,6 +460,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed Sep 28 2011 Rex Dieter <rdieter@fedoraproject.org> 2.1.1-5
+- include marble epoch in deps
+
 * Mon Sep 26 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.1.1-4
 - BR: pkgconfig(libpgf)
 
