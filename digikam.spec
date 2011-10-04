@@ -195,8 +195,6 @@ Requires: kipi-plugins = %{version}-%{release}
 
 %patch0 -p1 -b .clapack-atlas
 
-# do not install static lib libPropertyBrowser.a
-sed -i "/INSTALL/d" extra/kipi-plugins/photolayoutseditor/utils/qtpropertybrowser/CMakeLists.txt
 
 %build
 
@@ -269,6 +267,7 @@ kipiplugin_timeadjust.lang >> kipi-plugins.lang
 rm -f %{buildroot}%{_kde4_libdir}/libdigikamcore.so
 rm -f %{buildroot}%{_kde4_libdir}/libdigikamdatabase.so
 rm -f %{buildroot}%{_kde4_libdir}/libkipiplugins.so
+rm -f %{buildroot}%{_kde4_libdir}/libPropertyBrowser.a
 
 
 %check
