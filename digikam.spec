@@ -195,6 +195,8 @@ Requires: kipi-plugins = %{version}-%{release}
 
 %patch0 -p1 -b .clapack-atlas
 
+# do not install static lib libPropertyBrowser.a
+sed -i "/INSTALL/d" extra/kipi-plugins/photolayoutseditor/utils/qtpropertybrowser/CMakeLists.txt
 
 %build
 
@@ -290,7 +292,9 @@ gtk-update-icon-cache %{_kde4_iconsdir}/hicolor &> /dev/null || :
 update-desktop-database -q &> /dev/null
 
 %files -f digikam.lang
-%doc core/AUTHORS core/ChangeLog core/COPYING core/NEWS core/README core/TODO core/README.FACE core/TODO.FACE core/TODO.MYSQLPORT
+%doc core/AUTHORS core/ChangeLog core/COPYING
+%doc core/NEWS core/README core/TODO
+%doc core/README.FACE core/TODO.FACE core/TODO.MYSQLPORT
 %{_kde4_bindir}/digikam
 %{_kde4_bindir}/digitaglinktree
 %{_kde4_bindir}/cleanup_digikamdb
@@ -388,11 +392,14 @@ gtk-update-icon-cache %{_kde4_iconsdir}/oxygen >& /dev/null ||:
 update-desktop-database -q &> /dev/null
 
 %files -n kipi-plugins -f kipi-plugins.lang
-%doc extra/kipi-plugins/AUTHORS extra/kipi-plugins/COPYING extra/kipi-plugins/COPYING-ADOBE extra/kipi-plugins/ChangeLog extra/kipi-plugins/README extra/kipi-plugins/TODO extra/kipi-plugins/NEWS
+%doc extra/kipi-plugins/AUTHORS extra/kipi-plugins/COPYING
+%doc extra/kipi-plugins/COPYING-ADOBE extra/kipi-plugins/ChangeLog
+%doc extra/kipi-plugins/README extra/kipi-plugins/TODO extra/kipi-plugins/NEWS
 %{_kde4_bindir}/dngconverter
 %{_kde4_bindir}/dnginfo
 %{_kde4_bindir}/expoblending
 %{_kde4_bindir}/panoramagui
+%{_kde4_bindir}/photolayoutseditor
 %{_kde4_bindir}/scangui
 %{_kde4_libdir}/kde4/kipiplugin_acquireimages.so
 %{_kde4_libdir}/kde4/kipiplugin_advancedslideshow.so
@@ -437,15 +444,24 @@ update-desktop-database -q &> /dev/null
 %{_kde4_datadir}/applications/kde4/kipiplugins.desktop
 %{_kde4_datadir}/applications/kde4/expoblending.desktop
 %{_kde4_datadir}/applications/kde4/panoramagui.desktop
+%{_kde4_datadir}/applications/kde4/photolayoutseditor.desktop
 %{_kde4_datadir}/applications/kde4/scangui.desktop
 %{_kde4_datadir}/kde4/services/kipiplugin*.desktop
 %{_kde4_iconsdir}/hicolor/*/actions/*
 %{_kde4_iconsdir}/oxygen/*/apps/dngconverter*
+%{_kde4_iconsdir}/oxygen/*/apps/photolayoutseditor*
 %{_kde4_iconsdir}/oxygen/*/apps/rawconverter*
 %{_kde4_libdir}/kde4/kipiplugin_expoblending.so
 %{_kde4_appsdir}/kipiplugin_expoblending/
 %{_kde4_libdir}/kde4/kipiplugin_removeredeyes.so
 %{_kde4_appsdir}/kipiplugin_removeredeyes/
+%{_kde4_libdir}/kde4/kipiplugin_photolayoutseditor.so
+%{_kde4_appsdir}/photolayoutseditor/
+%{_kde4_libdir}/kde4/photolayoutseditorborderplugin_polaroid.so
+%{_kde4_libdir}/kde4/photolayoutseditorborderplugin_solid.so
+%{_kde4_datadir}/config.kcfg/PLEConfigSkeleton.kcfgc
+%{_kde4_datadir}/kde4/services/photolayoutseditorborderplugin*.desktop
+%{_kde4_datadir}/kde4/servicetypes/photolayoutseditor*.desktop
 
 %post -n kipi-plugins-libs -p /sbin/ldconfig
 %postun -n kipi-plugins-libs -p /sbin/ldconfig
@@ -458,6 +474,7 @@ update-desktop-database -q &> /dev/null
 * Tue Oct  4 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.2.0-1
 - digikam-2.2.0
 - drop libkvkontakte-libdir patch
+- added photolayoutseditor in kipi-plugins
 
 * Wed Sep 28 2011 Rex Dieter <rdieter@fedoraproject.org> 2.1.1-5
 - include marble epoch in deps
