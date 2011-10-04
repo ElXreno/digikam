@@ -1,7 +1,7 @@
 
 Name:	 digikam
-Version: 2.1.1
-Release: 5%{?dist}
+Version: 2.2.0
+Release: 1%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -22,8 +22,6 @@ Patch0: digikam-2.1.1-clapack-atlas.patch
 ## upstreamable patches
 
 ## upstream patches
-#https://projects.kde.org/projects/kdereview/libkvkontakte/repository/revisions/bf9ffc8d808676f0ed371fbe190e10e2f85888e0
-Patch100: digikam-2.1.0-libkvkontakte-libdir.patch
 
 # for clapack, see also the clapack-atlas patch
 BuildRequires: atlas-devel
@@ -197,9 +195,6 @@ Requires: kipi-plugins = %{version}-%{release}
 
 %patch0 -p1 -b .clapack-atlas
 
-pushd extra/libkvkontakte
-%patch100 -p1 -b .libkvkontakte-libdir
-popd
 
 %build
 
@@ -460,6 +455,10 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue Oct  4 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.2.0-1
+- digikam-2.2.0
+- drop libkvkontakte-libdir patch
+
 * Wed Sep 28 2011 Rex Dieter <rdieter@fedoraproject.org> 2.1.1-5
 - include marble epoch in deps
 
