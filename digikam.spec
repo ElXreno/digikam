@@ -220,7 +220,7 @@ desktop-file-install --vendor="" \
 cat showfoto.lang >> digikam.lang
 
 %find_lang libkgeomap
-%find_lang libkvkontakte
+#find_lang libkvkontakte
 
 %find_lang kipi-plugins --with-kde
 %find_lang kipiplugin_acquireimages
@@ -361,7 +361,7 @@ update-desktop-database -q &> /dev/null
 %post -n libkvkontakte -p /sbin/ldconfig
 %postun -n libkvkontakte -p /sbin/ldconfig
 
-%files -n libkvkontakte -f libkvkontakte.lang
+%files -n libkvkontakte
 %{_libdir}/libkvkontakte.so.1*
 
 %files -n libkvkontakte-devel
