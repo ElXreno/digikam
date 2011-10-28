@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 2.2.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -470,6 +470,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Fri Oct 28 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.2.0-2
+- rebuild for libpgf-6.11.42
+
 * Tue Oct  4 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.2.0-1
 - digikam-2.2.0
 - drop libkvkontakte-libdir patch
