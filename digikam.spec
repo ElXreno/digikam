@@ -42,7 +42,7 @@ BuildRequires: pkgconfig(lcms)
 BuildRequires: pkgconfig(lensfun)
 BuildRequires: pkgconfig(libgphoto2_port)
 BuildRequires: pkgconfig(lqr-1)
-BuildRequires: pkgconfig(libpgf)
+BuildRequires: pkgconfig(libpgf) >= 6.11.42
 BuildRequires: pkgconfig(libpng) >= 1.2.7
 BuildRequires: pkgconfig(libkdcraw)
 BuildRequires: pkgconfig(libkexiv2)
