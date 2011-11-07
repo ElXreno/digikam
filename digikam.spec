@@ -1,7 +1,7 @@
 
 Name:	 digikam
-Version: 2.2.0
-Release: 2%{?dist}
+Version: 2.3.0
+Release: 1%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -22,9 +22,6 @@ Patch0: digikam-2.1.1-clapack-atlas.patch
 ## upstreamable patches
 
 ## upstream patches
-# Fix broken compilation due to API changes in libpgf-6.11.42 (kde#285240)
-# http://commits.kde.org/digikam/51a92945ea0725fcca9c27435ee852003c441ad0
-Patch100: digikam-2.2.0-libpgf-api.patch
 
 # for clapack, see also the clapack-atlas patch
 BuildRequires: atlas-devel
@@ -198,9 +195,6 @@ Requires: kipi-plugins = %{version}-%{release}
 
 %patch0 -p1 -b .clapack-atlas
 
-pushd core
-%patch100 -p1 -b .libpgf-api
-popd
 
 %build
 
@@ -476,6 +470,10 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Nov  7 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.3.0-1
+- digikam-2.3.0
+- drop libpgf-api patch
+
 * Sat Oct 29 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.2.0-2
 - rebuild for libpgf-6.11.42
 - bacport fix for changed libpgf API
