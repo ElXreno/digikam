@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 2.3.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -22,6 +22,9 @@ Patch0: digikam-2.1.1-clapack-atlas.patch
 ## upstreamable patches
 
 ## upstream patches
+# https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/beecc2628e0c4ad3a9a44b28a88360b391048c7d
+# fix collision of digiKam icons with Oxygen
+Patch100: digikam-2.3.0-hicolor-icons.patch
 
 # for clapack, see also the clapack-atlas patch
 BuildRequires: atlas-devel
@@ -195,6 +198,10 @@ Requires: kipi-plugins = %{version}-%{release}
 
 %patch0 -p1 -b .clapack-atlas
 
+pushd core
+for i in data/icons/apps/ox*; do mv $i $(echo $i | sed -e 's/ox/hi/g'); done
+%patch100 -p1 -b .hicolor-icons
+popd
 
 %build
 
@@ -277,17 +284,17 @@ done
 
 
 %post
-touch --no-create %{_kde4_iconsdir}/oxygen &> /dev/null || :
+touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null || :
 
 %postun
 if [ $1 -eq 0 ] ; then
-  touch --no-create %{_kde4_iconsdir}/oxygen &> /dev/null
-  gtk-update-icon-cache %{_kde4_iconsdir}/oxygen &> /dev/null || :
+  touch --no-create %{_kde4_iconsdir}/hicolor &> /dev/null
+  gtk-update-icon-cache %{_kde4_iconsdir}/hicolor &> /dev/null || :
   update-desktop-database -q &> /dev/null
 fi
 
 %posttrans
-gtk-update-icon-cache %{_kde4_iconsdir}/oxygen &> /dev/null || :
+gtk-update-icon-cache %{_kde4_iconsdir}/hicolor &> /dev/null || :
 update-desktop-database -q &> /dev/null
 
 %files -f digikam.lang
@@ -311,8 +318,8 @@ update-desktop-database -q &> /dev/null
 %{_kde4_datadir}/kde4/servicetypes/digikam*.desktop
 %{_mandir}/man1/digitaglinktree.1*
 %{_mandir}/man1/cleanup_digikamdb.1*
-%{_kde4_iconsdir}/oxygen/*/apps/digikam*
-%{_kde4_iconsdir}/oxygen/*/apps/showfoto*
+%{_kde4_iconsdir}/hicolor/*/apps/digikam*
+%{_kde4_iconsdir}/hicolor/*/apps/showfoto*
 %{_kde4_libexecdir}/digikamdatabaseserver
 
 %post libs -p /sbin/ldconfig
@@ -467,6 +474,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue Nov  8 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.3.0-2
+- fix collision of digiKam icons with Oxygen
+
 * Mon Nov  7 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.3.0-1
 - digikam-2.3.0
 - drop libpgf-api patch
