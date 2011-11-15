@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 2.3.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -35,6 +35,7 @@ BuildRequires: gettext
 BuildRequires: marble-devel >= 1:4.6.80 
 BuildRequires: kdelibs4-devel
 BuildRequires: kdepimlibs-devel
+BuildRequires: libjpeg-devel
 BuildRequires: libtiff-devel
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(jasper)
@@ -474,6 +475,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue Nov 15 2011 Rex Dieter <rdieter@fedoraproject.org> 2.3.0-3
+- BR: libjpeg-devel
+
 * Tue Nov  8 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.3.0-2
 - fix collision of digiKam icons with Oxygen
 
