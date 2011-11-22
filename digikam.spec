@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 2.3.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -20,6 +20,9 @@ Source1: digikam-import.desktop
 Patch0: digikam-2.1.1-clapack-atlas.patch
 
 ## upstreamable patches
+# Unreadable text on tooltips in KDE 4.7 (kde#283572)
+# http://bugs.kde.org/283572
+Patch50: digikam-2.3.0-tooltips.patch
 
 ## upstream patches
 # https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/beecc2628e0c4ad3a9a44b28a88360b391048c7d
@@ -198,6 +201,7 @@ Requires: kipi-plugins = %{version}-%{release}
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .clapack-atlas
+%patch50 -p1 -b .tooltips
 
 pushd core
 for i in data/icons/apps/ox*; do mv $i $(echo $i | sed -e 's/ox/hi/g'); done
@@ -475,6 +479,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Nov 21 2011 Rex Dieter <rdieter@fedoraproject.org> 2.3.0-4
+- Unreadable text on tooltips in KDE 4.7 (kde#283572)
+
 * Tue Nov 15 2011 Rex Dieter <rdieter@fedoraproject.org> 2.3.0-3
 - BR: libjpeg-devel
 
