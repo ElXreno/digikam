@@ -1,7 +1,7 @@
 
 Name:	 digikam
-Version: 2.3.0
-Release: 4%{?dist}
+Version: 2.4.1
+Release: 1%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -20,14 +20,8 @@ Source1: digikam-import.desktop
 Patch0: digikam-2.1.1-clapack-atlas.patch
 
 ## upstreamable patches
-# Unreadable text on tooltips in KDE 4.7 (kde#283572)
-# http://bugs.kde.org/283572
-Patch50: digikam-2.3.0-tooltips.patch
 
 ## upstream patches
-# https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/beecc2628e0c4ad3a9a44b28a88360b391048c7d
-# fix collision of digiKam icons with Oxygen
-Patch100: digikam-2.3.0-hicolor-icons.patch
 
 # for clapack, see also the clapack-atlas patch
 BuildRequires: atlas-devel
@@ -201,12 +195,6 @@ Requires: kipi-plugins = %{version}-%{release}
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .clapack-atlas
-%patch50 -p1 -b .tooltips
-
-pushd core
-for i in data/icons/apps/ox*; do mv $i $(echo $i | sed -e 's/ox/hi/g'); done
-%patch100 -p1 -b .hicolor-icons
-popd
 
 %build
 
@@ -232,7 +220,6 @@ desktop-file-install --vendor="" \
 cat showfoto.lang >> digikam.lang
 
 %find_lang libkgeomap
-#find_lang libkvkontakte
 
 %find_lang kipi-plugins --with-kde
 %find_lang kipiplugin_acquireimages
@@ -260,7 +247,6 @@ cat showfoto.lang >> digikam.lang
 %find_lang kipiplugin_sendimages
 %find_lang kipiplugin_shwup
 %find_lang kipiplugin_timeadjust
-#find_lang kipiplugin_wallpaper
 cat kipiplugin_acquireimages.lang kipiplugin_advancedslideshow.lang \
 kipiplugin_batchprocessimages.lang kipiplugin_calendar.lang \
 kipiplugin_dngconverter.lang kipiplugin_expoblending.lang \
@@ -479,6 +465,10 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Dec  5 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.4.1-1
+- digikam-2.4.1
+- drop icons and tooltips patches (in upstream now)
+
 * Mon Nov 21 2011 Rex Dieter <rdieter@fedoraproject.org> 2.3.0-4
 - Unreadable text on tooltips in KDE 4.7 (kde#283572)
 
