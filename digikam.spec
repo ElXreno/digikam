@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 2.4.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -20,6 +20,8 @@ Source1: digikam-import.desktop
 Patch0: digikam-2.1.1-clapack-atlas.patch
 
 ## upstreamable patches
+# move dngconverter icons oxygen->hicolor so visible outside of kde
+Patch50: digikam-2.4.1-dngconverter_hicolor_icons.patch
 
 ## upstream patches
 
@@ -195,6 +197,11 @@ Requires: kipi-plugins = %{version}-%{release}
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .clapack-atlas
+
+mv extra/kipi-plugins/dngconverter/icons/oxygen \
+   extra/kipi-plugins/dngconverter/icons/hicolor
+%patch50 -p1 -b .dngconverter_hicolor_icons
+
 
 %build
 
@@ -465,6 +472,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Fri Dec 09 2011 Rex Dieter <rdieter@fedoraproject.org> 2.4.1-2
+- make dngconverter app icons to hicolor so usable outside of kde (#682055)
+
 * Mon Dec  5 2011 Alexey Kurov <nucleo@fedoraproject.org> - 2.4.1-1
 - digikam-2.4.1
 - drop icons and tooltips patches (in upstream now)
