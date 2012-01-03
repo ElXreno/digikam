@@ -50,7 +50,7 @@ index 0f4030a..b8efb35 100644
 +#endif
      QApplication::restoreOverrideCursor();
  }
- 
+ }  // namespace Digikam
 diff --git a/utilities/setup/setupplugins.h b/utilities/setup/setupplugins.h
 index 271a569..114e0fa 100644
 --- a/utilities/setup/setupplugins.h
