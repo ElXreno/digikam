@@ -21,21 +21,20 @@ diff -ur digikam-2.1.1/core/libs/dimg/filters/sharp/matrix.cpp digikam-2.1.1-cla
  #include "clapack.h"
  }
  
-@@ -653,15 +652,13 @@
+@@ -653,14 +653,12 @@
  
- int RefocusMatrix::dgesv (const int N, const int NRHS, double* A, const int lda, double* B, const int ldb)
+ int RefocusMatrix::dgesv(const int N, const int NRHS, double* A, const int lda, double* B, const int ldb)
  {
 -    int result = 0;
 -    integer i_N = N, i_NHRS = NRHS, i_lda = lda, i_ldb = ldb, info;
--    integer* ipiv = new integer[N];
+-    QScopedArrayPointer<integer> ipiv(new integer[N]);
 +    int result;
-+    int* ipiv = new int[N];
++    QScopedArrayPointer<int> ipiv(new int[N]);
  
      // Clapack call.
--    dgesv_ (&i_N, &i_NHRS, A, &i_lda, ipiv, B, &i_ldb, &info);
-+    result = clapack_dgesv (CblasColMajor, N, NRHS, A, lda, ipiv, B, ldb);
+-    dgesv_(&i_N, &i_NHRS, A, &i_lda, ipiv.data(), B, &i_ldb, &info);
++    result = clapack_dgesv (CblasColMajor, N, NRHS, A, lda, ipiv.data(), B, ldb);
  
-     delete [] ipiv;
 -    result = info;
      return (result);
  }
