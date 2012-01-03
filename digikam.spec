@@ -280,6 +280,8 @@ rm -f %{buildroot}%{_kde4_libdir}/libdigikamdatabase.so
 rm -f %{buildroot}%{_kde4_libdir}/libkipiplugins.so
 rm -f %{buildroot}%{_kde4_libdir}/libPropertyBrowser.a
 
+# test tool should not be installed (will be removed in cmake install script later)
+rm %{buildroot}%{_kde4_bindir}/multithread
 
 %check
 for i in %{buildroot}%{_kde4_datadir}/applications/kde4/*.desktop ; do
