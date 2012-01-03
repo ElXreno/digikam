@@ -24,6 +24,8 @@ Patch0: digikam-2.5.0-clapack-atlas.patch
 Patch50: digikam-2.4.1-dngconverter_hicolor_icons.patch
 
 ## upstream patches
+# http://commits.kde.org/digikam/25cc9c9876a5233bd630105d0110319892d4e18c
+Patch100: digikam-2.5.0-libkipi-1.4.0.patch
 
 # for clapack, see also the clapack-atlas patch
 BuildRequires: atlas-devel
@@ -202,6 +204,9 @@ mv extra/kipi-plugins/dngconverter/icons/oxygen \
    extra/kipi-plugins/dngconverter/icons/hicolor
 %patch50 -p1 -b .dngconverter_hicolor_icons
 
+pushd core
+%patch100 -p1 -b .libkipi-1.4.0
+popd
 
 %build
 
