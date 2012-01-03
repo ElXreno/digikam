@@ -233,7 +233,8 @@ cat showfoto.lang >> digikam.lang
 
 %find_lang libkgeomap
 
-%find_lang kipiplugins --with-kde
+%find_lang kipi-plugins --with-kde
+%find_lang kipiplugins
 %find_lang kipiplugin_acquireimages
 %find_lang kipiplugin_advancedslideshow
 %find_lang kipiplugin_batchprocessimages
@@ -272,7 +273,8 @@ kipiplugin_metadataedit.lang kipiplugin_picasawebexport.lang \
 kipiplugin_piwigoexport.lang kipiplugin_printimages.lang \
 kipiplugin_rawconverter.lang kipiplugin_removeredeyes.lang \
 kipiplugin_sendimages.lang kipiplugin_shwup.lang \
-kipiplugin_smug.lang kipiplugin_timeadjust.lang >> kipiplugins.lang
+kipiplugin_smug.lang kipiplugin_timeadjust.lang \
+kipiplugins.lang >> kipi-plugins.lang
 
 ## unpackaged files
 rm -f %{buildroot}%{_kde4_libdir}/libdigikamcore.so
@@ -403,7 +405,7 @@ gtk-update-icon-cache %{_kde4_iconsdir}/hicolor >& /dev/null ||:
 gtk-update-icon-cache %{_kde4_iconsdir}/oxygen >& /dev/null ||:
 update-desktop-database -q &> /dev/null
 
-%files -n kipi-plugins -f kipiplugins.lang
+%files -n kipi-plugins -f kipi-plugins.lang
 %doc extra/kipi-plugins/AUTHORS extra/kipi-plugins/COPYING
 %doc extra/kipi-plugins/COPYING-ADOBE extra/kipi-plugins/ChangeLog
 %doc extra/kipi-plugins/README extra/kipi-plugins/TODO extra/kipi-plugins/NEWS
