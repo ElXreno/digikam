@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 2.5.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -18,6 +18,12 @@ Source1: digikam-import.desktop
 # The latter part is probably not upstreamable as is, and the former on its own
 # isn't helpful.
 Patch0: digikam-2.5.0-clapack-atlas.patch
+
+# fix gcc-4.7.0 build https://bugs.kde.org/show_bug.cgi?id=290642#c3
+Patch1: digikam-2.5.0-gcc-4.7.0.patch
+
+# fix build against boost-1.48 https://bugs.kde.org/show_bug.cgi?id=287772#c22
+Patch2: digikam-2.5.0-boost-1.48.patch
 
 ## upstreamable patches
 # move dngconverter icons oxygen->hicolor so visible outside of kde
@@ -199,6 +205,13 @@ Requires: kipi-plugins = %{version}-%{release}
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .clapack-atlas
+%patch1 -p1 -b .gcc-4.7.0
+
+%if 0%{?fedora} > 16
+pushd core
+%patch2 -p1 -b .boost-1.48
+popd
+%endif
 
 mv extra/kipi-plugins/dngconverter/icons/oxygen \
    extra/kipi-plugins/dngconverter/icons/hicolor
@@ -482,6 +495,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Thu Jan  5 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.5.0-2
+- fix build with gcc-4.7.0 (kde#290642) and boost-1.48 (kde#287772)
+
 * Tue Jan  3 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.5.0-1
 - digikam-2.5.0
 
