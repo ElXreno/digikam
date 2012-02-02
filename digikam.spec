@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 2.5.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -23,8 +23,6 @@ Patch0: digikam-2.5.0-clapack-atlas.patch
 Patch1: digikam-2.5.0-gcc-4.7.0.patch
 
 ## upstreamable patches
-# move dngconverter icons oxygen->hicolor so visible outside of kde
-Patch50: digikam-2.4.1-dngconverter_hicolor_icons.patch
 
 ## upstream patches
 # http://commits.kde.org/digikam/25cc9c9876a5233bd630105d0110319892d4e18c
@@ -33,6 +31,10 @@ Patch100: digikam-2.5.0-libkipi-1.4.0.patch
 # fix build against boost-1.48
 # http://commits.kde.org/digikam/d18ea6da2d3e2359f4113e83c3fd40c18a29ddab
 Patch101: digikam-2.5.0-boost-1.48.patch
+
+# move dngconverter icons oxygen->hicolor so visible outside of kde
+# http://quickgit.kde.org/?p=kipi-plugins.git&a=commit&h=f982ad1cbfdcf70f9a8ffad45011a816637e64ba
+Patch102: digikam-2.4.1-dngconverter_hicolor_icons.patch
 
 # for clapack, see also the clapack-atlas patch
 BuildRequires: atlas-devel
@@ -107,6 +109,15 @@ Requires: kdelibs4-devel
 %description devel
 This package contains the libraries, include files and other resources
 needed to develop applications using %{name}.
+
+%package doc
+Summary: Application handbook, documentation, and translations
+# for upgrade path
+Obsoletes: digikam < 2.5.0-4
+Requires:  digikam = %{version}-%{release}
+BuildArch: noarch
+%description doc
+%{summary}.
 
 %package -n libkface
 Summary: A C++ wrapper around LibFace library to perform face recognition over pictures.  
@@ -201,6 +212,15 @@ Requires: kipi-plugins = %{version}-%{release}
 %description -n kipi-plugins-libs
 %{summary}.
 
+%package -n kipi-plugins-doc
+Summary: Application handbooks, documentation, and translations
+# for upgrade path
+Obsoletes: kipi-plugins < 2.5.0-4
+Requires:  kipi-plugins = %{version}-%{release}
+BuildArch: noarch
+%description -n kipi-plugins-doc
+%{summary}.
+
 
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
@@ -210,12 +230,13 @@ Requires: kipi-plugins = %{version}-%{release}
 
 mv extra/kipi-plugins/dngconverter/icons/oxygen \
    extra/kipi-plugins/dngconverter/icons/hicolor
-%patch50 -p1 -b .dngconverter_hicolor_icons
+%patch102 -p1 -b .dngconverter_hicolor_icons
 
 pushd core
 %patch100 -p1 -b .libkipi-1.4.0
 %patch101 -p1 -b .boost-1.48
 popd
+
 
 %build
 
@@ -236,13 +257,20 @@ desktop-file-install --vendor="" \
   --dir=%{buildroot}%{_datadir}/applications/kde4 \
   %{SOURCE1}
 
-%find_lang digikam --with-kde
-%find_lang showfoto --with-kde
-cat showfoto.lang >> digikam.lang
+%find_lang digikam --with-kde --without-mo
+mv digikam.lang digikam-doc.lang
+%find_lang showfoto --with-kde --without-mo
+mv showfoto.lang showfoto-doc.lang
+cat showfoto-doc.lang >> digikam-doc.lang
+%find_lang digikam
+#find_lang showfoto 
+#cat showfoto.lang >> digikam.lang
 
 %find_lang libkgeomap
 
-%find_lang kipi-plugins --with-kde
+%find_lang kipi-plugins --with-kde --without-mo
+mv kipi-plugins.lang kipi-plugins-doc.lang
+#find_lang kipi-plugins
 %find_lang kipiplugins
 %find_lang kipiplugin_acquireimages
 %find_lang kipiplugin_advancedslideshow
@@ -338,6 +366,8 @@ update-desktop-database -q &> /dev/null
 %{_kde4_iconsdir}/hicolor/*/apps/digikam*
 %{_kde4_iconsdir}/hicolor/*/apps/showfoto*
 %{_kde4_libexecdir}/digikamdatabaseserver
+
+%files doc -f digikam-doc.lang
 
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
@@ -483,6 +513,8 @@ update-desktop-database -q &> /dev/null
 %{_kde4_datadir}/config.kcfg/PLEConfigSkeleton.kcfgc
 %{_kde4_datadir}/kde4/servicetypes/photolayoutseditor*.desktop
 
+%files -n kipi-plugins-doc -f kipi-plugins-doc.lang
+
 %post -n kipi-plugins-libs -p /sbin/ldconfig
 %postun -n kipi-plugins-libs -p /sbin/ldconfig
 
@@ -491,6 +523,10 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Thu Feb 02 2012 Rex Dieter <rdieter@fedoraproject.org> 2.5.0-4
+- -doc, kipi-plugins-doc subpkgs for largish HTML handbooks
+- upstreamed dng patch
+
 * Sat Jan  7 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.5.0-3
 - update boost patch
 
