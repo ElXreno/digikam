@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 2.5.0
-Release: 4%{?dist}
+Release: 5%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -81,6 +81,9 @@ Obsoletes: digikam-devel < 2.0.0-2
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kdebase-runtime%{?_kde4_version: >= %{_kde4_version}}
+%if 0%{?fedora} > 16
+Requires: kcm_colors
+%endif
 
 %description
 digiKam is an easy to use and powerful digital photo management application,
@@ -523,6 +526,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Thu Feb 02 2012 Rex Dieter <rdieter@fedoraproject.org> 2.5.0-5
+- Requires: kcm_colors (kde48+)
+
 * Thu Feb 02 2012 Rex Dieter <rdieter@fedoraproject.org> 2.5.0-4
 - -doc, kipi-plugins-doc subpkgs for largish HTML handbooks
 - upstreamed dng patch
