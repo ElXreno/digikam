@@ -23,6 +23,8 @@ Patch0: digikam-2.5.0-clapack-atlas.patch
 ## upstreamable patches
 
 ## upstream patches
+# https://bugs.kde.org/show_bug.cgi?id=293563
+Patch100: digikam-2.6.0-beta1-docbook.patch
 
 # for clapack, see also the clapack-atlas patch
 BuildRequires: atlas-devel
@@ -218,6 +220,9 @@ BuildArch: noarch
 
 %patch0 -p1 -b .clapack-atlas
 
+pushd doc/digikam
+%patch100 -p1 -b .docbook
+popd
 
 %build
 
