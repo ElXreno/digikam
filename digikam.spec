@@ -1,7 +1,8 @@
+%define pre beta1
 
 Name:	 digikam
-Version: 2.5.0
-Release: 5%{?dist}
+Version: 2.6.0
+Release: 0.1.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -19,22 +20,9 @@ Source1: digikam-import.desktop
 # isn't helpful.
 Patch0: digikam-2.5.0-clapack-atlas.patch
 
-# fix gcc-4.7.0 build https://bugs.kde.org/show_bug.cgi?id=290642#c3
-Patch1: digikam-2.5.0-gcc-4.7.0.patch
-
 ## upstreamable patches
 
 ## upstream patches
-# http://commits.kde.org/digikam/25cc9c9876a5233bd630105d0110319892d4e18c
-Patch100: digikam-2.5.0-libkipi-1.4.0.patch
-
-# fix build against boost-1.48
-# http://commits.kde.org/digikam/d18ea6da2d3e2359f4113e83c3fd40c18a29ddab
-Patch101: digikam-2.5.0-boost-1.48.patch
-
-# move dngconverter icons oxygen->hicolor so visible outside of kde
-# http://quickgit.kde.org/?p=kipi-plugins.git&a=commit&h=f982ad1cbfdcf70f9a8ffad45011a816637e64ba
-Patch102: digikam-2.4.1-dngconverter_hicolor_icons.patch
 
 # for clapack, see also the clapack-atlas patch
 BuildRequires: atlas-devel
@@ -229,16 +217,6 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .clapack-atlas
-%patch1 -p1 -b .gcc-4.7.0
-
-mv extra/kipi-plugins/dngconverter/icons/oxygen \
-   extra/kipi-plugins/dngconverter/icons/hicolor
-%patch102 -p1 -b .dngconverter_hicolor_icons
-
-pushd core
-%patch100 -p1 -b .libkipi-1.4.0
-%patch101 -p1 -b .boost-1.48
-popd
 
 
 %build
@@ -526,6 +504,10 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue Feb  7 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.6.0-0.1.beta1
+- digikam-2.6.0-beta1
+- drop upstreamed patches gcc-4.7.0, dngconverter_hicolor_icons, libkipi, boost
+
 * Thu Feb 02 2012 Rex Dieter <rdieter@fedoraproject.org> 2.5.0-5
 - Requires: kcm_colors (kde48+)
 
