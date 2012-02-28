@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 2.6.0
-Release: 0.1.%{?pre}%{?dist}
+Release: 0.2.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -508,6 +508,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue Feb 28 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.6.0-0.2.beta1
+- Rebuilt for c++ ABI breakage
+
 * Tue Feb  7 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.6.0-0.1.beta1
 - digikam-2.6.0-beta1
 - drop upstreamed patches gcc-4.7.0, dngconverter_hicolor_icons, libkipi, boost
