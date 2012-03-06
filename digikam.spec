@@ -1,8 +1,8 @@
-%define pre beta1
+%define pre beta2
 
 Name:	 digikam
 Version: 2.6.0
-Release: 0.2.%{?pre}%{?dist}
+Release: 0.3.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -23,8 +23,6 @@ Patch0: digikam-2.5.0-clapack-atlas.patch
 ## upstreamable patches
 
 ## upstream patches
-# https://bugs.kde.org/show_bug.cgi?id=293563
-Patch100: digikam-2.6.0-beta1-docbook.patch
 
 # for clapack, see also the clapack-atlas patch
 BuildRequires: atlas-devel
@@ -220,9 +218,6 @@ BuildArch: noarch
 
 %patch0 -p1 -b .clapack-atlas
 
-pushd doc/digikam
-%patch100 -p1 -b .docbook
-popd
 
 %build
 
@@ -300,10 +295,10 @@ kipiplugin_smug.lang kipiplugin_timeadjust.lang \
 kipiplugins.lang >> kipi-plugins.lang
 
 ## unpackaged files
-rm -f %{buildroot}%{_kde4_libdir}/libdigikamcore.so
-rm -f %{buildroot}%{_kde4_libdir}/libdigikamdatabase.so
-rm -f %{buildroot}%{_kde4_libdir}/libkipiplugins.so
-rm -f %{buildroot}%{_kde4_libdir}/libPropertyBrowser.a
+rm %{buildroot}%{_kde4_libdir}/libdigikamcore.so
+rm %{buildroot}%{_kde4_libdir}/libdigikamdatabase.so
+rm %{buildroot}%{_kde4_libdir}/libkipiplugins.so
+rm %{buildroot}%{_kde4_libdir}/libPropertyBrowser.a
 
 
 %check
@@ -451,6 +446,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_gpssync.so
 %{_kde4_libdir}/kde4/kipiplugin_htmlexport.so
 %{_kde4_libdir}/kde4/kipiplugin_imageviewer.so
+%{_kde4_libdir}/kde4/kipiplugin_imageshackexport.so
 %{_kde4_libdir}/kde4/kipiplugin_ipodexport.so
 %{_kde4_libdir}/kde4/kipiplugin_jpeglossless.so
 %{_kde4_libdir}/kde4/kipiplugin_kioexportimport.so
@@ -469,6 +465,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_timeadjust.so
 %{_kde4_libdir}/kde4/kipiplugin_vkontakte.so
 %{_kde4_libdir}/kde4/kipiplugin_yandexfotki.so
+%{_kde4_libdir}/kde4/kipiplugin_wikimedia.so
 %{_kde4_appsdir}/gpssync/
 %{_kde4_appsdir}/kipiplugin_flashexport/
 %{_kde4_appsdir}/kipiplugin_galleryexport/
@@ -508,6 +505,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue Mar  6 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.6.0-0.3.beta2
+- digikam-2.6.0-beta2
+
 * Tue Feb 28 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.6.0-0.2.beta1
 - Rebuilt for c++ ABI breakage
 
