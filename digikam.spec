@@ -1,8 +1,8 @@
-%define pre beta2
+%define pre beta3
 
 Name:	 digikam
 Version: 2.6.0
-Release: 0.3.%{?pre}%{?dist}
+Release: 0.4.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -37,7 +37,7 @@ BuildRequires: libjpeg-devel
 BuildRequires: libtiff-devel
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(jasper)
-BuildRequires: pkgconfig(lcms)
+BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(lensfun)
 BuildRequires: pkgconfig(libgphoto2_port)
 BuildRequires: pkgconfig(lqr-1)
@@ -223,7 +223,7 @@ BuildArch: noarch
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kde4} -DDIGIKAMSC_USE_PRIVATE_KDEGRAPHICS:BOOL=0 ..
+%{cmake_kde4} -DENABLE_LCMS2=ON -DDIGIKAMSC_COMPILE_PO=ON -DDIGIKAMSC_COMPILE_DOC=ON  ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -372,7 +372,6 @@ update-desktop-database -q &> /dev/null
 %postun -n libkgeomap -p /sbin/ldconfig
 
 %files -n libkgeomap -f libkgeomap.lang
-%{_kde4_bindir}/libkgeomap_demo
 %{_kde4_appsdir}/libkgeomap/
 %{_kde4_libdir}/libkgeomap.so.1*
 
@@ -505,6 +504,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Apr  2 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.6.0-0.4.beta3
+- digikam-2.6.0-beta3
+
 * Tue Mar  6 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.6.0-0.3.beta2
 - digikam-2.6.0-beta2
 
