@@ -1,13 +1,13 @@
-%define pre beta3
+%define pre rc
 
 Name:	 digikam
 Version: 2.6.0
-Release: 0.6.%{?pre}%{?dist}
+Release: 0.7.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
 URL:	 http://www.digikam.org/
-Source0: http://downloads.sourceforge.net/digikam/digikam-%{version}%{?pre:-%{pre}}.tar.bz2
+Source0: http://downloads.sourceforge.net/digikam/digikam-software-compilation-%{version}%{?pre:-%{pre}}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
@@ -214,7 +214,7 @@ BuildArch: noarch
 
 
 %prep
-%setup -q -n %{name}-%{version}%{?pre:-%{pre}}
+%setup -q -n %{name}-software-compilation-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .clapack-atlas
 
@@ -223,7 +223,7 @@ BuildArch: noarch
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kde4} -DENABLE_LCMS2=ON -DDIGIKAMSC_COMPILE_PO=ON -DDIGIKAMSC_COMPILE_DOC=ON  ..
+%{cmake_kde4} -DENABLE_LCMS2=ON ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -446,6 +446,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_htmlexport.so
 %{_kde4_libdir}/kde4/kipiplugin_imageviewer.so
 %{_kde4_libdir}/kde4/kipiplugin_imageshackexport.so
+%{_kde4_libdir}/kde4/kipiplugin_imgurexport.so
 %{_kde4_libdir}/kde4/kipiplugin_ipodexport.so
 %{_kde4_libdir}/kde4/kipiplugin_jpeglossless.so
 %{_kde4_libdir}/kde4/kipiplugin_kioexportimport.so
@@ -504,6 +505,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed May  9 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.6.0-0.7.rc
+- digikam-software-compilation-2.6.0-rc
+
 * Tue May 08 2012 Rex Dieter <rdieter@fedoraproject.org> 2.6.0-0.6.beta3
 - rebuild (libtiff)
 
