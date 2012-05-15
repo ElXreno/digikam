@@ -506,7 +506,7 @@ update-desktop-database -q &> /dev/null
 
 %changelog
 * Tue May 15 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.6.0-0.8.rc
-- switch back to lcms1 for now (kse#299886)
+- switch back to lcms1 for now (kde#299886)
 
 * Wed May  9 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.6.0-0.7.rc
 - digikam-software-compilation-2.6.0-rc
