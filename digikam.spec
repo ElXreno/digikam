@@ -40,7 +40,7 @@ BuildRequires: libjpeg-devel
 BuildRequires: libtiff-devel
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(jasper)
-BuildRequires: pkgconfig(lcms)
+BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(lensfun)
 BuildRequires: pkgconfig(libgphoto2_port)
 BuildRequires: pkgconfig(lqr-1)
@@ -229,7 +229,7 @@ popd
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kde4} ..
+%{cmake_kde4} -DENABLE_LCMS2=ON ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
