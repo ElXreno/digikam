@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 2.6.0
-Release: 0.8.%{?pre}%{?dist}
+Release: 0.9.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -23,6 +23,9 @@ Patch0: digikam-2.5.0-clapack-atlas.patch
 ## upstreamable patches
 
 ## upstream patches
+# dkCmsTakeProfileID allocate right size (kde#299886)
+# http://commits.kde.org/digikam/6c1db4afb98e1718fa237c6310170b5980d4af81
+Patch100: digikam-2.6.0-rc-lcms2.patch
 
 # for clapack, see also the clapack-atlas patch
 BuildRequires: atlas-devel
@@ -218,6 +221,9 @@ BuildArch: noarch
 
 %patch0 -p1 -b .clapack-atlas
 
+pushd core
+%patch100 -p1 -b .lcms2
+popd
 
 %build
 
@@ -505,6 +511,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed May 16 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.6.0-0.9.rc
+- switch to lcms2, fix dkCmsTakeProfileID allocation size (kde#299886)
+
 * Tue May 15 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.6.0-0.8.rc
 - switch back to lcms1 for now (kde#299886)
 
