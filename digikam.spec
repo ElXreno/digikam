@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 2.6.0
-Release: 0.9.%{?pre}%{?dist}
+Release: 0.10.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -511,6 +511,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue May 29 2012 Rex Dieter <rdieter@fedoraproject.org> 2.6.0-0.10.rc
+- rebuild (kde-4.9beta)
+
 * Wed May 16 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.6.0-0.9.rc
 - switch to lcms2, fix dkCmsTakeProfileID allocation size (kde#299886)
 
