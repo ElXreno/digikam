@@ -214,7 +214,7 @@ BuildArch: noarch
 
 
 %prep
-%setup -q -n %{name}-software-compilation-%{version}%{?pre:-%{pre}}
+%setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .clapack-atlas
 
