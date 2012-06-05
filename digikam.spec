@@ -1,13 +1,13 @@
-%define pre rc
+#define pre rc
 
 Name:	 digikam
 Version: 2.6.0
-Release: 0.10.%{?pre}%{?dist}
+Release: 1%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
 URL:	 http://www.digikam.org/
-Source0: http://downloads.sourceforge.net/digikam/digikam-software-compilation-%{version}%{?pre:-%{pre}}.tar.bz2
+Source0: http://downloads.sourceforge.net/digikam/digikam-%{version}%{?pre:-%{pre}}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
@@ -23,9 +23,6 @@ Patch0: digikam-2.5.0-clapack-atlas.patch
 ## upstreamable patches
 
 ## upstream patches
-# dkCmsTakeProfileID allocate right size (kde#299886)
-# http://commits.kde.org/digikam/6c1db4afb98e1718fa237c6310170b5980d4af81
-Patch100: digikam-2.6.0-rc-lcms2.patch
 
 # for clapack, see also the clapack-atlas patch
 BuildRequires: atlas-devel
@@ -221,9 +218,6 @@ BuildArch: noarch
 
 %patch0 -p1 -b .clapack-atlas
 
-pushd core
-%patch100 -p1 -b .lcms2
-popd
 
 %build
 
@@ -511,6 +505,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue Jun  5 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.6.0-1
+- digikam-2.6.0
+
 * Tue May 29 2012 Rex Dieter <rdieter@fedoraproject.org> 2.6.0-0.10.rc
 - rebuild (kde-4.9beta)
 
