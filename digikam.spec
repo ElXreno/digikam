@@ -331,6 +331,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_bindir}/showfoto
 %{_kde4_libdir}/kde4/digikam*.so
 %{_kde4_libdir}/kde4/kio_digikam*.so
+%{_kde4_appsdir}/kconf_update/adjustlevelstool.upd
 %{_kde4_appsdir}/digikam/
 %{_kde4_appsdir}/showfoto/
 %{_kde4_appsdir}/solid/actions/digikam*.desktop
