@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 2.6.0
-Release: 1%{?pre}%{?dist}
+Release: 2%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -506,6 +506,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue Jun 26 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.6.0-2
+- rebuild for libpgf-6.12.24
+
 * Tue Jun  5 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.6.0-1
 - digikam-2.6.0
 
