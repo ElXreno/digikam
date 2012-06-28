@@ -21,10 +21,11 @@ Source1: digikam-import.desktop
 Patch0: digikam-2.5.0-clapack-atlas.patch
 
 ## upstreamable patches
-# fix detection of newer lensfun-0.2.6+
-Patch50: digikam-2.6.0-cmake_lensfun.patch
 
 ## upstream patches
+# fix fix detection of newer lensfun-0.2.6+
+# http://commits.kde.org/digikam/eb454a581dc8668e1dc3c3b8b4ffd4d9a617ad12
+Patch100: digikam-2.6.0-cmake_lensfun.patch
 
 # for clapack, see also the clapack-atlas patch
 BuildRequires: atlas-devel
@@ -219,7 +220,7 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .clapack-atlas
-%patch50 -p1 -b .cmake_lensfun
+%patch100 -p1 -b .cmake_lensfun
 
 
 %build
