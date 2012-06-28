@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 2.6.0
-Release: 2%{?pre}%{?dist}
+Release: 3%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -21,6 +21,8 @@ Source1: digikam-import.desktop
 Patch0: digikam-2.5.0-clapack-atlas.patch
 
 ## upstreamable patches
+# fix detection of newer lensfun-0.2.6+
+Patch50: digikam-2.6.0-cmake_lensfun.patch
 
 ## upstream patches
 
@@ -217,6 +219,7 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .clapack-atlas
+%patch50 -p1 -b .cmake_lensfun
 
 
 %build
@@ -506,6 +509,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Thu Jun 28 2012 Rex Dieter <rdieter@fedoraproject.org> 2.6.0-3
+- fix build for newer lensfun-0.2.6+
+
 * Tue Jun 26 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.6.0-2
 - rebuild for libpgf-6.12.24
 
