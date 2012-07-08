@@ -467,6 +467,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_vkontakte.so
 %{_kde4_libdir}/kde4/kipiplugin_yandexfotki.so
 %{_kde4_libdir}/kde4/kipiplugin_wikimedia.so
+%{_kde4_appsdir}/kipi/tips
 %{_kde4_appsdir}/gpssync/
 %{_kde4_appsdir}/kipiplugin_flashexport/
 %{_kde4_appsdir}/kipiplugin_galleryexport/
