@@ -1,8 +1,8 @@
 #define pre rc
 
 Name:	 digikam
-Version: 2.6.0
-Release: 3%{?pre}%{?dist}
+Version: 2.7.0
+Release: 1%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -23,9 +23,6 @@ Patch0: digikam-2.5.0-clapack-atlas.patch
 ## upstreamable patches
 
 ## upstream patches
-# fix fix detection of newer lensfun-0.2.6+
-# http://commits.kde.org/digikam/eb454a581dc8668e1dc3c3b8b4ffd4d9a617ad12
-Patch100: digikam-2.6.0-cmake_lensfun.patch
 
 # for clapack, see also the clapack-atlas patch
 BuildRequires: atlas-devel
@@ -220,7 +217,6 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .clapack-atlas
-%patch100 -p1 -b .cmake_lensfun
 
 
 %build
@@ -510,6 +506,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sun Jul  8 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.7.0-1
+- digikam-2.7.0
+
 * Thu Jun 28 2012 Rex Dieter <rdieter@fedoraproject.org> 2.6.0-3
 - fix build for newer lensfun-0.2.6+
 
