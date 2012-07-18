@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 2.7.0
-Release: 3%{?pre}%{?dist}
+Release: 4%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -507,6 +507,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed Jul 18 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.7.0-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Thu Jul 12 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.7.0-3
 - rebuild for libgphoto2-2.5.0
 
