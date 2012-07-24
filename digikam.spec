@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 2.7.0
-Release: 4%{?pre}%{?dist}
+Release: 5%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -21,6 +21,9 @@ Source1: digikam-import.desktop
 Patch0: digikam-2.5.0-clapack-atlas.patch
 
 ## upstreamable patches
+# libgphoto2-2.5 support patch from
+# https://bugs.kde.org/show_bug.cgi?id=303427
+Patch50: digikam-2.7.0-libgphoto2_25.patch
 
 ## upstream patches
 
@@ -217,6 +220,9 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .clapack-atlas
+pushd core
+%patch50 -p1 -b .libgphoto2_25
+popd
 
 
 %build
@@ -507,6 +513,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue Jul 24 2012 Rex Dieter <rdieter@fedoraproject.org> 2.7.0-5
+- digikam FTBFS against libgphoto2-2.5 (#841615)
+
 * Wed Jul 18 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.7.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
