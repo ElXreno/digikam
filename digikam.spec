@@ -1,8 +1,8 @@
 #define pre rc
 
 Name:	 digikam
-Version: 2.7.0
-Release: 5%{?pre}%{?dist}
+Version: 2.8.0
+Release: 1%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -513,6 +513,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Aug  6 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.8.0-1
+- digikam-2.8.0
+
 * Tue Jul 24 2012 Rex Dieter <rdieter@fedoraproject.org> 2.7.0-5
 - digikam FTBFS against libgphoto2-2.5 (#841615)
 
