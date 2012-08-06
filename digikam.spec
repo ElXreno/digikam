@@ -220,9 +220,12 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .clapack-atlas
+
+%if 0%{?fedora} > 17
 pushd core
 %patch50 -p1 -b .libgphoto2_25
 popd
+%endif
 
 
 %build
