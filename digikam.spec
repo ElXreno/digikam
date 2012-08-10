@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 2.8.0
-Release: 1%{?pre}%{?dist}
+Release: 2%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -516,6 +516,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Fri Aug 10 2012 Rex Dieter <rdieter@fedoraproject.org> 2.8.0-2
+- rebuild (libimobiledevice)
+
 * Mon Aug  6 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.8.0-1
 - digikam-2.8.0
 
