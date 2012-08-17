@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 2.8.0
-Release: 2%{?pre}%{?dist}
+Release: 3%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -23,7 +23,7 @@ Patch0: digikam-2.5.0-clapack-atlas.patch
 ## upstreamable patches
 # libgphoto2-2.5 support patch from
 # https://bugs.kde.org/show_bug.cgi?id=303427
-Patch50: digikam-2.7.0-libgphoto2_25.patch
+Patch50: digikam-2.8.0-libgphoto2_25.patch
 
 ## upstream patches
 
@@ -221,6 +221,7 @@ BuildArch: noarch
 
 %patch0 -p1 -b .clapack-atlas
 
+# apply conditionally to be on the safe-side for now, at least until committed upstream -- rex
 %if 0%{?fedora} > 17
 pushd core
 %patch50 -p1 -b .libgphoto2_25
@@ -516,6 +517,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Fri Aug 17 2012 Rex Dieter <rdieter@fedoraproject.org> 2.8.0-3
+- rev libgphoto2-2.5 patch (kde#303427)
+
 * Fri Aug 10 2012 Rex Dieter <rdieter@fedoraproject.org> 2.8.0-2
 - rebuild (libimobiledevice)
 
