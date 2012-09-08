@@ -1,0 +1,19 @@
+commit e6970f4f2fe48c9f38fb25ca252cc2799d6674d0
+Author: Gilles Caulier <caulier.gilles@gmail.com>
+Date:   Mon Sep 3 15:17:08 2012 +0200
+
+    use X- prefix with customized kipiplugins group of desktop file
+    BUGS: 306193
+    FIXED-IN: 3.0.0
+
+diff --git a/common/libkipiplugins/kipiplugins.desktop.cmake b/common/libkipiplugins/kipiplugins.desktop.cmake
+index 66c8a2e..c704b92 100644
+--- a/common/libkipiplugins/kipiplugins.desktop.cmake
++++ b/common/libkipiplugins/kipiplugins.desktop.cmake
+@@ -92,5 +92,5 @@ Type=Application
+ Exec=""
+ Icon=kipi-logo
+ 
+-[KipiPlugins Entry]
++[X-KipiPlugins Entry]
+ Version=${KIPIPLUGINS_VERSION_STRING}

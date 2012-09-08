@@ -1,8 +1,7 @@
-#define pre rc
 
 Name:	 digikam
 Version: 2.9.0
-Release: 1%{?pre}%{?dist}
+Release: 1%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -23,6 +22,8 @@ Patch0: digikam-2.5.0-clapack-atlas.patch
 ## upstreamable patches
 
 ## upstream patches
+# https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/e6970f4f2fe48c9f38fb25ca252cc2799d6674d0
+Patch100: changeset_re6970f4f2fe48c9f38fb25ca252cc2799d6674d0.diff
 
 # for clapack, see also the clapack-atlas patch
 BuildRequires: atlas-devel
@@ -43,9 +44,9 @@ BuildRequires: pkgconfig(libgphoto2_port)
 BuildRequires: pkgconfig(lqr-1)
 BuildRequires: pkgconfig(libpgf) >= 6.11.42
 BuildRequires: pkgconfig(libpng) >= 1.2.7
-BuildRequires: pkgconfig(libkdcraw)
-BuildRequires: pkgconfig(libkexiv2)
-BuildRequires: pkgconfig(libkipi)
+BuildRequires: pkgconfig(libkdcraw) >= 0.2.0
+BuildRequires: pkgconfig(libkexiv2) >= 1.0.0
+BuildRequires: pkgconfig(libkipi) >= 1.0.0
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: mysql-devel mysql-server
 BuildRequires: pkgconfig(exiv2)
@@ -217,6 +218,10 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .clapack-atlas
+
+pushd extra/kipi-plugins/
+%patch100 -p1 -b .kipiplugins_desktop
+popd
 
 
 %build
