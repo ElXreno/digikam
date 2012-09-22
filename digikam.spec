@@ -30,7 +30,7 @@ BuildRequires: doxygen
 BuildRequires: gettext
 # marble integration, http://bugzilla.redhat.com/470578
 BuildRequires: marble-devel >= 1:4.6.80 
-BuildRequires: kdelibs4-devel
+BuildRequires: kdelibs4-devel >= 6:4.9.1-4
 BuildRequires: kdepimlibs-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libtiff-devel
