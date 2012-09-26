@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 3.0.0
-Release: 0.2.%{?pre}%{?dist}
+Release: 0.3.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -223,6 +223,10 @@ BuildArch: noarch
 
 %patch0 -p1 -b .clapack-atlas
 
+# don't use bundled/old FindKipi.cmake in favor of kdelibs' version
+# see http:/bugs.kde.org/307213
+mv cmake/modules/FindKipi.cmake cmake/modules/FindKipi.cmake.ORIG
+
 
 %build
 
@@ -249,14 +253,11 @@ mv digikam.lang digikam-doc.lang
 mv showfoto.lang showfoto-doc.lang
 cat showfoto-doc.lang >> digikam-doc.lang
 %find_lang digikam
-#find_lang showfoto 
-#cat showfoto.lang >> digikam.lang
 
 %find_lang libkgeomap
 
 %find_lang kipi-plugins --with-kde --without-mo
 mv kipi-plugins.lang kipi-plugins-doc.lang
-#find_lang kipi-plugins
 %find_lang kipiplugins
 %find_lang kipiplugin_acquireimages
 %find_lang kipiplugin_advancedslideshow
@@ -300,14 +301,14 @@ kipiplugin_smug.lang kipiplugin_timeadjust.lang \
 kipiplugins.lang >> kipi-plugins.lang
 
 ## unpackaged files
-rm %{buildroot}%{_kde4_libdir}/libdigikamcore.so
-rm %{buildroot}%{_kde4_libdir}/libdigikamdatabase.so
-rm %{buildroot}%{_kde4_libdir}/libkipiplugins.so
-rm %{buildroot}%{_kde4_libdir}/libPropertyBrowser.a
-rm %{buildroot}%{_kde4_libdir}/libHUpnp.a
-rm %{buildroot}%{_kde4_libdir}/libHUpnpAv.a
-rm %{buildroot}%{_kde4_libdir}/libQtSoap.a
-rm %{buildroot}%{_kde4_datadir}/locale/*/LC_MESSAGES/libkipi.mo
+rm -fv %{buildroot}%{_kde4_libdir}/libdigikamcore.so
+rm -fv %{buildroot}%{_kde4_libdir}/libdigikamdatabase.so
+rm -fv %{buildroot}%{_kde4_libdir}/libkipiplugins.so
+rm -fv %{buildroot}%{_kde4_libdir}/libPropertyBrowser.a
+rm -fv %{buildroot}%{_kde4_libdir}/libHUpnp.a
+rm -fv %{buildroot}%{_kde4_libdir}/libHUpnpAv.a
+rm -fv %{buildroot}%{_kde4_libdir}/libQtSoap.a
+rm -fv %{buildroot}%{_kde4_datadir}/locale/*/LC_MESSAGES/libkipi.mo
 
 
 %check
@@ -521,6 +522,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed Sep 26 2012 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-0.3.beta1a
+- rebuild for updated FindKipi.cmake in kdelibs (kde#307213)
+
 * Sat Sep 22 2012 Alexey Kurov <nucleo@fedoraproject.org> - 3.0.0-0.2.beta1a
 - rebuild for updated FindKipi.cmake in kdelibs (kde#307213)
 
