@@ -1,8 +1,8 @@
-%define pre beta1a
+%define pre beta2
 
 Name:	 digikam
 Version: 3.0.0
-Release: 0.3.%{?pre}%{?dist}
+Release: 0.4.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -43,7 +43,7 @@ BuildRequires: pkgconfig(libgphoto2_port)
 BuildRequires: pkgconfig(lqr-1)
 BuildRequires: pkgconfig(libpgf) >= 6.11.42
 BuildRequires: pkgconfig(libpng) >= 1.2.7
-BuildRequires: pkgconfig(libkdcraw) >= 0.2.0
+BuildRequires: pkgconfig(libkdcraw) >= 2.2.0
 BuildRequires: pkgconfig(libkexiv2) >= 1.0.0
 BuildRequires: pkgconfig(libkipi) >= 2.0.0
 BuildRequires: pkgconfig(sqlite3)
@@ -478,7 +478,8 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_yandexfotki.so
 %{_kde4_libdir}/kde4/kipiplugin_wikimedia.so
 %{_kde4_libdir}/kde4/kipiplugin_dlnaexport.so
-%{_kde4_libdir}/kde4/kipiplugin_photivointegration.so
+# Plugin not yet ready for production
+#{_kde4_libdir}/kde4/kipiplugin_photivointegration.so
 %{_kde4_libdir}/kde4/kipiplugin_videoslideshow.so
 %{_kde4_appsdir}/kipi/tips
 %{_kde4_appsdir}/kipi/*rc
@@ -522,6 +523,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sat Oct 13 2012 Alexey Kurov <nucleo@fedoraproject.org> - 3.0.0-0.4.beta2
+- digikam-3.0.0-beta2
+
 * Wed Sep 26 2012 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-0.3.beta1a
 - rebuild for updated FindKipi.cmake in kdelibs (kde#307213)
 
