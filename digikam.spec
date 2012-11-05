@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 3.0.0
-Release: 0.5.%{?pre}%{?dist}
+Release: 0.6.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -68,12 +68,11 @@ BuildRequires: pkgconfig(QtGStreamer-0.10)
 BuildRequires: pkgconfig(ImageMagick)
 BuildRequires: herqq-devel
 
-
 # when lib(-devel) subpkgs were split
 Obsoletes: digikam-devel < 2.0.0-2
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-Requires: kdebase-runtime%{?_kde4_version: >= %{_kde4_version}}
+Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
 %if 0%{?fedora} > 16
 Requires: kcm_colors
 %endif
@@ -523,6 +522,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Nov 05 2012 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-0.6.beta2
+- rebuild (opencv)
+
 * Wed Oct 24 2012 Alexey Kurov <nucleo@fedoraproject.org> - 3.0.0-0.5.beta2
 - rebuild for libjpeg8
 
