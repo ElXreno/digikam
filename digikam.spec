@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 2.9.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -30,8 +30,7 @@ BuildRequires: atlas-devel
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
 BuildRequires: gettext
-# marble integration, http://bugzilla.redhat.com/470578
-BuildRequires: marble-devel >= 1:4.6.80 
+BuildRequires: marble-devel
 BuildRequires: kdelibs4-devel
 BuildRequires: kdepimlibs-devel
 BuildRequires: libjpeg-devel
@@ -69,10 +68,9 @@ BuildRequires: pkgconfig(QJson)
 Obsoletes: digikam-devel < 2.0.0-2
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-Requires: kdebase-runtime%{?_kde4_version: >= %{_kde4_version}}
-%if 0%{?fedora} > 16
+Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
+# http://bugzilla.redhat.com/761184
 Requires: kcm_colors
-%endif
 
 %description
 digiKam is an easy to use and powerful digital photo management application,
@@ -89,8 +87,6 @@ to use them.
 %package libs
 Summary: Runtime libraries for %{name}
 Requires: %{name} = %{version}-%{release}
-# grow versioned deps on libkipi (and friends instead?) -- rex
-#Requires: kdegraphics-libs%{?_isa}%{?_kde4_version: >= %{_kde4_version}}
 %description libs
 %{summary}.
 
@@ -113,8 +109,6 @@ BuildArch: noarch
 
 %package -n libkface
 Summary: A C++ wrapper around LibFace library to perform face recognition over pictures.  
-# when libs were split 
-Conflicts: digikam-libs < 2.0.0-2
 %description -n libkface 
 %{summary}.
 
@@ -125,8 +119,6 @@ Summary: Development files for libkface
 
 %package -n libkgeomap
 Summary: A world map library
-# when libs were split 
-Conflicts: digikam-libs < 2.0.0-2
 Requires: marble%{?_kde4_version: >= 1:%{_kde4_version}}
 %description -n libkgeomap
 %{summary}.
@@ -138,8 +130,6 @@ Summary: Development files for libkgeomap
 
 %package -n libmediawiki
 Summary: a MediaWiki C++ interface
-# when libs were split 
-Conflicts: digikam-libs < 2.0.0-2
 %description -n libmediawiki
 %{summary}.
 
@@ -515,6 +505,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Thu Dec 13 2012 Rex Dieter <rdieter@fedoraproject.org> 2.9.0-4
+- cleanup, remove old conditional, Conflicts
+
 * Thu Dec 13 2012 Rex Dieter <rdieter@fedoraproject.org> 2.9.0-3
 - disable broken nepomuk support (#832483)
 
