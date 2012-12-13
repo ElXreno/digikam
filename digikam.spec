@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 3.0.0
-Release: 0.11.%{pre}%{?dist}
+Release: 0.12.%{pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -73,9 +73,8 @@ Obsoletes: digikam-devel < 2.0.0-2
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
-%if 0%{?fedora} > 16
+# http://bugzilla.redhat.com/761184
 Requires: kcm_colors
-%endif
 
 %description
 digiKam is an easy to use and powerful digital photo management application,
@@ -92,8 +91,6 @@ to use them.
 %package libs
 Summary: Runtime libraries for %{name}
 Requires: %{name} = %{version}-%{release}
-# grow versioned deps on libkipi (and friends instead?) -- rex
-#Requires: kdegraphics-libs%{?_isa}%{?_kde4_version: >= %{_kde4_version}}
 %description libs
 %{summary}.
 
@@ -116,8 +113,6 @@ BuildArch: noarch
 
 %package -n libkface
 Summary: A C++ wrapper around LibFace library to perform face recognition over pictures.  
-# when libs were split 
-Conflicts: digikam-libs < 2.0.0-2
 %description -n libkface 
 %{summary}.
 
@@ -128,8 +123,6 @@ Summary: Development files for libkface
 
 %package -n libkgeomap
 Summary: A world map library
-# when libs were split 
-Conflicts: digikam-libs < 2.0.0-2
 Requires: marble%{?_kde4_version: >= 1:%{_kde4_version}}
 %description -n libkgeomap
 %{summary}.
@@ -141,8 +134,6 @@ Summary: Development files for libkgeomap
 
 %package -n libmediawiki
 Summary: a MediaWiki C++ interface
-# when libs were split 
-Conflicts: digikam-libs < 2.0.0-2
 %description -n libmediawiki
 %{summary}.
 
@@ -522,6 +513,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Thu Dec 13 2012 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-0.12.beta3
+- cleanup, remove old conditionals, Conflicts
+
 * Tue Dec 04 2012 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-0.11.beta3
 - rebuild (marble)
 
