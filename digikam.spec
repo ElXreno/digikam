@@ -1,7 +1,7 @@
 
 Name:	 digikam
 Version: 2.9.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -228,7 +228,10 @@ popd
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kde4} -DENABLE_LCMS2=ON ..
+%{cmake_kde4} \
+  -DENABLE_LCMS2:BOOL=ON \
+  -DENABLE_NEPOMUKSUPPORT:BOOL=OFF \
+  ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -512,6 +515,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Thu Dec 13 2012 Rex Dieter <rdieter@fedoraproject.org> 2.9.0-3
+- disable broken nepomuk support (#832483)
+
 * Mon Nov 26 2012 Rex Dieter <rdieter@fedoraproject.org> 2.9.0-2
 - rebuild (opencv)
 
