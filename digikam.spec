@@ -295,9 +295,6 @@ rm -fv %{buildroot}%{_kde4_libdir}/libdigikamcore.so
 rm -fv %{buildroot}%{_kde4_libdir}/libdigikamdatabase.so
 rm -fv %{buildroot}%{_kde4_libdir}/libkipiplugins.so
 rm -fv %{buildroot}%{_kde4_libdir}/libPropertyBrowser.a
-rm -fv %{buildroot}%{_kde4_libdir}/libHUpnp.a
-rm -fv %{buildroot}%{_kde4_libdir}/libHUpnpAv.a
-rm -fv %{buildroot}%{_kde4_libdir}/libQtSoap.a
 rm -fv %{buildroot}%{_kde4_datadir}/locale/*/LC_MESSAGES/libkipi.mo
 
 
