@@ -222,7 +222,7 @@ mv cmake/modules/FindKipi.cmake cmake/modules/FindKipi.cmake.ORIG
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kde4} -DENABLE_LCMS2=ON ..
+%{cmake_kde4} -DENABLE_LCMS2=ON -DDIGIKAMSC_USE_PRIVATE_KDEGRAPHICS=OFF ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -515,6 +515,7 @@ update-desktop-database -q &> /dev/null
 %changelog
 * Sat Dec 29 2012 Alexey Kurov <nucleo@fedoraproject.org> - 3.0.0-0.13.rc
 - digikam-3.0.0-rc
+- disable local kdegraphics build enabled in rc by default
 
 * Thu Dec 13 2012 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-0.12.beta3
 - cleanup, remove old conditionals, Conflicts
