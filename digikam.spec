@@ -1,13 +1,13 @@
+%define pre rc
 
 Name:	 digikam
-Version: 2.9.0
-Release: 4%{?dist}
+Version: 3.0.0
+Release: 0.14.%{pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
 URL:	 http://www.digikam.org/
-Source0: http://downloads.sourceforge.net/digikam/digikam-%{version}%{?pre:-%{pre}}.tar.bz2
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Source0: http://download.kde.org/unstable/digikam/digikam-%{version}%{?pre:-%{pre}}.tar.bz2
 
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
 # TODO: upstream me
@@ -22,16 +22,18 @@ Patch0: digikam-2.5.0-clapack-atlas.patch
 ## upstreamable patches
 
 ## upstream patches
-# https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/e6970f4f2fe48c9f38fb25ca252cc2799d6674d0
-Patch100: changeset_re6970f4f2fe48c9f38fb25ca252cc2799d6674d0.diff
 
 # for clapack, see also the clapack-atlas patch
 BuildRequires: atlas-devel
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
 BuildRequires: gettext
-BuildRequires: marble-devel
-BuildRequires: kdelibs4-devel
+%if 0%{?fedora}
+# marble integration, http://bugzilla.redhat.com/470578
+BuildRequires: marble-devel >= 1:4.6.80 
+%endif
+# updated FindKipi.cmake https://bugs.kde.org/show_bug.cgi?id=307213
+BuildRequires: kdelibs4-devel >= 4.9.1-4
 BuildRequires: kdepimlibs-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libtiff-devel
@@ -43,9 +45,9 @@ BuildRequires: pkgconfig(libgphoto2_port)
 BuildRequires: pkgconfig(lqr-1)
 BuildRequires: pkgconfig(libpgf) >= 6.11.42
 BuildRequires: pkgconfig(libpng) >= 1.2.7
-BuildRequires: pkgconfig(libkdcraw) >= 0.2.0
+BuildRequires: pkgconfig(libkdcraw) >= 2.2.0
 BuildRequires: pkgconfig(libkexiv2) >= 1.0.0
-BuildRequires: pkgconfig(libkipi) >= 1.0.0
+BuildRequires: pkgconfig(libkipi) >= 2.0.0
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: mysql-devel mysql-server
 BuildRequires: pkgconfig(exiv2)
@@ -63,6 +65,10 @@ BuildRequires: pkgconfig(opencv)
 BuildRequires: pkgconfig(qca2)
 ## debianscreenshorts
 BuildRequires: pkgconfig(QJson) 
+
+BuildRequires: pkgconfig(QtGStreamer-0.10)
+BuildRequires: pkgconfig(ImageMagick)
+BuildRequires: herqq-devel
 
 # when lib(-devel) subpkgs were split
 Obsoletes: digikam-devel < 2.0.0-2
@@ -117,6 +123,7 @@ Summary: Development files for libkface
 %description -n libkface-devel
 %{summary}.
 
+%if 0%{?fedora}
 %package -n libkgeomap
 Summary: A world map library
 Requires: marble%{?_kde4_version: >= 1:%{_kde4_version}}
@@ -127,6 +134,7 @@ Requires: marble%{?_kde4_version: >= 1:%{_kde4_version}}
 Summary: Development files for libkgeomap
 %description -n libkgeomap-devel
 %{summary}.
+%endif
 
 %package -n libmediawiki
 Summary: a MediaWiki C++ interface
@@ -209,19 +217,16 @@ BuildArch: noarch
 
 %patch0 -p1 -b .clapack-atlas
 
-pushd extra/kipi-plugins/
-%patch100 -p1 -b .kipiplugins_desktop
-popd
+# don't use bundled/old FindKipi.cmake in favor of kdelibs' version
+# see http:/bugs.kde.org/307213
+mv cmake/modules/FindKipi.cmake cmake/modules/FindKipi.cmake.ORIG
 
 
 %build
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kde4} \
-  -DENABLE_LCMS2:BOOL=ON \
-  -DENABLE_NEPOMUKSUPPORT:BOOL=OFF \
-  ..
+%{cmake_kde4} -DENABLE_LCMS2=ON -DDIGIKAMSC_USE_PRIVATE_KDEGRAPHICS=OFF ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -242,14 +247,11 @@ mv digikam.lang digikam-doc.lang
 mv showfoto.lang showfoto-doc.lang
 cat showfoto-doc.lang >> digikam-doc.lang
 %find_lang digikam
-#find_lang showfoto 
-#cat showfoto.lang >> digikam.lang
 
 %find_lang libkgeomap
 
 %find_lang kipi-plugins --with-kde --without-mo
 mv kipi-plugins.lang kipi-plugins-doc.lang
-#find_lang kipi-plugins
 %find_lang kipiplugins
 %find_lang kipiplugin_acquireimages
 %find_lang kipiplugin_advancedslideshow
@@ -293,10 +295,11 @@ kipiplugin_smug.lang kipiplugin_timeadjust.lang \
 kipiplugins.lang >> kipi-plugins.lang
 
 ## unpackaged files
-rm %{buildroot}%{_kde4_libdir}/libdigikamcore.so
-rm %{buildroot}%{_kde4_libdir}/libdigikamdatabase.so
-rm %{buildroot}%{_kde4_libdir}/libkipiplugins.so
-rm %{buildroot}%{_kde4_libdir}/libPropertyBrowser.a
+rm -fv %{buildroot}%{_kde4_libdir}/libdigikamcore.so
+rm -fv %{buildroot}%{_kde4_libdir}/libdigikamdatabase.so
+rm -fv %{buildroot}%{_kde4_libdir}/libkipiplugins.so
+rm -fv %{buildroot}%{_kde4_libdir}/libPropertyBrowser.a
+rm -fv %{buildroot}%{_kde4_datadir}/locale/*/LC_MESSAGES/libkipi.mo
 
 
 %check
@@ -351,8 +354,8 @@ update-desktop-database -q &> /dev/null
 %postun libs -p /sbin/ldconfig
 
 %files libs
-%{_kde4_libdir}/libdigikamcore.so.2*
-%{_kde4_libdir}/libdigikamdatabase.so.2*
+%{_kde4_libdir}/libdigikamcore.so.3*
+%{_kde4_libdir}/libdigikamdatabase.so.3*
 
 %post -n libkface -p /sbin/ldconfig
 %postun -n libkface -p /sbin/ldconfig
@@ -367,6 +370,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_appsdir}/cmake/modules/FindKface.cmake
 %{_libdir}/pkgconfig/libkface.pc
 
+%if 0%{?fedora}
 %post -n libkgeomap -p /sbin/ldconfig
 %postun -n libkgeomap -p /sbin/ldconfig
 
@@ -379,6 +383,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/libkgeomap.so
 %{_kde4_appsdir}/cmake/modules/FindKGeoMap.cmake
 %{_libdir}/pkgconfig/libkgeomap.pc
+%endif
 
 %post -n libmediawiki -p /sbin/ldconfig
 %postun -n libmediawiki -p /sbin/ldconfig
@@ -465,7 +470,12 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_vkontakte.so
 %{_kde4_libdir}/kde4/kipiplugin_yandexfotki.so
 %{_kde4_libdir}/kde4/kipiplugin_wikimedia.so
+%{_kde4_libdir}/kde4/kipiplugin_dlnaexport.so
+# Plugin not yet ready for production
+#{_kde4_libdir}/kde4/kipiplugin_photivointegration.so
+%{_kde4_libdir}/kde4/kipiplugin_videoslideshow.so
 %{_kde4_appsdir}/kipi/tips
+%{_kde4_appsdir}/kipi/*rc
 %{_kde4_appsdir}/gpssync/
 %{_kde4_appsdir}/kipiplugin_flashexport/
 %{_kde4_appsdir}/kipiplugin_galleryexport/
@@ -474,6 +484,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_appsdir}/kipiplugin_panorama/
 %{_kde4_appsdir}/kipiplugin_piwigoexport/
 %{_kde4_appsdir}/kipiplugin_printimages/
+%{_kde4_appsdir}/kipiplugin_dlnaexport/
 %{_kde4_datadir}/applications/kde4/dngconverter.desktop
 %{_kde4_datadir}/applications/kde4/kipiplugins.desktop
 %{_kde4_datadir}/applications/kde4/expoblending.desktop
@@ -501,18 +512,49 @@ update-desktop-database -q &> /dev/null
 %postun -n kipi-plugins-libs -p /sbin/ldconfig
 
 %files -n kipi-plugins-libs
-%{_kde4_libdir}/libkipiplugins.so.2*
+%{_kde4_libdir}/libkipiplugins.so.3*
 
 
 %changelog
-* Thu Dec 13 2012 Rex Dieter <rdieter@fedoraproject.org> 2.9.0-4
-- cleanup, remove old conditional, Conflicts
+* Thu Jan 3 2013 Lukáš Tinkl <ltinkl@redhat.com> -  - 3.0.0-0.14.rc
+- Resolves #891515, build marble deps on Fedora only
 
-* Thu Dec 13 2012 Rex Dieter <rdieter@fedoraproject.org> 2.9.0-3
-- disable broken nepomuk support (#832483)
+* Sat Dec 29 2012 Alexey Kurov <nucleo@fedoraproject.org> - 3.0.0-0.13.rc
+- digikam-3.0.0-rc
+- disable local kdegraphics build enabled in rc by default
 
-* Mon Nov 26 2012 Rex Dieter <rdieter@fedoraproject.org> 2.9.0-2
+* Thu Dec 13 2012 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-0.12.beta3
+- cleanup, remove old conditionals, Conflicts
+
+* Tue Dec 04 2012 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-0.11.beta3
+- rebuild (marble)
+
+* Tue Nov 27 2012 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-0.10.beta3
+- rebuild (qjson)
+
+* Fri Nov 23 2012 Alexey Kurov <nucleo@fedoraproject.org> - 3.0.0-0.9.beta3
+- rebuild for qjson-0.8.0
+
+* Sun Nov 11 2012 Alexey Kurov <nucleo@fedoraproject.org> - 3.0.0-0.8.beta3
+- digikam-3.0.0-beta3
+
+* Mon Nov 05 2012 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-0.6.beta2
 - rebuild (opencv)
+
+* Wed Oct 24 2012 Alexey Kurov <nucleo@fedoraproject.org> - 3.0.0-0.5.beta2
+- rebuild for libjpeg8
+
+* Sat Oct 13 2012 Alexey Kurov <nucleo@fedoraproject.org> - 3.0.0-0.4.beta2
+- digikam-3.0.0-beta2
+
+* Wed Sep 26 2012 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-0.3.beta1a
+- rebuild for updated FindKipi.cmake in kdelibs (kde#307213)
+
+* Sat Sep 22 2012 Alexey Kurov <nucleo@fedoraproject.org> - 3.0.0-0.2.beta1a
+- rebuild for updated FindKipi.cmake in kdelibs (kde#307213)
+
+* Fri Sep 21 2012 Alexey Kurov <nucleo@fedoraproject.org> - 3.0.0-0.1.beta1a
+- digikam-3.0.0-beta1a
 
 * Sun Sep  2 2012 Alexey Kurov <nucleo@fedoraproject.org> - 2.9.0-1
 - digikam-2.9.0
