@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 3.0.0
-Release: 0.13.%{pre}%{?dist}
+Release: 0.14.%{pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -28,8 +28,10 @@ BuildRequires: atlas-devel
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
 BuildRequires: gettext
+%if 0%{?fedora}
 # marble integration, http://bugzilla.redhat.com/470578
 BuildRequires: marble-devel >= 1:4.6.80 
+%endif
 # updated FindKipi.cmake https://bugs.kde.org/show_bug.cgi?id=307213
 BuildRequires: kdelibs4-devel >= 4.9.1-4
 BuildRequires: kdepimlibs-devel
@@ -121,6 +123,7 @@ Summary: Development files for libkface
 %description -n libkface-devel
 %{summary}.
 
+%if 0%{?fedora}
 %package -n libkgeomap
 Summary: A world map library
 Requires: marble%{?_kde4_version: >= 1:%{_kde4_version}}
@@ -131,6 +134,7 @@ Requires: marble%{?_kde4_version: >= 1:%{_kde4_version}}
 Summary: Development files for libkgeomap
 %description -n libkgeomap-devel
 %{summary}.
+%endif
 
 %package -n libmediawiki
 Summary: a MediaWiki C++ interface
@@ -366,6 +370,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_appsdir}/cmake/modules/FindKface.cmake
 %{_libdir}/pkgconfig/libkface.pc
 
+%if 0%{?fedora}
 %post -n libkgeomap -p /sbin/ldconfig
 %postun -n libkgeomap -p /sbin/ldconfig
 
@@ -378,6 +383,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/libkgeomap.so
 %{_kde4_appsdir}/cmake/modules/FindKGeoMap.cmake
 %{_libdir}/pkgconfig/libkgeomap.pc
+%endif
 
 %post -n libmediawiki -p /sbin/ldconfig
 %postun -n libmediawiki -p /sbin/ldconfig
@@ -510,6 +516,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Thu Jan 3 2013 Lukáš Tinkl <ltinkl@redhat.com> -  - 3.0.0-0.14.rc
+- Resolves #891515, build marble deps on Fedora only
+
 * Sat Dec 29 2012 Alexey Kurov <nucleo@fedoraproject.org> - 3.0.0-0.13.rc
 - digikam-3.0.0-rc
 - disable local kdegraphics build enabled in rc by default
