@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 3.0.0
-Release: 0.14.%{pre}%{?dist}
+Release: 0.15.%{pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -516,6 +516,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Fri Jan 18 2013 Adam Tkac <atkac redhat com> - 3.0.0-0.15.rc
+- rebuild due to "jpeg8-ABI" feature drop
+
 * Thu Jan 3 2013 Lukáš Tinkl <ltinkl@redhat.com> -  - 3.0.0-0.14.rc
 - Resolves #891515, build marble deps on Fedora only
 
