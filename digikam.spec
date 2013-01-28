@@ -78,7 +78,7 @@ Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
 # http://bugzilla.redhat.com/761184
 Requires: kcm_colors
 # better default access to mtp-enabled devices
-Requires; kio_mtp
+Requires: kio_mtp
 
 %description
 digiKam is an easy to use and powerful digital photo management application,
