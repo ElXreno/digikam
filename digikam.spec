@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 3.0.0
-Release: 0.15.%{pre}%{?dist}
+Release: 0.16.%{pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -77,6 +77,8 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
 # http://bugzilla.redhat.com/761184
 Requires: kcm_colors
+# better default access to mtp-enabled devices
+Requires; kio_mtp
 
 %description
 digiKam is an easy to use and powerful digital photo management application,
@@ -516,6 +518,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Jan 28 2013 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-0.16.rc
+- Requires: kio_mtp
+
 * Fri Jan 18 2013 Adam Tkac <atkac redhat com> - 3.0.0-0.15.rc
 - rebuild due to "jpeg8-ABI" feature drop
 
