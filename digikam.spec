@@ -1,13 +1,13 @@
-%define pre rc
+#define pre rc
 
 Name:	 digikam
 Version: 3.0.0
-Release: 0.16.%{pre}%{?dist}
+Release: 1%{pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
 URL:	 http://www.digikam.org/
-Source0: http://download.kde.org/unstable/digikam/digikam-%{version}%{?pre:-%{pre}}.tar.bz2
+Source0: http://download.kde.org/stable/digikam/digikam-%{version}%{?pre:-%{pre}}.tar.bz2
 
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
 # TODO: upstream me
@@ -518,6 +518,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Fri Feb  8 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.0.0-1
+- digikam-3.0.0
+
 * Mon Jan 28 2013 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-0.16.rc
 - Requires: kio_mtp
 
