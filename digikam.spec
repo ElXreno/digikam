@@ -69,6 +69,9 @@ BuildRequires: pkgconfig(QJson)
 BuildRequires: pkgconfig(QtGStreamer-0.10)
 BuildRequires: pkgconfig(ImageMagick)
 BuildRequires: herqq-devel
+# Panorama plugin requires flex and bison
+BuildRequires: flex
+BuildRequires: bison
 
 # when lib(-devel) subpkgs were split
 Obsoletes: digikam-devel < 2.0.0-2
@@ -520,6 +523,7 @@ update-desktop-database -q &> /dev/null
 %changelog
 * Fri Feb  8 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.0.0-1
 - digikam-3.0.0
+- BR: flex bison for Panorama plugin
 
 * Mon Jan 28 2013 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-0.16.rc
 - Requires: kio_mtp
