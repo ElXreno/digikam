@@ -1,13 +1,13 @@
-%define pre rc
+#define pre rc
 
 Name:	 digikam
 Version: 3.0.0
-Release: 0.14.%{pre}%{?dist}
+Release: 1%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
 URL:	 http://www.digikam.org/
-Source0: http://download.kde.org/unstable/digikam/digikam-%{version}%{?pre:-%{pre}}.tar.bz2
+Source0: http://download.kde.org/stable/digikam/digikam-%{version}%{?pre:-%{pre}}.tar.bz2
 
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
 # TODO: upstream me
@@ -69,6 +69,9 @@ BuildRequires: pkgconfig(QJson)
 BuildRequires: pkgconfig(QtGStreamer-0.10)
 BuildRequires: pkgconfig(ImageMagick)
 BuildRequires: herqq-devel
+# Panorama plugin requires flex and bison
+BuildRequires: flex
+BuildRequires: bison
 
 # when lib(-devel) subpkgs were split
 Obsoletes: digikam-devel < 2.0.0-2
@@ -77,6 +80,8 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
 # http://bugzilla.redhat.com/761184
 Requires: kcm_colors
+# better default access to mtp-enabled devices
+Requires: kio_mtp
 
 %description
 digiKam is an easy to use and powerful digital photo management application,
@@ -516,6 +521,16 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Fri Feb  8 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.0.0-1
+- digikam-3.0.0
+- BR: flex bison for Panorama plugin
+
+* Mon Jan 28 2013 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-0.16.rc
+- Requires: kio_mtp
+
+* Fri Jan 18 2013 Adam Tkac <atkac redhat com> - 3.0.0-0.15.rc
+- rebuild due to "jpeg8-ABI" feature drop
+
 * Thu Jan 3 2013 Lukáš Tinkl <ltinkl@redhat.com> -  - 3.0.0-0.14.rc
 - Resolves #891515, build marble deps on Fedora only
 
