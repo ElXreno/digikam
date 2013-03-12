@@ -1,8 +1,8 @@
 #define pre rc
 
 Name:	 digikam
-Version: 3.0.0
-Release: 2%{?pre}%{?dist}
+Version: 3.1.0
+Release: 1%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -521,6 +521,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue Mar 12 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.1.0-1
+- digikam-3.1.0
+
 * Wed Mar 06 2013 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-2
 - rebuild (marble)
 
