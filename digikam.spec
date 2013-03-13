@@ -20,6 +20,7 @@ Source1: digikam-import.desktop
 Patch0: digikam-2.5.0-clapack-atlas.patch
 
 ## upstreamable patches
+Patch50: digikam-3.1.0-htmlexport.patch
 
 ## upstream patches
 
@@ -48,8 +49,7 @@ BuildRequires: pkgconfig(libpng) >= 1.2.7
 BuildRequires: pkgconfig(libkdcraw) >= 2.2.0
 BuildRequires: pkgconfig(libkexiv2) >= 1.0.0
 BuildRequires: pkgconfig(libkipi) >= 2.0.0
-BuildRequires: pkgconfig(sqlite3)
-BuildRequires: mysql-devel mysql-server
+BuildRequires: mysql-server
 BuildRequires: pkgconfig(exiv2)
 ## DNG converter
 BuildRequires: expat-devel
@@ -221,6 +221,7 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .clapack-atlas
+%patch50 -p1 -b .htmlexport
 
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
@@ -523,6 +524,7 @@ update-desktop-database -q &> /dev/null
 %changelog
 * Tue Mar 12 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.1.0-1
 - digikam-3.1.0
+- drop BR: pkgconfig(sqlite3) mysql-devel
 
 * Wed Mar 06 2013 Rex Dieter <rdieter@fedoraproject.org> 3.0.0-2
 - rebuild (marble)
