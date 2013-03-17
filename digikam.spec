@@ -2,7 +2,7 @@
 
 Name:	 digikam
 Version: 3.1.0
-Release: 1%{?pre}%{?dist}
+Release: 2%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -522,6 +522,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sun Mar 17 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.1.0-2
+- rebuild for ImageMagick-6.8.3.9
+
 * Tue Mar 12 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.1.0-1
 - digikam-3.1.0
 - drop BR: pkgconfig(sqlite3) mysql-devel
