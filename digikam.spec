@@ -41,7 +41,7 @@ BuildRequires: libtiff-devel
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(jasper)
 BuildRequires: pkgconfig(lcms2)
-BuildRequires: pkgconfig(lensfun)
+BuildRequires: pkgconfig(lensfun) >= 0.2.6
 BuildRequires: pkgconfig(libgphoto2_port)
 BuildRequires: pkgconfig(lqr-1)
 BuildRequires: pkgconfig(libpgf) >= 6.11.42
