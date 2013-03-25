@@ -86,8 +86,10 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
 # http://bugzilla.redhat.com/761184
 Requires: kcm_colors
+%if 0%{?fedora} || 0%{?rhel} > 6
 # better default access to mtp-enabled devices
 Requires: kio_mtp
+%endif
 
 %description
 digiKam is an easy to use and powerful digital photo management application,
@@ -173,7 +175,9 @@ Requires: kipi-plugins-libs%{?_isa} = %{version}-%{release}
 ## jpeglossless plugin
 Requires: ImageMagick
 ## expoblending
+%if 0%{?fedora} || 0%{?rhel} > 6
 Requires: hugin-base
+%endif
 %description -n kipi-plugins
 This package contains plugins to use with Kipi, the KDE Image Plugin
 Interface.  Currently implemented plugins are:
@@ -243,7 +247,7 @@ pushd %{_target_platform}
 %{cmake_kde4} -DENABLE_LCMS2=ON -DDIGIKAMSC_USE_PRIVATE_KDEGRAPHICS=OFF ..
 popd
 
-make %{?_smp_mflags} -C %{_target_platform} VERBOSE=
+make %{?_smp_mflags} -C %{_target_platform}
 
 
 %install
