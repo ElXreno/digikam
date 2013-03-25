@@ -1,0 +1,123 @@
+diff -up digikam-3.1.0/core/libs/dimg/filters/nr/libopencv.h.opencv20 digikam-3.1.0/core/libs/dimg/filters/nr/libopencv.h
+--- digikam-3.1.0/core/libs/dimg/filters/nr/libopencv.h.opencv20	2013-03-11 03:24:28.000000000 -0500
++++ digikam-3.1.0/core/libs/dimg/filters/nr/libopencv.h	2013-03-24 20:15:32.499498390 -0500
+@@ -28,7 +28,7 @@
+ 
+ // OpenCV includes
+ 
+-#include <opencv2/core/version.hpp>
++#include <cvver.h>
+ 
+ #define OPENCV_MAKE_VERSION(major,minor,patch) (((major) << 16) | ((minor) << 8) | (patch))
+ #define OPENCV_VERSION                         OPENCV_MAKE_VERSION(CV_MAJOR_VERSION,CV_MINOR_VERSION,CV_SUBMINOR_VERSION)
+diff -up digikam-3.1.0/extra/kipi-plugins/removeredeyes/plugin/libopencv.h.opencv20 digikam-3.1.0/extra/kipi-plugins/removeredeyes/plugin/libopencv.h
+--- digikam-3.1.0/extra/kipi-plugins/removeredeyes/plugin/libopencv.h.opencv20	2013-03-11 03:24:07.000000000 -0500
++++ digikam-3.1.0/extra/kipi-plugins/removeredeyes/plugin/libopencv.h	2013-03-24 20:05:41.132932117 -0500
+@@ -35,7 +35,7 @@
+ 
+ // OpenCV includes
+ 
+-#include <opencv2/core/version.hpp>
++#include <cvver.h>
+ 
+ #define OPENCV_MAKE_VERSION(major,minor,patch) (((major) << 16) | ((minor) << 8) | (patch))
+ #define OPENCV_VERSION                         OPENCV_MAKE_VERSION(CV_MAJOR_VERSION,CV_MINOR_VERSION,CV_SUBMINOR_VERSION)
+diff -up digikam-3.1.0/extra/libkface/libkface/database.cpp.opencv20 digikam-3.1.0/extra/libkface/libkface/database.cpp
+--- digikam-3.1.0/extra/libkface/libkface/database.cpp.opencv20	2013-03-11 03:24:20.000000000 -0500
++++ digikam-3.1.0/extra/libkface/libkface/database.cpp	2013-03-24 20:05:41.132932117 -0500
+@@ -80,7 +80,7 @@ public:
+         }
+         catch (cv::Exception& e)
+         {
+-            kError() << "cv::Exception:" << e.what();
++            kError() << "cv::Exception:" << e.code;
+         }
+         catch(...)
+         {
+@@ -108,7 +108,7 @@ public:
+         }
+         catch (cv::Exception& e)
+         {
+-            kError() << "cv::Exception:" << e.what();
++            kError() << "cv::Exception:" << e.code;
+         }
+         catch(...)
+         {
+@@ -148,7 +148,7 @@ Database::Database(InitFlags flags, cons
+     }
+     catch (cv::Exception& e)
+     {
+-        kError() << "cv::Exception:" << e.what();
++        kError() << "cv::Exception:" << e.code;
+     }
+     catch(...)
+     {
+@@ -190,7 +190,7 @@ QList<Face> Database::detectFaces(const 
+     }
+     catch (cv::Exception& e)
+     {
+-        kError() << "cv::Exception:" << e.what();
++        kError() << "cv::Exception:" << e.code;
+     }
+     catch(...)
+     {
+@@ -231,7 +231,7 @@ bool Database::updateFaces(QList<Face>& 
+     }
+     catch (cv::Exception& e)
+     {
+-        kError() << "cv::Exception:" << e.what();
++        kError() << "cv::Exception:" << e.code;
+     }
+     catch(...)
+     {
+@@ -278,7 +278,7 @@ QList<double> Database::recognizeFaces(Q
+     }
+     catch (cv::Exception& e)
+     {
+-        kError() << "cv::Exception:" << e.what();
++        kError() << "cv::Exception:" << e.code;
+     }
+     catch(...)
+     {
+diff -up digikam-3.1.0/extra/libkface/libkface/kfaceutils.cpp.opencv20 digikam-3.1.0/extra/libkface/libkface/kfaceutils.cpp
+--- digikam-3.1.0/extra/libkface/libkface/kfaceutils.cpp.opencv20	2013-03-11 03:24:20.000000000 -0500
++++ digikam-3.1.0/extra/libkface/libkface/kfaceutils.cpp	2013-03-24 20:05:41.132932117 -0500
+@@ -94,7 +94,7 @@ IplImage* KFaceUtils::QImage2GrayscaleIp
+     }
+     catch (cv::Exception& e)
+     {
+-        kError() << "Cannot allocate IplImage:" << e.what();
++        kError() << "Cannot allocate IplImage:" << e.code;
+         return 0;
+     }
+     catch(...)
+@@ -132,7 +132,7 @@ IplImage* KFaceUtils::Data2GrayscaleIplI
+     }
+     catch (cv::Exception& e)
+     {
+-        kError() << "Cannot allocate IplImage:" << e.what();
++        kError() << "Cannot allocate IplImage:" << e.code;
+         return 0;
+     }
+     catch(...)
+@@ -229,7 +229,7 @@ QImage KFaceUtils::IplImage2QImage(const
+     }
+     catch (cv::Exception& e)
+     {
+-        kError() << "Cannot convert OpenCV Image to QImage:" << e.what();
++        kError() << "Cannot convert OpenCV Image to QImage:" << e.code;
+     }
+     catch(...)
+     {
+diff -up digikam-3.1.0/extra/libkface/libkface/libopencv.h.opencv20 digikam-3.1.0/extra/libkface/libkface/libopencv.h
+--- digikam-3.1.0/extra/libkface/libkface/libopencv.h.opencv20	2013-03-11 03:24:20.000000000 -0500
++++ digikam-3.1.0/extra/libkface/libkface/libopencv.h	2013-03-24 20:05:41.133932105 -0500
+@@ -28,7 +28,7 @@
+ 
+ // OpenCV includes
+ 
+-#include <opencv2/core/version.hpp>
++#include <cvver.h>
+ 
+ #define OPENCV_MAKE_VERSION(major,minor,patch) (((major) << 16) | ((minor) << 8) | (patch))
+ #define OPENCV_VERSION                         OPENCV_MAKE_VERSION(CV_MAJOR_VERSION,CV_MINOR_VERSION,CV_SUBMINOR_VERSION)

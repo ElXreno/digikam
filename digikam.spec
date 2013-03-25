@@ -1,5 +1,9 @@
 #define pre rc
 
+%if 0%{?fedora} || 0%{?rhel} > 6
+%define videoslideshow 1
+%endif
+
 Name:	 digikam
 Version: 3.1.0
 Release: 2%{?pre}%{?dist}
@@ -21,6 +25,8 @@ Patch0: digikam-2.5.0-clapack-atlas.patch
 
 ## upstreamable patches
 Patch50: digikam-3.1.0-htmlexport.patch
+# fix build against opencv-2.0
+Patch51:  digikam-3.1.0-opencv20.patch
 
 ## upstream patches
 
@@ -29,10 +35,8 @@ BuildRequires: atlas-devel
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
 BuildRequires: gettext
-%if 0%{?fedora}
 # marble integration, http://bugzilla.redhat.com/470578
 BuildRequires: marble-devel >= 1:4.6.80 
-%endif
 # updated FindKipi.cmake https://bugs.kde.org/show_bug.cgi?id=307213
 BuildRequires: kdelibs4-devel >= 4.9.1-4
 BuildRequires: kdepimlibs-devel
@@ -65,9 +69,11 @@ BuildRequires: pkgconfig(opencv)
 BuildRequires: pkgconfig(qca2)
 ## debianscreenshorts
 BuildRequires: pkgconfig(QJson) 
-
+%if 0%{?videoslideshow}
+## VideoSlideShow
 BuildRequires: pkgconfig(QtGStreamer-0.10)
 BuildRequires: pkgconfig(ImageMagick)
+%endif
 BuildRequires: herqq-devel
 # Panorama plugin requires flex and bison
 BuildRequires: flex
@@ -128,7 +134,6 @@ Summary: Development files for libkface
 %description -n libkface-devel
 %{summary}.
 
-%if 0%{?fedora}
 %package -n libkgeomap
 Summary: A world map library
 Requires: marble%{?_kde4_version: >= 1:%{_kde4_version}}
@@ -139,7 +144,6 @@ Requires: marble%{?_kde4_version: >= 1:%{_kde4_version}}
 Summary: Development files for libkgeomap
 %description -n libkgeomap-devel
 %{summary}.
-%endif
 
 %package -n libmediawiki
 Summary: a MediaWiki C++ interface
@@ -223,6 +227,10 @@ BuildArch: noarch
 %patch0 -p1 -b .clapack-atlas
 %patch50 -p1 -b .htmlexport
 
+%if 0%{?rhel} == 6
+%patch51 -p1 -b .opencv20
+%endif
+
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
 mv cmake/modules/FindKipi.cmake cmake/modules/FindKipi.cmake.ORIG
@@ -235,7 +243,7 @@ pushd %{_target_platform}
 %{cmake_kde4} -DENABLE_LCMS2=ON -DDIGIKAMSC_USE_PRIVATE_KDEGRAPHICS=OFF ..
 popd
 
-make %{?_smp_mflags} -C %{_target_platform}
+make %{?_smp_mflags} -C %{_target_platform} VERBOSE=
 
 
 %install
@@ -376,7 +384,6 @@ update-desktop-database -q &> /dev/null
 %{_kde4_appsdir}/cmake/modules/FindKface.cmake
 %{_libdir}/pkgconfig/libkface.pc
 
-%if 0%{?fedora}
 %post -n libkgeomap -p /sbin/ldconfig
 %postun -n libkgeomap -p /sbin/ldconfig
 
@@ -389,7 +396,6 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/libkgeomap.so
 %{_kde4_appsdir}/cmake/modules/FindKGeoMap.cmake
 %{_libdir}/pkgconfig/libkgeomap.pc
-%endif
 
 %post -n libmediawiki -p /sbin/ldconfig
 %postun -n libmediawiki -p /sbin/ldconfig
@@ -479,7 +485,9 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_dlnaexport.so
 # Plugin not yet ready for production
 #{_kde4_libdir}/kde4/kipiplugin_photivointegration.so
+%if 0%{?videoslideshow}
 %{_kde4_libdir}/kde4/kipiplugin_videoslideshow.so
+%endif
 %{_kde4_appsdir}/kipi/tips
 %{_kde4_appsdir}/kipi/*rc
 %{_kde4_appsdir}/gpssync/
