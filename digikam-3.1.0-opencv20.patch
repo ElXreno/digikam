@@ -1,6 +1,6 @@
 diff -up digikam-3.1.0/core/libs/dimg/filters/nr/libopencv.h.opencv20 digikam-3.1.0/core/libs/dimg/filters/nr/libopencv.h
---- digikam-3.1.0/core/libs/dimg/filters/nr/libopencv.h.opencv20	2013-03-11 03:24:28.000000000 -0500
-+++ digikam-3.1.0/core/libs/dimg/filters/nr/libopencv.h	2013-03-24 20:15:32.499498390 -0500
+--- digikam-3.1.0/core/digikam/utils/libopencv.h.opencv20	2013-03-11 03:24:28.000000000 -0500
++++ digikam-3.1.0/core/digikam/utils/libopencv.h	2013-03-24 20:15:32.499498390 -0500
 @@ -28,7 +28,7 @@
  
  // OpenCV includes

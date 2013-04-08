@@ -1,12 +1,12 @@
-#define pre rc
+%define pre beta1
 
 %if 0%{?fedora} || 0%{?rhel} > 6
 %define videoslideshow 1
 %endif
 
 Name:	 digikam
-Version: 3.1.0
-Release: 2%{?pre}%{?dist}
+Version: 3.2.0
+Release: 0.1.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -17,21 +17,14 @@ Source0: http://download.kde.org/stable/digikam/digikam-%{version}%{?pre:-%{pre}
 # TODO: upstream me
 Source1: digikam-import.desktop
 
-# fix FindCLAPACK.cmake to search %%{_libdir}/atlas
-# also patch matrix.cpp for the ATLAS clapack API
-# The latter part is probably not upstreamable as is, and the former on its own
-# isn't helpful.
-Patch0: digikam-2.5.0-clapack-atlas.patch
 
 ## upstreamable patches
-Patch50: digikam-3.1.0-htmlexport.patch
 # fix build against opencv-2.0
 Patch51:  digikam-3.1.0-opencv20.patch
 
 ## upstream patches
 
-# for clapack, see also the clapack-atlas patch
-BuildRequires: atlas-devel
+BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
 BuildRequires: gettext
@@ -228,9 +221,6 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
-%patch0 -p1 -b .clapack-atlas
-%patch50 -p1 -b .htmlexport
-
 %if 0%{?rhel} == 6
 %patch51 -p1 -b .opencv20
 %endif
@@ -244,7 +234,7 @@ mv cmake/modules/FindKipi.cmake cmake/modules/FindKipi.cmake.ORIG
 
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kde4} -DENABLE_LCMS2=ON -DDIGIKAMSC_USE_PRIVATE_KDEGRAPHICS=OFF ..
+%{cmake_kde4} -DENABLE_LCMS2=ON ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -534,6 +524,10 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Apr  8 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.2.0-0.1.beta1
+- digikam-3.2.0-beta1
+- BR: eigen3-devel instead of atlas-devel, drop clapack patch
+
 * Sun Mar 17 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.1.0-2
 - rebuild for ImageMagick-6.8.3.9
 
