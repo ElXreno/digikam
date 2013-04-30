@@ -477,6 +477,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_yandexfotki.so
 %{_kde4_libdir}/kde4/kipiplugin_wikimedia.so
 %{_kde4_libdir}/kde4/kipiplugin_dlnaexport.so
+%{_kde4_libdir}/kde4/kipiplugin_jalbumexport.so
 # Plugin not yet ready for production
 #{_kde4_libdir}/kde4/kipiplugin_photivointegration.so
 %if 0%{?videoslideshow}
