@@ -1,4 +1,4 @@
-%define pre beta1
+%define pre beta2
 
 %if 0%{?fedora} || 0%{?rhel} > 6
 %define videoslideshow 1
@@ -6,7 +6,7 @@
 
 Name:	 digikam
 Version: 3.2.0
-Release: 0.1.%{?pre}%{?dist}
+Release: 0.2.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -524,6 +524,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed May  1 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.2.0-0.2.beta2
+- digikam-3.2.0-beta2
+
 * Mon Apr  8 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.2.0-0.1.beta1
 - digikam-3.2.0-beta1
 - BR: eigen3-devel instead of atlas-devel, drop clapack patch
