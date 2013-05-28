@@ -25,7 +25,7 @@ Patch51:  digikam-3.1.0-opencv20.patch
 ## upstream patches
 
 # Ensure that full screen settings is loaded at initialization of AlbumGUI.
-https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/439316380574b6dc8b3c3ed37efa1e74656c342f
+# https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/439316380574b6dc8b3c3ed37efa1e74656c342f
 Patch100: digikam-3.2.0-fullscreen.patch
 
 BuildRequires: eigen3-devel
