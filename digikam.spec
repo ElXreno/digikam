@@ -6,7 +6,7 @@
 
 Name:	 digikam
 Version: 3.2.0
-Release: 1%{?pre}%{?dist}
+Release: 2%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -23,6 +23,10 @@ Source1: digikam-import.desktop
 Patch51:  digikam-3.1.0-opencv20.patch
 
 ## upstream patches
+
+# Ensure that full screen settings is loaded at initialization of AlbumGUI.
+https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/439316380574b6dc8b3c3ed37efa1e74656c342f
+Patch100: digikam-3.2.0-fullscreen.patch
 
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
@@ -224,6 +228,10 @@ BuildArch: noarch
 %if 0%{?rhel} == 6
 %patch51 -p1 -b .opencv20
 %endif
+
+pushd core
+%patch100 -p1 -b .fullscreen
+popd
 
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
@@ -525,6 +533,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed May 29 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.2.0-2
+- fix fullscreen settings loading kde#320016
+
 * Tue May 14 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.2.0-1
 - digikam-3.2.0
 
