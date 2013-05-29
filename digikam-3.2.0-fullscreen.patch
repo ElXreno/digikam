@@ -191,3 +191,73 @@ index 166de47..8039650 100644
      d->fullScreenSettings->readSettings(group);
  }
  
+diff --git a/libs/widgets/common/dxmlguiwindow.cpp b/libs/widgets/common/dxmlguiwindow.cpp
+index ebec2dd..b577d68 100644
+--- a/libs/widgets/common/dxmlguiwindow.cpp
++++ b/libs/widgets/common/dxmlguiwindow.cpp
+@@ -178,7 +178,8 @@ void DXmlGuiWindow::slotToggleFullScreen(bool set)
+ 
+         // restore sidebars
+ 
+-        showSideBars(true);
++        if ((d->fsOptions & FS_SIDEBARS) && d->fullScreenHideSideBars)
++            showSideBars(true);
+ 
+         // restore thummbbar
+ 
+diff --git a/libs/widgets/common/sidebar.cpp b/libs/widgets/common/sidebar.cpp
+index 4df7e92..2dfee0c 100644
+--- a/libs/widgets/common/sidebar.cpp
++++ b/libs/widgets/common/sidebar.cpp
+@@ -44,6 +44,7 @@
+ #include <kdeversion.h>
+ #include <kglobal.h>
+ #include <kiconloader.h>
++#include <kdebug.h>
+ 
+ namespace Digikam
+ {
+@@ -85,7 +86,9 @@ public:
+ 
+     bool                          minimizedDefault;
+     bool                          minimized;
+-    bool                          isMinimized;      // Backup of minimized status (used with Fullscreen)
++    bool                          isMinimized;      // Backup of shrinked status before backup(), restored by restore()
++                                                    // NOTE: when sidebar is hidden, only icon bar is affected. If sidebar view is 
++                                                    // visible, this one must be shrink and restored accordingly.
+ 
+     int                           tabs;
+     int                           activeTab;
+@@ -182,12 +185,11 @@ void Sidebar::doSaveState()
+ 
+ void Sidebar::backup()
+ {
++    // backup preview state of sidebar view (shrink or not)
+     d->isMinimized = d->minimized;
+-
+-    if (!d->isMinimized)
+-    {
+-        shrink();
+-    }
++    
++    // In all case, shrink sidebar view 
++    shrink();
+ 
+     KMultiTabBar::hide();
+ }
+@@ -205,12 +207,13 @@ void Sidebar::backup(const QList<QWidget*> thirdWidgetsToBackup, QList<int> *siz
+ 
+ void Sidebar::restore()
+ {
++    KMultiTabBar::show();
++
++    // restore preview state of sidebar view, stored in backup()
+     if (!d->isMinimized)
+     {
+         expand();
+     }
+-
+-    KMultiTabBar::show();
+ }
+ 
+ void Sidebar::restore(const QList<QWidget*> thirdWidgetsToRestore, const QList<int>& sizes)

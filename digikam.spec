@@ -4,13 +4,13 @@
 %define videoslideshow 1
 %endif
 
-Name:	 digikam
+Name:    digikam
 Version: 3.2.0
-Release: 2%{?pre}%{?dist}
+Release: 3%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
-URL:	 http://www.digikam.org/
+URL:     http://www.digikam.org/
 Source0: http://download.kde.org/%{?pre:un}stable/digikam/digikam-%{version}%{?pre:-%{pre}}.tar.bz2
 
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
@@ -26,6 +26,7 @@ Patch51:  digikam-3.1.0-opencv20.patch
 
 # Ensure that full screen settings is loaded at initialization of AlbumGUI.
 # https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/439316380574b6dc8b3c3ed37efa1e74656c342f
+# https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/b8f20122e42acb5424cba7aff034101f068c5a90
 Patch100: digikam-3.2.0-fullscreen.patch
 
 BuildRequires: eigen3-devel
@@ -533,6 +534,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed May 29 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.2.0-3
+- fix sidebar in fullscreen mode kde#319876
+
 * Wed May 29 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.2.0-2
 - fix fullscreen settings loading kde#320016
 
@@ -830,7 +834,7 @@ update-desktop-database -q &> /dev/null
 * Sat Nov 14 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.9.beta6
 - digiKam not listed as a media handler for pictures in Nautilus (#516447)
 
-* Mon Nov 08 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.8.beta6
+* Sun Nov 08 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.8.beta6
 - digikam-1.0.0-beta6
 
 * Tue Oct 06 2009 Rex Dieter <rdieter@fedoraproject.org> - 1.0.0-0.7.beta5
@@ -937,7 +941,7 @@ update-desktop-database -q &> /dev/null
 - digikam-0.9.3-rc1
 - BR: kdelibs3-devel
 
-* Thu Nov 20 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.3-0.2.beta3
+* Tue Nov 20 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.3-0.2.beta3
 - digikam-0.9.3-beta3
 
 * Tue Nov 13 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 0.9.3-0.1.beta2
