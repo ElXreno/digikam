@@ -261,3 +261,85 @@ index 4df7e92..2dfee0c 100644
  }
  
  void Sidebar::restore(const QList<QWidget*> thirdWidgetsToRestore, const QList<int>& sizes)
+diff --git a/digikam/main/digikamapp.cpp b/digikam/main/digikamapp.cpp
+index 782e64c..c28014e 100644
+--- a/digikam/main/digikamapp.cpp
++++ b/digikam/main/digikamapp.cpp
+@@ -3028,7 +3028,7 @@ void DigikamApp::showThumbBar(bool visible)
+ 
+ bool DigikamApp::thumbbarVisibility() const
+ {
+-    return d->view->isThumbBarVisible();
++    return d->showBarAction->isChecked();
+ }
+ 
+ }  // namespace Digikam
+diff --git a/digikam/views/digikamview.cpp b/digikam/views/digikamview.cpp
+index f7242a0..475bfdf 100644
+--- a/digikam/views/digikamview.cpp
++++ b/digikam/views/digikamview.cpp
+@@ -1952,11 +1952,6 @@ void DigikamView::toggleShowBar(bool b)
+     d->stackedview->thumbBarDock()->showThumbBar(b);
+ }
+ 
+-bool DigikamView::isThumbBarVisible()
+-{
+-    return d->stackedview->thumbBarDock()->isVisible();
+-}
+-
+ void DigikamView::setRecurseAlbums(bool recursive)
+ {
+     d->iconView->imageAlbumModel()->setRecurseAlbums(recursive);
+diff --git a/digikam/views/digikamview.h b/digikam/views/digikamview.h
+index 669eac9..9229fa6 100644
+--- a/digikam/views/digikamview.h
++++ b/digikam/views/digikamview.h
+@@ -79,7 +79,6 @@ public:
+     void hideSideBars();
+     void setThumbSize(int size);
+     void toggleShowBar(bool);
+-    bool isThumbBarVisible();
+     void setRecurseAlbums(bool recursive);
+     void setRecurseTags(bool recursive);
+     void imageTransform(RotationMatrix::TransformationAction transform);
+diff --git a/utilities/importui/main/importui.cpp b/utilities/importui/main/importui.cpp
+index f136998..03b53bb 100644
+--- a/utilities/importui/main/importui.cpp
++++ b/utilities/importui/main/importui.cpp
+@@ -2588,7 +2588,7 @@ void ImportUI::showThumbBar(bool visible)
+ 
+ bool ImportUI::thumbbarVisibility() const
+ {
+-    return d->view->isThumbBarVisible();
++    return d->showBarAction->isChecked();
+ }
+ 
+ }  // namespace Digikam
+diff --git a/utilities/importui/views/importview.cpp b/utilities/importui/views/importview.cpp
+index fb30c48..a15728d 100644
+--- a/utilities/importui/views/importview.cpp
++++ b/utilities/importui/views/importview.cpp
+@@ -775,11 +775,6 @@ void ImportView::toggleShowBar(bool b)
+     d->StackedView->thumbBarDock()->showThumbBar(b);
+ }
+ 
+-bool ImportView::isThumbBarVisible()
+-{
+-    return d->StackedView->thumbBarDock()->isVisible();
+-}
+-
+ void ImportView::scrollTo(const QString& folder, const QString& file)
+ {
+     CamItemInfo info  = camItemInfo(folder, file);
+diff --git a/utilities/importui/views/importview.h b/utilities/importui/views/importview.h
+index 4b48970..42e01b1 100644
+--- a/utilities/importui/views/importview.h
++++ b/utilities/importui/views/importview.h
+@@ -58,7 +58,6 @@ public:
+     void hideSideBars();
+     void setThumbSize(int size);
+     void toggleShowBar(bool b);
+-    bool isThumbBarVisible();
+ 
+     void scrollTo(const QString& folder, const QString& file);
+ 
