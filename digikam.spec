@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 3.2.0
-Release: 4%{?pre}%{?dist}
+Release: 5%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -28,6 +28,7 @@ Patch51:  digikam-3.1.0-opencv20.patch
 # https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/439316380574b6dc8b3c3ed37efa1e74656c342f
 # https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/b8f20122e42acb5424cba7aff034101f068c5a90
 # https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/4f892fb62241940fd2a0ceeffa1d2302576611d8
+# https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/0cad3cfd24c841acc56eb11f4c548c3bcdc6193e
 Patch100: digikam-3.2.0-fullscreen.patch
 
 BuildRequires: eigen3-devel
@@ -535,6 +536,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Fri May 31 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.2.0-5
+- more fixes for bars hiding in fullscreen mode kde#319876
+
 * Thu May 30 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.2.0-4
 - fix thumbbar visibility after fullscreen mode kde#319876
 
