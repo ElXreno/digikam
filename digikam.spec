@@ -376,7 +376,7 @@ update-desktop-database -q &> /dev/null
 
 %files -n libkface
 %{_kde4_appsdir}/libkface/
-%{_kde4_libdir}/libkface.so.1*
+%{_kde4_libdir}/libkface.so.2*
 
 %files -n libkface-devel
 %{_kde4_includedir}/libkface/
