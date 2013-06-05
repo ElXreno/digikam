@@ -23,6 +23,8 @@ Source1: digikam-import.desktop
 Patch51:  digikam-3.1.0-opencv20.patch
 
 ## upstream patches
+# https://bugs.kde.org/show_bug.cgi?id=320714
+Patch100: 0001-explictly-mark-opentld-libs-static.patch
 
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
@@ -220,6 +222,10 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
+
+pushd extra/libkface
+%patch100 -p1 -b .0001
+popd
 
 %if 0%{?rhel} == 6
 %patch51 -p1 -b .opencv20

@@ -1,0 +1,41 @@
+From dd718f4948c106e67c15c9562832f8389ef3c338 Mon Sep 17 00:00:00 2001
+From: Rex Dieter <rdieter@math.unl.edu>
+Date: Wed, 5 Jun 2013 08:58:53 -0500
+Subject: [PATCH] explictly mark opentld libs static
+
+BUG: 320714
+---
+ OpenTLD/src/3rdparty/cvblobs/CMakeLists.txt | 3 ++-
+ OpenTLD/src/libopentld/CMakeLists.txt       | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/OpenTLD/src/3rdparty/cvblobs/CMakeLists.txt b/OpenTLD/src/3rdparty/cvblobs/CMakeLists.txt
+index 2ff52ac..5a1e025 100644
+--- a/OpenTLD/src/3rdparty/cvblobs/CMakeLists.txt
++++ b/OpenTLD/src/3rdparty/cvblobs/CMakeLists.txt
+@@ -1,6 +1,7 @@
+ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../../../../libkface)
+ 
+-ADD_LIBRARY(cvblobs blob.cpp
++ADD_LIBRARY(cvblobs STATIC
++                    blob.cpp
+                     BlobContour.cpp
+                     BlobOperators.cpp
+                     BlobProperties.cpp
+diff --git a/OpenTLD/src/libopentld/CMakeLists.txt b/OpenTLD/src/libopentld/CMakeLists.txt
+index b4bee3e..1e31d81 100644
+--- a/OpenTLD/src/libopentld/CMakeLists.txt
++++ b/OpenTLD/src/libopentld/CMakeLists.txt
+@@ -4,7 +4,8 @@ INCLUDE_DIRECTORIES(tld
+                     )
+ 
+ 
+-ADD_LIBRARY(opentld tld/Clustering.cpp
++ADD_LIBRARY(opentld STATIC
++                    tld/Clustering.cpp
+                     tld/DetectionResult.cpp
+                     tld/DetectorCascade.cpp
+                     tld/EnsembleClassifier.cpp
+-- 
+1.8.2.1
+
