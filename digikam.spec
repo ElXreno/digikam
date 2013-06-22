@@ -223,10 +223,6 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
-pushd extra/libkface
-%patch100 -p1 -b .0001
-popd
-
 %if 0%{?rhel} == 6
 %patch51 -p1 -b .opencv20
 %endif
