@@ -1,4 +1,4 @@
-%define pre beta1
+%define pre beta2
 
 %if 0%{?fedora} || 0%{?rhel} > 6
 %define videoslideshow 1
@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 3.3.0
-Release: 0.1.%{?pre}%{?dist}
+Release: 0.2.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -531,6 +531,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sat Jun 22 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.3.0-0.2.beta2
+- digikam-3.3.0-beta2
+
 * Tue Jun  4 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.3.0-0.1.beta1
 - digikam-3.3.0-beta1
 
