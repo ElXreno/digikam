@@ -503,7 +503,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_datadir}/kde4/services/kipiplugin*.desktop
 %{_kde4_iconsdir}/hicolor/*/actions/*
 %{_kde4_iconsdir}/hicolor/*/apps/photolayoutseditor*
-%{_kde4_iconsdir}/hicolor/*/apps/dngconverter*
+%{_kde4_iconsdir}/hicolor/*/apps/kipi-dngconverter*
 %{_kde4_iconsdir}/oxygen/*/apps/rawconverter*
 %{_kde4_libdir}/kde4/kipiplugin_expoblending.so
 %{_kde4_appsdir}/kipiplugin_expoblending/
