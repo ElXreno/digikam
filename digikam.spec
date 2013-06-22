@@ -501,6 +501,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_datadir}/applications/kde4/photolayoutseditor.desktop
 %{_kde4_datadir}/applications/kde4/scangui.desktop
 %{_kde4_datadir}/kde4/services/kipiplugin*.desktop
+%{_kde4_iconsdir}/hicolor/*/actions/*
 %{_kde4_iconsdir}/hicolor/*/apps/photolayoutseditor*
 %{_kde4_iconsdir}/hicolor/*/apps/kipi-*
 %{_kde4_iconsdir}/oxygen/*/apps/rawconverter*
