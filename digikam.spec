@@ -526,7 +526,7 @@ update-desktop-database -q &> /dev/null
 
 %changelog
 * Mon Jul  8 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.3.0-0.5.beta3
-- digikam-3.3.0-beta2
+- digikam-3.3.0-beta3
 
 * Fri Jun 28 2013 Rex Dieter <rdieter@fedoraproject.org> 3.3.0-0.4.beta2
 - rebuild (marble)
