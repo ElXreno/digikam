@@ -512,6 +512,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_photolayoutseditor.so
 %{_kde4_appsdir}/photolayoutseditor/
 %{_kde4_datadir}/templates/kipiplugins_photolayoutseditor/
+%{_kde4_datadir}/config.kcfg/photolayoutseditor.kcfg
 %{_kde4_datadir}/kde4/servicetypes/photolayoutseditor*.desktop
 
 %files -n kipi-plugins-doc -f kipi-plugins-doc.lang
