@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 3.3.0
-Release: 1%{?pre}%{?dist}
+Release: 1%{?pre}%{?dist}.2
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -525,6 +525,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Thu Sep 05 2013 Rex Dieter <rdieter@fedoraproject.org> 3.3.0-1.2
+- rebuild (kde-4.11.x)
+
 * Mon Aug  5 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.3.0-1
 - digikam-3.3.0
 
