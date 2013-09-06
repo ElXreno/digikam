@@ -39,6 +39,9 @@ BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(jasper)
 BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(lensfun) >= 0.2.6
+# libusb required for GPhoto2 support https://bugs.kde.org/268267
+# but libgphoto2 switched to libusbx https://bugzilla.redhat.com/997880
+BuildRequires: pkgconfig(libusb)
 BuildRequires: pkgconfig(libgphoto2_port)
 BuildRequires: pkgconfig(lqr-1)
 BuildRequires: pkgconfig(libpgf) >= 6.11.42
@@ -527,6 +530,7 @@ update-desktop-database -q &> /dev/null
 %changelog
 * Fri Sep  6 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.4.0-1
 - digikam-3.4.0
+- BuildRequires: pkgconfig(libusb)
 
 * Thu Sep 05 2013 Rex Dieter <rdieter@fedoraproject.org> 3.3.0-2
 - rebuild (kde-4.11.x)
