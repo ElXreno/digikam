@@ -5,7 +5,7 @@
 %endif
 
 Name:    digikam
-Version: 3.4.0
+Version: 3.5.0
 Release: 1%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
@@ -528,6 +528,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed Oct  9 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.5.0-1
+- digikam-3.5.0
+
 * Fri Sep  6 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.4.0-1
 - digikam-3.4.0
 - BuildRequires: pkgconfig(libusb)
