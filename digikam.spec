@@ -1,4 +1,3 @@
-#define pre beta3
 
 %if 0%{?fedora} || 0%{?rhel} > 6
 %define videoslideshow 1
@@ -6,7 +5,7 @@
 
 Name:    digikam
 Version: 3.5.0
-Release: 1%{?pre}%{?dist}
+Release: 2%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -21,6 +20,9 @@ Source1: digikam-import.desktop
 ## upstreamable patches
 # fix build against opencv-2.0
 Patch51:  digikam-3.1.0-opencv20.patch
+# do not install convenience/static libPropertyBrowser
+# https://bugs.kde.org/show_bug.cgi?id=319664
+Patch52:  digikam-3.5.0-no_libPropertyBrowser.patch
 
 ## upstream patches
 
@@ -309,7 +311,6 @@ kipiplugins.lang >> kipi-plugins.lang
 rm -fv %{buildroot}%{_kde4_libdir}/libdigikamcore.so
 rm -fv %{buildroot}%{_kde4_libdir}/libdigikamdatabase.so
 rm -fv %{buildroot}%{_kde4_libdir}/libkipiplugins.so
-rm -fv %{buildroot}%{_kde4_libdir}/libPropertyBrowser.a
 rm -fv %{buildroot}%{_kde4_datadir}/locale/*/LC_MESSAGES/libkipi.mo
 
 
@@ -528,6 +529,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Thu Oct 10 2013 Rex Dieter <rdieter@fedoraproject.org> 3.5.0-2
+- include (upstreamable) patch to omit libPropertyBrowser from packaging (kde#319664)
+
 * Wed Oct  9 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.5.0-1
 - digikam-3.5.0
 
