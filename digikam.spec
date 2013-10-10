@@ -229,6 +229,7 @@ BuildArch: noarch
 %if 0%{?rhel} == 6
 %patch51 -p1 -b .opencv20
 %endif
+%patch51 -p1 -b .no_libPropertyBrowser
 
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
