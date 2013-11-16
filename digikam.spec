@@ -5,7 +5,7 @@
 
 Name:    digikam
 Version: 3.5.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -530,6 +530,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sat Nov 16 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.5.0-3
+- rebuilt for libkdcraw-4.11.90
+
 * Thu Oct 10 2013 Rex Dieter <rdieter@fedoraproject.org> 3.5.0-2
 - include (upstreamable) patch to omit libPropertyBrowser from packaging (kde#319664)
 
