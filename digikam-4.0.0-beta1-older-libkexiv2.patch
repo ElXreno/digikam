@@ -1,0 +1,33 @@
+From: Gilles Caulier <caulier.gilles@gmail.com>
+Date: Mon, 02 Dec 2013 16:42:54 +0000
+Subject: support older libkexiv2 API to compile fine
+X-Git-Url: http://quickgit.kde.org/?p=digikam.git&a=commitdiff&h=c53994f0dbeea49a04aeec9298753a954cff427f
+---
+support older libkexiv2 API to compile fine
+---
+
+
+--- a/libs/widgets/metadata/exifwidget.cpp
++++ b/libs/widgets/metadata/exifwidget.cpp
+@@ -112,7 +112,7 @@
+     }
+ 
+     // Update all metadata contents.
+-    setMetadataMap(data.getExifTagsDataList());
++    setMetadataMap(data.getExifTagsDataList(QStringList()));
+     return true;
+ }
+ 
+
+--- a/libs/widgets/metadata/xmpwidget.cpp
++++ b/libs/widgets/metadata/xmpwidget.cpp
+@@ -123,7 +123,7 @@
+     }
+ 
+     // Update all metadata contents.
+-    setMetadataMap(data.getXmpTagsDataList());
++    setMetadataMap(data.getXmpTagsDataList(QStringList()));
+     return true;
+ }
+ 
+

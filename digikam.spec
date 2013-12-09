@@ -1,11 +1,12 @@
+%define pre beta1
 
 %if 0%{?fedora} || 0%{?rhel} > 6
 %define videoslideshow 1
 %endif
 
 Name:    digikam
-Version: 3.5.0
-Release: 4%{?dist}
+Version: 4.0.0
+Release: 0.1.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -20,11 +21,9 @@ Source1: digikam-import.desktop
 ## upstreamable patches
 # fix build against opencv-2.0
 Patch51:  digikam-3.1.0-opencv20.patch
-# do not install convenience/static libPropertyBrowser
-# https://bugs.kde.org/show_bug.cgi?id=319664
-Patch52:  digikam-3.5.0-no_libPropertyBrowser.patch
 
 ## upstream patches
+Patch100: digikam-4.0.0-beta1-older-libkexiv2.patch
 
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
@@ -229,7 +228,10 @@ BuildArch: noarch
 %if 0%{?rhel} == 6
 %patch51 -p1 -b .opencv20
 %endif
-%patch52 -p1 -b .no_libPropertyBrowser
+
+pushd core
+%patch100 -p1 -b .older-libkexiv2
+popd
 
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
@@ -453,10 +455,12 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_calendar.so
 %{_kde4_libdir}/kde4/kipiplugin_debianscreenshots.so
 %{_kde4_libdir}/kde4/kipiplugin_dngconverter.so
+%{_kde4_libdir}/kde4/kipiplugin_dropbox.so
 %{_kde4_libdir}/kde4/kipiplugin_facebook.so
 %{_kde4_libdir}/kde4/kipiplugin_flickrexport.so
 %{_kde4_libdir}/kde4/kipiplugin_flashexport.so
 %{_kde4_libdir}/kde4/kipiplugin_galleryexport.so
+%{_kde4_libdir}/kde4/kipiplugin_googledrive.so
 %{_kde4_libdir}/kde4/kipiplugin_gpssync.so
 %{_kde4_libdir}/kde4/kipiplugin_htmlexport.so
 %{_kde4_libdir}/kde4/kipiplugin_imageviewer.so
@@ -530,6 +534,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Dec  9 2013 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.1.beta1
+- digikam-4.0.0-beta1
+
 * Tue Dec 03 2013 Rex Dieter <rdieter@fedoraproject.org> - 3.5.0-4
 - rebuild (exiv2)
 
