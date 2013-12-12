@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 3.5.0
-Release: 1%{?pre}%{?dist}
+Release: 2%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -23,6 +23,8 @@ Source1: digikam-import.desktop
 Patch51:  digikam-3.1.0-opencv20.patch
 
 ## upstream patches
+# git 3d1a27f9
+Patch100: digikam-3.5.0-panorama-crasher.patch
 
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
@@ -227,6 +229,8 @@ BuildArch: noarch
 %if 0%{?rhel} == 6
 %patch51 -p1 -b .opencv20
 %endif
+
+%patch100 -p1 -b .panaroma-crasher
 
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
@@ -528,6 +532,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Thu Dec 12 2013 Jaroslav Reznik <jreznik@redhat.com> - 3.5.0-2
+- fix panorama crasher rhbz#1040922
+
 * Wed Oct  9 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.5.0-1
 - digikam-3.5.0
 
