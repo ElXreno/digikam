@@ -1,4 +1,4 @@
-%define pre beta1
+%define pre beta2
 
 %if 0%{?fedora} || 0%{?rhel} > 6
 %define videoslideshow 1
@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.0.0
-Release: 0.1.%{?pre}%{?dist}
+Release: 0.2.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -23,7 +23,6 @@ Source1: digikam-import.desktop
 Patch51:  digikam-3.1.0-opencv20.patch
 
 ## upstream patches
-Patch100: digikam-4.0.0-beta1-older-libkexiv2.patch
 
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
@@ -229,9 +228,6 @@ BuildArch: noarch
 %patch51 -p1 -b .opencv20
 %endif
 
-pushd core
-%patch100 -p1 -b .older-libkexiv2
-popd
 
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
@@ -534,6 +530,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue Jan 14 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.2.beta2
+- digikam-4.0.0-beta2
+
 * Mon Dec  9 2013 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.1.beta1
 - digikam-4.0.0-beta1
 
