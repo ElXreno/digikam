@@ -1,0 +1,35 @@
+--- digikam-4.0.0-beta4/doc-translated/et/CMakeLists.txt	2014-03-26 23:18:54.000000000 +0200
++++ digikam-4.0.0-beta4/doc-translated/et/CMakeLists.txt	2014-03-27 03:59:50.959137741 +0200
+@@ -1 +1 @@
+-kde4_create_handbook( index.docbook INSTALL_DESTINATION ${HTML_INSTALL_DIR}/et/ )
++kde4_create_handbook( index.docbook INSTALL_DESTINATION ${HTML_INSTALL_DIR}/digikam/ )
+--- digikam-4.0.0-beta4/doc-translated/it/CMakeLists.txt	2014-03-26 23:19:03.000000000 +0200
++++ digikam-4.0.0-beta4/doc-translated/it/CMakeLists.txt	2014-03-27 03:59:58.789057971 +0200
+@@ -1 +1 @@
+-kde4_create_handbook( index.docbook INSTALL_DESTINATION ${HTML_INSTALL_DIR}/it/ )
++kde4_create_handbook( index.docbook INSTALL_DESTINATION ${HTML_INSTALL_DIR}/digikam/ )
+--- digikam-4.0.0-beta4/doc-translated/nl/CMakeLists.txt	2014-03-26 23:19:17.000000000 +0200
++++ digikam-4.0.0-beta4/doc-translated/nl/CMakeLists.txt	2014-03-27 04:00:05.731987234 +0200
+@@ -1 +1 @@
+-kde4_create_handbook( index.docbook INSTALL_DESTINATION ${HTML_INSTALL_DIR}/nl/ )
++kde4_create_handbook( index.docbook INSTALL_DESTINATION ${HTML_INSTALL_DIR}/digikam/ )
+--- digikam-4.0.0-beta4/doc-translated/pt/CMakeLists.txt	2014-03-26 23:19:25.000000000 +0200
++++ digikam-4.0.0-beta4/doc-translated/pt/CMakeLists.txt	2014-03-27 04:00:14.031902672 +0200
+@@ -1 +1 @@
+-kde4_create_handbook( index.docbook INSTALL_DESTINATION ${HTML_INSTALL_DIR}/pt/ )
++kde4_create_handbook( index.docbook INSTALL_DESTINATION ${HTML_INSTALL_DIR}/digikam/ )
+--- digikam-4.0.0-beta4/doc-translated/pt_BR/CMakeLists.txt	2014-03-26 23:19:32.000000000 +0200
++++ digikam-4.0.0-beta4/doc-translated/pt_BR/CMakeLists.txt	2014-03-27 04:00:21.135830293 +0200
+@@ -1 +1 @@
+-kde4_create_handbook( index.docbook INSTALL_DESTINATION ${HTML_INSTALL_DIR}/pt_BR/ )
++kde4_create_handbook( index.docbook INSTALL_DESTINATION ${HTML_INSTALL_DIR}/digikam/ )
+--- digikam-4.0.0-beta4/doc-translated/sv/CMakeLists.txt	2014-03-26 23:19:41.000000000 +0200
++++ digikam-4.0.0-beta4/doc-translated/sv/CMakeLists.txt	2014-03-27 04:00:27.362766848 +0200
+@@ -1 +1 @@
+-kde4_create_handbook( index.docbook INSTALL_DESTINATION ${HTML_INSTALL_DIR}/sv/ )
++kde4_create_handbook( index.docbook INSTALL_DESTINATION ${HTML_INSTALL_DIR}/digikam/ )
+--- digikam-4.0.0-beta4/doc-translated/uk/CMakeLists.txt	2014-03-26 23:19:50.000000000 +0200
++++ digikam-4.0.0-beta4/doc-translated/uk/CMakeLists.txt	2014-03-27 04:00:33.924699988 +0200
+@@ -1 +1 @@
+-kde4_create_handbook( index.docbook INSTALL_DESTINATION ${HTML_INSTALL_DIR}/uk/ )
++kde4_create_handbook( index.docbook INSTALL_DESTINATION ${HTML_INSTALL_DIR}/digikam/ )

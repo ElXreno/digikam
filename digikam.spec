@@ -22,8 +22,13 @@ Source1: digikam-import.desktop
 # fix build against opencv-2.0
 Patch51:  digikam-3.1.0-opencv20.patch
 
+# fix translations location https://bugs.kde.org/show_bug.cgi?id=332663
+Patch52:  digikam-4.0.0-beta4-translations-fix.patch
+
 ## upstream patches
 
+# for KDE 4.13 nepomuk-core-devel needed explicitly until Digikam not ported to Baloo
+BuildRequires: nepomuk-core-devel
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
@@ -228,6 +233,7 @@ BuildArch: noarch
 %patch51 -p1 -b .opencv20
 %endif
 
+%patch52 -p1 -b .translations-fix
 
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
@@ -532,6 +538,7 @@ update-desktop-database -q &> /dev/null
 %changelog
 * Thu Mar 27 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.5.beta4
 - digikam-4.0.0-beta4
+- add BR: nepomuk-core-devel
 
 * Thu Mar 20 2014 Rex Dieter <rdieter@fedoraproject.org> 4.0.0-0.4.
 - rebuild (kde-4.13)
