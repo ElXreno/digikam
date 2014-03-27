@@ -365,8 +365,8 @@ update-desktop-database -q &> /dev/null
 %postun libs -p /sbin/ldconfig
 
 %files libs
-%{_kde4_libdir}/libdigikamcore.so.3*
-%{_kde4_libdir}/libdigikamdatabase.so.3*
+%{_kde4_libdir}/libdigikamcore.so.4*
+%{_kde4_libdir}/libdigikamdatabase.so.4*
 
 %post -n libkface -p /sbin/ldconfig
 %postun -n libkface -p /sbin/ldconfig
@@ -526,7 +526,7 @@ update-desktop-database -q &> /dev/null
 %postun -n kipi-plugins-libs -p /sbin/ldconfig
 
 %files -n kipi-plugins-libs
-%{_kde4_libdir}/libkipiplugins.so.3*
+%{_kde4_libdir}/libkipiplugins.so.4*
 
 
 %changelog
