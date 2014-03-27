@@ -28,6 +28,7 @@ Patch52:  digikam-4.0.0-beta4-translations-fix.patch
 ## upstream patches
 
 # for KDE 4.13 nepomuk-core-devel needed explicitly until Digikam not ported to Baloo
+# Nepomuk libraries not found https://bugs.kde.org/show_bug.cgi?id=332665
 BuildRequires: nepomuk-core-devel
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
