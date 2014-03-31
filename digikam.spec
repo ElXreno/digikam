@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.0.0
-Release: 0.5.%{?pre}%{?dist}
+Release: 0.6.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -27,9 +27,6 @@ Patch52:  digikam-4.0.0-beta4-translations-fix.patch
 
 ## upstream patches
 
-# for KDE 4.13 nepomuk-core-devel needed explicitly until Digikam not ported to Baloo
-# Nepomuk libraries not found https://bugs.kde.org/show_bug.cgi?id=332665
-BuildRequires: nepomuk-core-devel
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
@@ -537,6 +534,10 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Mar 31 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.6.beta4
+- rebuild for ImageMagick-6.8.8.10
+- drop BR: nepomuk-core-devel (Nepomuk disabled by default kde#332665)
+
 * Thu Mar 27 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.5.beta4
 - digikam-4.0.0-beta4
 - add BR: nepomuk-core-devel
