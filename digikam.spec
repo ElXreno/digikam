@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 3.5.0
-Release: 4%{?pre}%{?dist}
+Release: 5%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -25,6 +25,8 @@ Patch51:  digikam-3.1.0-opencv20.patch
 ## upstream patches
 # git 3d1a27f9
 Patch100: digikam-3.5.0-panorama-crasher.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1091113
+Patch101: 0765-Reorder-mutex-locks-the-ImageInfo-ReadWriteLock-must.patch
 
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
@@ -231,6 +233,9 @@ BuildArch: noarch
 %endif
 
 %patch100 -p1 -b .panaroma-crasher
+pushd core
+%patch101 -p1 -b .mutex
+popd
 
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
@@ -532,6 +537,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Fri Apr 25 2014 Rex Dieter <rdieter@fedoraproject.org> 3.5.0-5
+- backport "Reorder mutex lock" fix (#1091113)
+
 * Tue Feb 04 2014 Rex Dieter <rdieter@fedoraproject.org> 3.5.0-4
 - rebuild (kde-4.12)
 
