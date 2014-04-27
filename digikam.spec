@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.0.0
-Release: 0.6.%{?pre}%{?dist}
+Release: 0.7.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -534,6 +534,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sat Apr 26 2014 Rex Dieter <rdieter@fedoraproject.org> 4.0.0-0.7.beta4
+- rebuild (opencv)
+
 * Mon Mar 31 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.6.beta4
 - rebuild for ImageMagick-6.8.8.10
 - drop BR: nepomuk-core-devel (Nepomuk disabled by default kde#332665)
