@@ -1,4 +1,4 @@
-%define pre beta4
+%define pre rc
 
 %if 0%{?fedora} || 0%{?rhel} > 6
 %define videoslideshow 1
@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.0.0
-Release: 0.7.%{?pre}%{?dist}
+Release: 0.8.%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -21,9 +21,6 @@ Source1: digikam-import.desktop
 ## upstreamable patches
 # fix build against opencv-2.0
 Patch51:  digikam-3.1.0-opencv20.patch
-
-# fix translations location https://bugs.kde.org/show_bug.cgi?id=332663
-Patch52:  digikam-4.0.0-beta4-translations-fix.patch
 
 ## upstream patches
 
@@ -230,8 +227,6 @@ BuildArch: noarch
 %if 0%{?rhel} == 6
 %patch51 -p1 -b .opencv20
 %endif
-
-%patch52 -p1 -b .translations-fix
 
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
@@ -534,6 +529,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Apr 28 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.8.rc
+- digikam-4.0.0-rc
+
 * Sat Apr 26 2014 Rex Dieter <rdieter@fedoraproject.org> 4.0.0-0.7.beta4
 - rebuild (opencv)
 
