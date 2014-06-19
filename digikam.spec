@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.0.0
-Release: 2%{?pre}%{?dist}
+Release: 3%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -32,6 +32,7 @@ BuildRequires: gettext
 BuildRequires: marble-devel >= 1:4.6.80 
 # updated FindKipi.cmake https://bugs.kde.org/show_bug.cgi?id=307213
 BuildRequires: kdelibs4-devel >= 4.9.1-4
+BuildRequires: kdelibs4-webkit-devel
 BuildRequires: kdepimlibs-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libtiff-devel
@@ -529,6 +530,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Thu Jun 19 2014 Rex Dieter <rdieter@fedoraproject.org> 4.0.0-3
+- BR: kdelibs4-webkit-devel
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.0.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
