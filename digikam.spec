@@ -1,12 +1,12 @@
-#define pre beta3
+#define pre rc
 
-%if 0%{?fedora} || 0%{?rhel} > 6
+%if 0%{?fedora}
 %define videoslideshow 1
 %endif
 
 Name:    digikam
-Version: 3.5.0
-Release: 1%{?pre}%{?dist}
+Version: 4.0.0
+Release: 3%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -32,24 +32,22 @@ BuildRequires: gettext
 BuildRequires: marble-devel >= 1:4.6.80 
 # updated FindKipi.cmake https://bugs.kde.org/show_bug.cgi?id=307213
 BuildRequires: kdelibs4-devel >= 4.9.1-4
+BuildRequires: kdelibs4-webkit-devel
 BuildRequires: kdepimlibs-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libtiff-devel
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(jasper)
 BuildRequires: pkgconfig(lcms2)
-BuildRequires: pkgconfig(lensfun) >= 0.2.6
 # libusb required for GPhoto2 support https://bugs.kde.org/268267
 # but libgphoto2 switched to libusbx https://bugzilla.redhat.com/997880
 BuildRequires: pkgconfig(libusb)
 BuildRequires: pkgconfig(libgphoto2_port)
-BuildRequires: pkgconfig(lqr-1)
-BuildRequires: pkgconfig(libpgf) >= 6.11.42
 BuildRequires: pkgconfig(libpng) >= 1.2.7
 BuildRequires: pkgconfig(libkdcraw) >= 2.2.0
 BuildRequires: pkgconfig(libkexiv2) >= 1.0.0
 BuildRequires: pkgconfig(libkipi) >= 2.0.0
-BuildRequires: mysql-server
+BuildRequires: mariadb-server
 BuildRequires: pkgconfig(exiv2)
 ## DNG converter
 BuildRequires: expat-devel
@@ -70,10 +68,15 @@ BuildRequires: pkgconfig(QJson)
 BuildRequires: pkgconfig(QtGStreamer-0.10)
 BuildRequires: pkgconfig(ImageMagick)
 %endif
-BuildRequires: herqq-devel
 # Panorama plugin requires flex and bison
 BuildRequires: flex
 BuildRequires: bison
+%if 0%{?fedora}
+BuildRequires: herqq-devel
+BuildRequires: pkgconfig(lensfun) >= 0.2.6
+BuildRequires: pkgconfig(lqr-1)
+BuildRequires: pkgconfig(libpgf) >= 6.11.42
+%endif
 
 # when lib(-devel) subpkgs were split
 Obsoletes: digikam-devel < 2.0.0-2
@@ -309,7 +312,6 @@ kipiplugins.lang >> kipi-plugins.lang
 rm -fv %{buildroot}%{_kde4_libdir}/libdigikamcore.so
 rm -fv %{buildroot}%{_kde4_libdir}/libdigikamdatabase.so
 rm -fv %{buildroot}%{_kde4_libdir}/libkipiplugins.so
-rm -fv %{buildroot}%{_kde4_libdir}/libPropertyBrowser.a
 rm -fv %{buildroot}%{_kde4_datadir}/locale/*/LC_MESSAGES/libkipi.mo
 
 
@@ -365,8 +367,8 @@ update-desktop-database -q &> /dev/null
 %postun libs -p /sbin/ldconfig
 
 %files libs
-%{_kde4_libdir}/libdigikamcore.so.3*
-%{_kde4_libdir}/libdigikamdatabase.so.3*
+%{_kde4_libdir}/libdigikamcore.so.4*
+%{_kde4_libdir}/libdigikamdatabase.so.4*
 
 %post -n libkface -p /sbin/ldconfig
 %postun -n libkface -p /sbin/ldconfig
@@ -451,10 +453,12 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_calendar.so
 %{_kde4_libdir}/kde4/kipiplugin_debianscreenshots.so
 %{_kde4_libdir}/kde4/kipiplugin_dngconverter.so
+%{_kde4_libdir}/kde4/kipiplugin_dropbox.so
 %{_kde4_libdir}/kde4/kipiplugin_facebook.so
 %{_kde4_libdir}/kde4/kipiplugin_flickrexport.so
 %{_kde4_libdir}/kde4/kipiplugin_flashexport.so
 %{_kde4_libdir}/kde4/kipiplugin_galleryexport.so
+%{_kde4_libdir}/kde4/kipiplugin_googledrive.so
 %{_kde4_libdir}/kde4/kipiplugin_gpssync.so
 %{_kde4_libdir}/kde4/kipiplugin_htmlexport.so
 %{_kde4_libdir}/kde4/kipiplugin_imageviewer.so
@@ -524,10 +528,54 @@ update-desktop-database -q &> /dev/null
 %postun -n kipi-plugins-libs -p /sbin/ldconfig
 
 %files -n kipi-plugins-libs
-%{_kde4_libdir}/libkipiplugins.so.3*
+%{_kde4_libdir}/libkipiplugins.so.4*
 
 
 %changelog
+* Thu Jun 19 2014 Rex Dieter <rdieter@fedoraproject.org> 4.0.0-3
+- BR: kdelibs4-webkit-devel
+
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.0.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
+* Tue May 13 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-1
+- digikam-4.0.0
+
+* Mon Apr 28 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.8.rc
+- digikam-4.0.0-rc
+
+* Sat Apr 26 2014 Rex Dieter <rdieter@fedoraproject.org> 4.0.0-0.7.beta4
+- rebuild (opencv)
+
+* Mon Mar 31 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.6.beta4
+- rebuild for ImageMagick-6.8.8.10
+- drop BR: nepomuk-core-devel (Nepomuk disabled by default kde#332665)
+
+* Thu Mar 27 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.5.beta4
+- digikam-4.0.0-beta4
+- add BR: nepomuk-core-devel
+
+* Thu Mar 20 2014 Rex Dieter <rdieter@fedoraproject.org> 4.0.0-0.4.
+- rebuild (kde-4.13)
+
+* Tue Feb 25 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.3.beta3
+- digikam-4.0.0-beta3
+
+* Tue Jan 14 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.2.beta2
+- digikam-4.0.0-beta2
+
+* Mon Dec  9 2013 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.1.beta1
+- digikam-4.0.0-beta1
+
+* Tue Dec 03 2013 Rex Dieter <rdieter@fedoraproject.org> - 3.5.0-4
+- rebuild (exiv2)
+
+* Sat Nov 16 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.5.0-3
+- rebuilt for libkdcraw-4.11.90
+
+* Thu Oct 10 2013 Rex Dieter <rdieter@fedoraproject.org> 3.5.0-2
+- include (upstreamable) patch to omit libPropertyBrowser from packaging (kde#319664)
+
 * Wed Oct  9 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.5.0-1
 - digikam-3.5.0
 
