@@ -1,6 +1,6 @@
 #define pre rc
 
-%if 0%{?fedora} || 0%{?rhel} > 6
+%if 0%{?fedora}
 %define videoslideshow 1
 %endif
 
@@ -39,18 +39,15 @@ BuildRequires: libtiff-devel
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(jasper)
 BuildRequires: pkgconfig(lcms2)
-BuildRequires: pkgconfig(lensfun) >= 0.2.6
 # libusb required for GPhoto2 support https://bugs.kde.org/268267
 # but libgphoto2 switched to libusbx https://bugzilla.redhat.com/997880
 BuildRequires: pkgconfig(libusb)
 BuildRequires: pkgconfig(libgphoto2_port)
-BuildRequires: pkgconfig(lqr-1)
-BuildRequires: pkgconfig(libpgf) >= 6.11.42
 BuildRequires: pkgconfig(libpng) >= 1.2.7
 BuildRequires: pkgconfig(libkdcraw) >= 2.2.0
 BuildRequires: pkgconfig(libkexiv2) >= 1.0.0
 BuildRequires: pkgconfig(libkipi) >= 2.0.0
-BuildRequires: mysql-server
+BuildRequires: mariadb-server
 BuildRequires: pkgconfig(exiv2)
 ## DNG converter
 BuildRequires: expat-devel
@@ -71,10 +68,15 @@ BuildRequires: pkgconfig(QJson)
 BuildRequires: pkgconfig(QtGStreamer-0.10)
 BuildRequires: pkgconfig(ImageMagick)
 %endif
-BuildRequires: herqq-devel
 # Panorama plugin requires flex and bison
 BuildRequires: flex
 BuildRequires: bison
+%if 0%{?fedora}
+BuildRequires: herqq-devel
+BuildRequires: pkgconfig(lensfun) >= 0.2.6
+BuildRequires: pkgconfig(lqr-1)
+BuildRequires: pkgconfig(libpgf) >= 6.11.42
+%endif
 
 # when lib(-devel) subpkgs were split
 Obsoletes: digikam-devel < 2.0.0-2
