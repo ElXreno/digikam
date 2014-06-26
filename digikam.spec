@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 3.5.0
-Release: 4%{?pre}%{?dist}
+Release: 2%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -532,9 +532,6 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
-* Tue Feb 04 2014 Rex Dieter <rdieter@fedoraproject.org> 3.5.0-4
-- rebuild (kde-4.12)
-
 * Thu Dec 12 2013 Jaroslav Reznik <jreznik@redhat.com> - 3.5.0-2
 - fix panorama crasher rhbz#1040922
 
