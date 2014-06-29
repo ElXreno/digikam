@@ -58,7 +58,7 @@ BuildRequires: sane-backends-devel
 ## htmlexport plugin
 BuildRequires: pkgconfig(libxslt)
 ## RemoveRedeye
-BuildRequires: pkgconfig(opencv)
+BuildRequires: pkgconfig(opencv) >= 2.4.9
 ## Shwup
 BuildRequires: pkgconfig(qca2)
 ## debianscreenshorts
@@ -534,6 +534,7 @@ update-desktop-database -q &> /dev/null
 %changelog
 * Sun Jun 29 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.1.0-1
 - digikam-4.1.0
+- OpenCV >= 2.4.9 required for libkface
 
 * Thu Jun 19 2014 Rex Dieter <rdieter@fedoraproject.org> 4.0.0-3
 - BR: kdelibs4-webkit-devel
