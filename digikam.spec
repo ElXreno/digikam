@@ -17,10 +17,7 @@ Source0: http://download.kde.org/%{?pre:un}stable/digikam/digikam-%{version}%{?p
 # TODO: upstream me
 Source1: digikam-import.desktop
 
-
 ## upstreamable patches
-# fix build against opencv-2.0
-Patch51:  digikam-3.1.0-opencv20.patch
 
 ## upstream patches
 
@@ -227,17 +224,12 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
-%if 0%{?rhel} == 6
-%patch51 -p1 -b .opencv20
-%endif
-
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
-mv cmake/modules/FindKipi.cmake cmake/modules/FindKipi.cmake.ORIG
+mv -f cmake/modules/FindKipi.cmake cmake/modules/FindKipi.cmake.ORIG
 
 
 %build
-
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kde4} -DENABLE_LCMS2=ON ..
@@ -247,8 +239,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %install
-rm -rf %{buildroot}
-
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 desktop-file-install --vendor="" \
