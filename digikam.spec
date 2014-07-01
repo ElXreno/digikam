@@ -1,12 +1,12 @@
-#define pre beta3
+#define pre rc
 
 %if 0%{?fedora} || 0%{?rhel} > 6
 %define videoslideshow 1
 %endif
 
 Name:    digikam
-Version: 3.5.0
-Release: 4%{?pre}%{?dist}
+Version: 4.0.0
+Release: 3%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -23,8 +23,6 @@ Source1: digikam-import.desktop
 Patch51:  digikam-3.1.0-opencv20.patch
 
 ## upstream patches
-# git 3d1a27f9
-Patch100: digikam-3.5.0-panorama-crasher.patch
 
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
@@ -34,6 +32,7 @@ BuildRequires: gettext
 BuildRequires: marble-devel >= 1:4.6.80 
 # updated FindKipi.cmake https://bugs.kde.org/show_bug.cgi?id=307213
 BuildRequires: kdelibs4-devel >= 4.9.1-4
+BuildRequires: kdelibs4-webkit-devel
 BuildRequires: kdepimlibs-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libtiff-devel
@@ -230,8 +229,6 @@ BuildArch: noarch
 %patch51 -p1 -b .opencv20
 %endif
 
-%patch100 -p1 -b .panaroma-crasher
-
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
 mv cmake/modules/FindKipi.cmake cmake/modules/FindKipi.cmake.ORIG
@@ -313,7 +310,6 @@ kipiplugins.lang >> kipi-plugins.lang
 rm -fv %{buildroot}%{_kde4_libdir}/libdigikamcore.so
 rm -fv %{buildroot}%{_kde4_libdir}/libdigikamdatabase.so
 rm -fv %{buildroot}%{_kde4_libdir}/libkipiplugins.so
-rm -fv %{buildroot}%{_kde4_libdir}/libPropertyBrowser.a
 rm -fv %{buildroot}%{_kde4_datadir}/locale/*/LC_MESSAGES/libkipi.mo
 
 
@@ -369,8 +365,8 @@ update-desktop-database -q &> /dev/null
 %postun libs -p /sbin/ldconfig
 
 %files libs
-%{_kde4_libdir}/libdigikamcore.so.3*
-%{_kde4_libdir}/libdigikamdatabase.so.3*
+%{_kde4_libdir}/libdigikamcore.so.4*
+%{_kde4_libdir}/libdigikamdatabase.so.4*
 
 %post -n libkface -p /sbin/ldconfig
 %postun -n libkface -p /sbin/ldconfig
@@ -455,10 +451,12 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_calendar.so
 %{_kde4_libdir}/kde4/kipiplugin_debianscreenshots.so
 %{_kde4_libdir}/kde4/kipiplugin_dngconverter.so
+%{_kde4_libdir}/kde4/kipiplugin_dropbox.so
 %{_kde4_libdir}/kde4/kipiplugin_facebook.so
 %{_kde4_libdir}/kde4/kipiplugin_flickrexport.so
 %{_kde4_libdir}/kde4/kipiplugin_flashexport.so
 %{_kde4_libdir}/kde4/kipiplugin_galleryexport.so
+%{_kde4_libdir}/kde4/kipiplugin_googledrive.so
 %{_kde4_libdir}/kde4/kipiplugin_gpssync.so
 %{_kde4_libdir}/kde4/kipiplugin_htmlexport.so
 %{_kde4_libdir}/kde4/kipiplugin_imageviewer.so
@@ -528,15 +526,53 @@ update-desktop-database -q &> /dev/null
 %postun -n kipi-plugins-libs -p /sbin/ldconfig
 
 %files -n kipi-plugins-libs
-%{_kde4_libdir}/libkipiplugins.so.3*
+%{_kde4_libdir}/libkipiplugins.so.4*
 
 
 %changelog
-* Tue Feb 04 2014 Rex Dieter <rdieter@fedoraproject.org> 3.5.0-4
-- rebuild (kde-4.12)
+* Thu Jun 19 2014 Rex Dieter <rdieter@fedoraproject.org> 4.0.0-3
+- BR: kdelibs4-webkit-devel
 
-* Thu Dec 12 2013 Jaroslav Reznik <jreznik@redhat.com> - 3.5.0-2
-- fix panorama crasher rhbz#1040922
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.0.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
+* Tue May 13 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-1
+- digikam-4.0.0
+
+* Mon Apr 28 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.8.rc
+- digikam-4.0.0-rc
+
+* Sat Apr 26 2014 Rex Dieter <rdieter@fedoraproject.org> 4.0.0-0.7.beta4
+- rebuild (opencv)
+
+* Mon Mar 31 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.6.beta4
+- rebuild for ImageMagick-6.8.8.10
+- drop BR: nepomuk-core-devel (Nepomuk disabled by default kde#332665)
+
+* Thu Mar 27 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.5.beta4
+- digikam-4.0.0-beta4
+- add BR: nepomuk-core-devel
+
+* Thu Mar 20 2014 Rex Dieter <rdieter@fedoraproject.org> 4.0.0-0.4.
+- rebuild (kde-4.13)
+
+* Tue Feb 25 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.3.beta3
+- digikam-4.0.0-beta3
+
+* Tue Jan 14 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.2.beta2
+- digikam-4.0.0-beta2
+
+* Mon Dec  9 2013 Alexey Kurov <nucleo@fedoraproject.org> - 4.0.0-0.1.beta1
+- digikam-4.0.0-beta1
+
+* Tue Dec 03 2013 Rex Dieter <rdieter@fedoraproject.org> - 3.5.0-4
+- rebuild (exiv2)
+
+* Sat Nov 16 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.5.0-3
+- rebuilt for libkdcraw-4.11.90
+
+* Thu Oct 10 2013 Rex Dieter <rdieter@fedoraproject.org> 3.5.0-2
+- include (upstreamable) patch to omit libPropertyBrowser from packaging (kde#319664)
 
 * Wed Oct  9 2013 Alexey Kurov <nucleo@fedoraproject.org> - 3.5.0-1
 - digikam-3.5.0
