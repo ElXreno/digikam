@@ -328,7 +328,7 @@ update-desktop-database -q &> /dev/null
 %files -f digikam.lang
 %doc core/AUTHORS core/ChangeLog core/COPYING
 %doc core/NEWS core/README core/TODO
-%doc core/README.FACE core/TODO.FACE core/TODO.MYSQLPORT
+%doc core/TODO.FACE core/TODO.MYSQLPORT
 %{_kde4_bindir}/digikam
 %{_kde4_bindir}/digitaglinktree
 %{_kde4_bindir}/cleanup_digikamdb
@@ -364,6 +364,8 @@ update-desktop-database -q &> /dev/null
 %postun -n libkface -p /sbin/ldconfig
 
 %files -n libkface
+%doc extra/libkface/AUTHORS extra/libkface/COPYING
+%doc extra/libkface/README extra/libkface/COPYING.LIB
 %{_kde4_appsdir}/libkface/
 %{_kde4_libdir}/libkface.so.2*
 
@@ -377,6 +379,8 @@ update-desktop-database -q &> /dev/null
 %postun -n libkgeomap -p /sbin/ldconfig
 
 %files -n libkgeomap -f libkgeomap.lang
+%doc extra/libkgeomap/AUTHORS extra/libkgeomap/COPYING
+%doc extra/libkgeomap/README extra/libkgeomap/COPYING.LIB
 %{_kde4_appsdir}/libkgeomap/
 %{_kde4_libdir}/libkgeomap.so.1*
 
@@ -390,6 +394,8 @@ update-desktop-database -q &> /dev/null
 %postun -n libmediawiki -p /sbin/ldconfig
 
 %files -n libmediawiki
+%doc extra/libmediawiki/AUTHORS extra/libmediawiki/COPYING
+%doc extra/libmediawiki/README extra/libmediawiki/COPYING.LIB
 %{_kde4_libdir}/libmediawiki.so.1*
 
 %files -n libmediawiki-devel
@@ -402,6 +408,7 @@ update-desktop-database -q &> /dev/null
 %postun -n libkvkontakte -p /sbin/ldconfig
 
 %files -n libkvkontakte
+%doc extra/libkvkontakte/COPYING extra/libkvkontakte/COPYING.LIB
 %{_libdir}/libkvkontakte.so.1*
 
 %files -n libkvkontakte-devel
