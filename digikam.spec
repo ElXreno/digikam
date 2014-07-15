@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.1.0
-Release: 1%{?pre}%{?dist}
+Release: 2%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -529,6 +529,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Jul 14 2014 Rex Dieter <rdieter@fedoraproject.org> 4.1.0-2
+- rebuild (marble)
+
 * Sun Jun 29 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.1.0-1
 - digikam-4.1.0
 - OpenCV >= 2.4.9 required for libkface
