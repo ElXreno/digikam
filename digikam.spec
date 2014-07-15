@@ -1,12 +1,12 @@
 #define pre rc
 
-%if 0%{?fedora} || 0%{?rhel} > 6
+%if 0%{?fedora}
 %define videoslideshow 1
 %endif
 
 Name:    digikam
-Version: 4.0.0
-Release: 3%{?pre}%{?dist}
+Version: 4.1.0
+Release: 2%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -17,10 +17,7 @@ Source0: http://download.kde.org/%{?pre:un}stable/digikam/digikam-%{version}%{?p
 # TODO: upstream me
 Source1: digikam-import.desktop
 
-
 ## upstreamable patches
-# fix build against opencv-2.0
-Patch51:  digikam-3.1.0-opencv20.patch
 
 ## upstream patches
 
@@ -39,18 +36,15 @@ BuildRequires: libtiff-devel
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(jasper)
 BuildRequires: pkgconfig(lcms2)
-BuildRequires: pkgconfig(lensfun) >= 0.2.6
 # libusb required for GPhoto2 support https://bugs.kde.org/268267
 # but libgphoto2 switched to libusbx https://bugzilla.redhat.com/997880
 BuildRequires: pkgconfig(libusb)
 BuildRequires: pkgconfig(libgphoto2_port)
-BuildRequires: pkgconfig(lqr-1)
-BuildRequires: pkgconfig(libpgf) >= 6.11.42
 BuildRequires: pkgconfig(libpng) >= 1.2.7
 BuildRequires: pkgconfig(libkdcraw) >= 2.2.0
 BuildRequires: pkgconfig(libkexiv2) >= 1.0.0
 BuildRequires: pkgconfig(libkipi) >= 2.0.0
-BuildRequires: mysql-server
+BuildRequires: mariadb-server
 BuildRequires: pkgconfig(exiv2)
 ## DNG converter
 BuildRequires: expat-devel
@@ -61,7 +55,7 @@ BuildRequires: sane-backends-devel
 ## htmlexport plugin
 BuildRequires: pkgconfig(libxslt)
 ## RemoveRedeye
-BuildRequires: pkgconfig(opencv)
+BuildRequires: pkgconfig(opencv) >= 2.4.9
 ## Shwup
 BuildRequires: pkgconfig(qca2)
 ## debianscreenshorts
@@ -71,10 +65,15 @@ BuildRequires: pkgconfig(QJson)
 BuildRequires: pkgconfig(QtGStreamer-0.10)
 BuildRequires: pkgconfig(ImageMagick)
 %endif
-BuildRequires: herqq-devel
 # Panorama plugin requires flex and bison
 BuildRequires: flex
 BuildRequires: bison
+%if 0%{?fedora}
+BuildRequires: herqq-devel
+BuildRequires: pkgconfig(lensfun) >= 0.2.6
+BuildRequires: pkgconfig(lqr-1)
+BuildRequires: pkgconfig(libpgf) >= 6.11.42
+%endif
 
 # when lib(-devel) subpkgs were split
 Obsoletes: digikam-devel < 2.0.0-2
@@ -225,17 +224,12 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
-%if 0%{?rhel} == 6
-%patch51 -p1 -b .opencv20
-%endif
-
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
-mv cmake/modules/FindKipi.cmake cmake/modules/FindKipi.cmake.ORIG
+mv -f cmake/modules/FindKipi.cmake cmake/modules/FindKipi.cmake.ORIG
 
 
 %build
-
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kde4} -DENABLE_LCMS2=ON ..
@@ -245,8 +239,6 @@ make %{?_smp_mflags} -C %{_target_platform}
 
 
 %install
-rm -rf %{buildroot}
-
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 desktop-file-install --vendor="" \
@@ -336,7 +328,7 @@ update-desktop-database -q &> /dev/null
 %files -f digikam.lang
 %doc core/AUTHORS core/ChangeLog core/COPYING
 %doc core/NEWS core/README core/TODO
-%doc core/README.FACE core/TODO.FACE core/TODO.MYSQLPORT
+%doc core/TODO.FACE core/TODO.MYSQLPORT
 %{_kde4_bindir}/digikam
 %{_kde4_bindir}/digitaglinktree
 %{_kde4_bindir}/cleanup_digikamdb
@@ -372,6 +364,8 @@ update-desktop-database -q &> /dev/null
 %postun -n libkface -p /sbin/ldconfig
 
 %files -n libkface
+%doc extra/libkface/AUTHORS extra/libkface/COPYING
+%doc extra/libkface/README extra/libkface/COPYING.LIB
 %{_kde4_appsdir}/libkface/
 %{_kde4_libdir}/libkface.so.2*
 
@@ -385,6 +379,8 @@ update-desktop-database -q &> /dev/null
 %postun -n libkgeomap -p /sbin/ldconfig
 
 %files -n libkgeomap -f libkgeomap.lang
+%doc extra/libkgeomap/AUTHORS extra/libkgeomap/COPYING
+%doc extra/libkgeomap/README extra/libkgeomap/COPYING.LIB
 %{_kde4_appsdir}/libkgeomap/
 %{_kde4_libdir}/libkgeomap.so.1*
 
@@ -398,6 +394,8 @@ update-desktop-database -q &> /dev/null
 %postun -n libmediawiki -p /sbin/ldconfig
 
 %files -n libmediawiki
+%doc extra/libmediawiki/AUTHORS extra/libmediawiki/COPYING
+%doc extra/libmediawiki/README extra/libmediawiki/COPYING.LIB
 %{_kde4_libdir}/libmediawiki.so.1*
 
 %files -n libmediawiki-devel
@@ -410,6 +408,7 @@ update-desktop-database -q &> /dev/null
 %postun -n libkvkontakte -p /sbin/ldconfig
 
 %files -n libkvkontakte
+%doc extra/libkvkontakte/COPYING extra/libkvkontakte/COPYING.LIB
 %{_libdir}/libkvkontakte.so.1*
 
 %files -n libkvkontakte-devel
@@ -530,6 +529,13 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Jul 14 2014 Rex Dieter <rdieter@fedoraproject.org> 4.1.0-2
+- rebuild (marble)
+
+* Sun Jun 29 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.1.0-1
+- digikam-4.1.0
+- OpenCV >= 2.4.9 required for libkface
+
 * Thu Jun 19 2014 Rex Dieter <rdieter@fedoraproject.org> 4.0.0-3
 - BR: kdelibs4-webkit-devel
 
