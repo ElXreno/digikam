@@ -12,6 +12,10 @@ Summary: A digital camera accessing & photo management application
 License: GPLv2+
 URL:     http://www.digikam.org/
 Source0: http://download.kde.org/%{?pre:un}stable/digikam/digikam-%{version}%{?pre:-%{pre}}.tar.bz2
+%if 0%{?rhel}
+# rhel7/ppc64 lacks some dependencies, including libkdcraw, libkexiv2, libkipi
+ExcludeArch: ppc64
+%endif
 
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
 # TODO: upstream me
