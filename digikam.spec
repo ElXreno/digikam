@@ -52,7 +52,6 @@ BuildRequires: mariadb-server
 BuildRequires: pkgconfig(exiv2)
 ## DNG converter
 BuildRequires: expat-devel
-BuildRequires: pkgconfig(libgpod-1.0)
 # until when/if libksane-devel grows a depn on sane-backends-devel
 BuildRequires: pkgconfig(libksane) 
 BuildRequires: sane-backends-devel
@@ -76,6 +75,8 @@ BuildRequires: bison
 BuildRequires: herqq-devel
 BuildRequires: pkgconfig(lensfun) >= 0.2.6
 BuildRequires: pkgconfig(lqr-1)
+%define libgpod 1
+BuildRequires: pkgconfig(libgpod-1.0)
 BuildRequires: pkgconfig(libpgf) >= 6.11.42
 %endif
 
@@ -274,7 +275,9 @@ mv kipi-plugins.lang kipi-plugins-doc.lang
 %find_lang kipiplugin_gpssync
 %find_lang kipiplugin_htmlexport
 %find_lang kipiplugin_imageviewer
+%if 0%{?libgpod}
 %find_lang kipiplugin_ipodexport
+%endif
 %find_lang kipiplugin_jpeglossless
 %find_lang kipiplugin_kioexportimport
 %find_lang kipiplugin_metadataedit
@@ -293,7 +296,7 @@ kipiplugin_dngconverter.lang kipiplugin_expoblending.lang \
 kipiplugin_facebook.lang kipiplugin_flashexport.lang \
 kipiplugin_flickrexport.lang kipiplugin_galleryexport.lang \
 kipiplugin_gpssync.lang kipiplugin_htmlexport.lang \
-kipiplugin_imageviewer.lang kipiplugin_ipodexport.lang \
+kipiplugin_imageviewer.lang \
 kipiplugin_jpeglossless.lang kipiplugin_kioexportimport.lang \
 kipiplugin_metadataedit.lang kipiplugin_picasawebexport.lang \
 kipiplugin_piwigoexport.lang kipiplugin_printimages.lang \
@@ -301,6 +304,11 @@ kipiplugin_rawconverter.lang kipiplugin_removeredeyes.lang \
 kipiplugin_sendimages.lang kipiplugin_shwup.lang \
 kipiplugin_smug.lang kipiplugin_timeadjust.lang \
 kipiplugins.lang >> kipi-plugins.lang
+%if 0%{?libgpod}
+cat kipiplugin_ipodexport.lang >> kipi-plugins.lang
+%else
+rm -fv %{buildroot}%{_datadir}/locale/*/LC_MESSAGES/kipiplugin_ipodexport.mo
+%endif
 
 ## unpackaged files
 rm -fv %{buildroot}%{_kde4_libdir}/libdigikamcore.so
@@ -465,7 +473,9 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_imageviewer.so
 %{_kde4_libdir}/kde4/kipiplugin_imageshackexport.so
 %{_kde4_libdir}/kde4/kipiplugin_imgurexport.so
+%if 0%{?libgpod}
 %{_kde4_libdir}/kde4/kipiplugin_ipodexport.so
+%endif
 %{_kde4_libdir}/kde4/kipiplugin_jpeglossless.so
 %{_kde4_libdir}/kde4/kipiplugin_kioexportimport.so
 %{_kde4_libdir}/kde4/kipiplugin_kmlexport.so
