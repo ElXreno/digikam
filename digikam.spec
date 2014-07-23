@@ -236,7 +236,7 @@ BuildArch: noarch
 
 # applied unconditionally, it autodetects the version of QtGStreamer to use
 pushd extra/kipi-plugins
-patch100 -p1 -b .gstreamer1
+%patch100 -p1 -b .gstreamer1
 popd
 
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
