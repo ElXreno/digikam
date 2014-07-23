@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.1.0
-Release: 2%{?pre}%{?dist}
+Release: 3%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -24,6 +24,10 @@ Source1: digikam-import.desktop
 ## upstreamable patches
 
 ## upstream patches
+# handle QtGstreamer API 1.0 in VideoSlideShow tool (Andreas Cord-Landwehr)
+# The patch autodetects whether we have QtGStreamer 0.10 or 1.x.
+# http://commits.kde.org/kipi-plugins/cbc59f1060fe4cf770d35800bbcefb1f89f882de
+Patch100: kipi-plugins-gstreamer1.patch
 
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
@@ -65,7 +69,8 @@ BuildRequires: pkgconfig(qca2)
 BuildRequires: pkgconfig(QJson) 
 %if 0%{?videoslideshow}
 ## VideoSlideShow
-BuildRequires: pkgconfig(QtGStreamer-0.10)
+# pkgconfig(QtGStreamer-1.0) vs. pkgconfig(QtGStreamer-0.10) is autodetected
+BuildRequires: qt-gstreamer-devel
 BuildRequires: pkgconfig(ImageMagick)
 %endif
 # Panorama plugin requires flex and bison
@@ -228,6 +233,11 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
+
+# applied unconditionally, it autodetects the version of QtGStreamer to use
+pushd extra/kipi-plugins
+patch100 -p1 -b .gstreamer1
+popd
 
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
@@ -543,6 +553,10 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed Jul 23 2014 Kevin Kofler <Kevin@tigcc.ticalc.org> - 4.1.0-3
+- apply upstream patch to handle QtGstreamer API 1.0 in VideoSlideShow tool;
+  whether to build against QtGStreamer 0.10 or 1.x is autodetected (#1092659)
+
 * Mon Jul 14 2014 Rex Dieter <rdieter@fedoraproject.org> 4.1.0-2
 - rebuild (marble)
 

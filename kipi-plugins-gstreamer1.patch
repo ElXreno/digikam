@@ -1,0 +1,106 @@
+commit cbc59f1060fe4cf770d35800bbcefb1f89f882de
+Author: Gilles Caulier <caulier.gilles@gmail.com>
+Date:   Thu Jul 10 09:59:49 2014 +0200
+
+    apply patch to handle QtGstreamer API 1.0 in VideoSlideShow tool
+    REVIEW: 119073
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index cb1e04c..ff42bb0 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -349,6 +349,24 @@ PRINT_PLUGIN_COMPILE_STATUS("Panorama"           FLEX_FOUND AND BISON_FOUND)
+ PRINT_PLUGIN_COMPILE_STATUS("VideoSlideshow"     ImageMagick_FOUND AND QTGSTREAMER_FOUND)
+ PRINT_PLUGIN_COMPILE_STATUS("Wallpaper"          BUILD_WALLPAPER)
+ 
++
++# set QtGStreamer API version
++MESSAGE(STATUS "----------------------------------------------------------------------------------")
++MESSAGE(STATUS "")
++IF((${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} EQUAL 1 AND ${QtGStreamer_VERSION_PATCH} GREATER 80)
++    OR (${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} GREATER 1))
++    SET(GSTREAMER_API_1 TRUE)
++ELSE((${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} EQUAL 1 AND ${QtGStreamer_VERSION_PATCH} GREATER 80)
++    OR (${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} GREATER 1))
++    SET(GSTREAMER_API_1 FALSE)
++ENDIF((${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} EQUAL 1 AND ${QtGStreamer_VERSION_PATCH} GREATER 80)
++    OR (${QtGStreamer_VERSION_MAJOR} EQUAL 1 AND ${QtGStreamer_VERSION_MINOR} GREATER 1))
++CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/gstreamerapi.h.in_cmake" "${CMAKE_CURRENT_BINARY_DIR}/gstreamerapi.h" @ONLY)
++
++MESSAGE(STATUS "Found QtGstreamer version : ${QtGStreamer_VERSION}")
++MESSAGE(STATUS "Using GStreamer API 1: ${GSTREAMER_API_1}")
++
++
+ MESSAGE(STATUS "----------------------------------------------------------------------------------")
+ MESSAGE(STATUS "")
+ 
+diff --git a/cmake/templates/gstreamerapi.h.in_cmake b/cmake/templates/gstreamerapi.h.in_cmake
+new file mode 100644
+index 0000000..ec5a196
+--- /dev/null
++++ b/cmake/templates/gstreamerapi.h.in_cmake
+@@ -0,0 +1,6 @@
++#ifndef GSTREAMERAPI_H
++#define GSTREAMERAPI_H
++
++#cmakedefine01 GSTREAMER_API_1
++
++#endif
+diff --git a/videoslideshow/manager/encoderdecoder.cpp b/videoslideshow/manager/encoderdecoder.cpp
+index 23eca8a..b25ddd7 100644
+--- a/videoslideshow/manager/encoderdecoder.cpp
++++ b/videoslideshow/manager/encoderdecoder.cpp
+@@ -23,6 +23,7 @@
+  * ============================================================ */
+ 
+ #include "encoderdecoder.moc"
++#include "../../gstreamerapi.h"
+ 
+ // Qt includes
+ 
+@@ -50,6 +51,27 @@ EncoderDecoder::EncoderDecoder()
+ {
+     QGst::init();
+ 
++#if GSTREAMER_API_1
++    m_audioPipelines.append("filesrc location=\"%1\" ! decodebin ! audioconvert ! audioresample !"
++                          "audio/x-raw, rate=%2 ! avenc_mp2 bitrate=%3 ! queue");
++
++    m_audioPipelines.append("filesrc location=\"%1\" ! decodebin ! audioconvert ! audioresample !"
++                          "audio/x-raw, rate=%2 ! lamemp3enc bitrate=%3 ! id3v2mux ! queue");
++
++    m_videoPipelines.append("multifilesrc location=\"%1\" caps=image/ppm,framerate=%2 ! avdec_ppm ! videoconvert !"
++                          " y4menc ! y4mdec ! videoscale ! mpeg2enc format=%3 norm=%4 bitrate=%5 aspect=%6 ! "
++                          " filesink location=\"%7\"");
++
++    m_videoPipelines.append("multifilesrc location=\"%1\" caps=image/ppm,framerate=%2 ! avdec_ppm ! videoconvert !"
++                          " avenc_mpeg4 ! avimux ! filesink location=\"%3\"");
++
++    m_videoPipelines.append("multifilesrc location=\"%1\" caps=image/ppm,framerate=%2 ! avdec_ppm ! videoconvert !"
++                          " theoraenc ! oggmux ! filesink location=\"%3\"");
++
++    m_videoPipelines.append("multifilesrc location=\"%1\" caps=image/ppm,framerate=%2 ! avdec_ppm ! videoconvert ! "
++                          " avenc_mpeg4 ! queue ! mux. filesrc location =\"%3\" ! decodebin ! audioconvert !"
++                          " audio/x-raw, rate=44100 ! lamemp3enc ! queue ! mux. avimux name=mux ! filesink location=\"%4\"");
++#else
+     m_audioPipelines.append("filesrc location=\"%1\" ! decodebin ! audioconvert ! audioresample !"
+                           "audio/x-raw-int, rate=%2 ! ffenc_mp2 bitrate=%3 ! queue");
+ 
+@@ -69,6 +91,8 @@ EncoderDecoder::EncoderDecoder()
+     m_videoPipelines.append("multifilesrc location=\"%1\" caps=image/ppm,framerate=%2 ! ffdec_ppm ! ffmpegcolorspace ! "
+                           " xvidenc ! queue ! mux. filesrc location =\"%3\" ! decodebin ! audioconvert !"
+                           " audio/x-raw-int, rate=44100 ! lamemp3enc ! queue ! mux. avimux name=mux ! filesink location=\"%4\"");
++#endif
++
+ }
+ 
+ EncoderDecoder::~EncoderDecoder()
+@@ -293,7 +317,7 @@ void EncoderDecoder::encodeVideo(const QString& destination, const QString& audi
+ }
+ 
+ /*
+- * 
++ *
+ QGst::BinPtr EncoderDecoder::createAudioSrcBin(QString file, AUDIO_TYPE type, int sampleRate, int bitRate)
+ {
+     QGst::BinPtr audioBin;
