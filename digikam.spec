@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.0.0
-Release: 3%{?pre}%{?dist}
+Release: 4%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -90,7 +90,7 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
 # http://bugzilla.redhat.com/761184
 Requires: kcm_colors
-%if 0%{?fedora} || 0%{?rhel} > 6
+%if 0%{?fedora}
 # better default access to mtp-enabled devices
 Requires: kio_mtp
 %endif
@@ -546,6 +546,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sun Aug 03 2014 Rex Dieter <rdieter@fedoraproject.org> 4.0.0-4
+- make kio_mtp fedora only
+
 * Thu Jun 19 2014 Rex Dieter <rdieter@fedoraproject.org> 4.0.0-3
 - BR: kdelibs4-webkit-devel
 
