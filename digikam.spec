@@ -553,7 +553,7 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
-* Sun Aug 03 2014 Rex Dieter <rdieter@fedoraproject.org> 4.1.0-3
+* Sun Aug 03 2014 Rex Dieter <rdieter@fedoraproject.org> 4.1.0-4
 - make kio_mtp fedora only
 
 * Wed Jul 23 2014 Kevin Kofler <Kevin@tigcc.ticalc.org> - 4.1.0-3
