@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.1.0
-Release: 3%{?pre}%{?dist}
+Release: 4%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -92,7 +92,7 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
 # http://bugzilla.redhat.com/761184
 Requires: kcm_colors
-%if 0%{?fedora} || 0%{?rhel} > 6
+%if 0%{?fedora}
 # better default access to mtp-enabled devices
 Requires: kio_mtp
 %endif
@@ -553,6 +553,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sun Aug 03 2014 Rex Dieter <rdieter@fedoraproject.org> 4.1.0-3
+- make kio_mtp fedora only
+
 * Wed Jul 23 2014 Kevin Kofler <Kevin@tigcc.ticalc.org> - 4.1.0-3
 - apply upstream patch to handle QtGstreamer API 1.0 in VideoSlideShow tool;
   whether to build against QtGStreamer 0.10 or 1.x is autodetected (#1092659)
