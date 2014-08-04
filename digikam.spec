@@ -5,8 +5,8 @@
 %endif
 
 Name:    digikam
-Version: 4.1.0
-Release: 4%{?pre}%{?dist}
+Version: 4.2.0
+Release: 1%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -24,10 +24,6 @@ Source1: digikam-import.desktop
 ## upstreamable patches
 
 ## upstream patches
-# handle QtGstreamer API 1.0 in VideoSlideShow tool (Andreas Cord-Landwehr)
-# The patch autodetects whether we have QtGStreamer 0.10 or 1.x.
-# http://commits.kde.org/kipi-plugins/cbc59f1060fe4cf770d35800bbcefb1f89f882de
-Patch100: kipi-plugins-gstreamer1.patch
 
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
@@ -233,11 +229,6 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
-
-# applied unconditionally, it autodetects the version of QtGStreamer to use
-pushd extra/kipi-plugins
-%patch100 -p1 -b .gstreamer1
-popd
 
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
@@ -553,6 +544,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Aug  4 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.2.0-1
+- digikam-4.2.0
+
 * Sun Aug 03 2014 Rex Dieter <rdieter@fedoraproject.org> 4.1.0-4
 - make kio_mtp fedora only
 
