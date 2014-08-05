@@ -24,6 +24,9 @@ Source1: digikam-import.desktop
 ## upstreamable patches
 
 ## upstream patches
+# https://bugs.kde.org/show_bug.cgi?id=338037
+Patch100: digikam-4.2.0-fix-linking.patch
+
 
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
@@ -229,6 +232,8 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
+
+%patch100 -p1 -b .fix-linking
 
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
