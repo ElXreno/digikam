@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.2.0
-Release: 2%{?pre}%{?dist}
+Release: 3%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -549,6 +549,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Thu Aug 07 2014 Rex Dieter <rdieter@fedoraproject.org> 4.2.0-3
+- rebuild (marble)
+
 * Wed Aug  6 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.2.0-2
 - enable kdepimlibs support disabled by default in 4.2.0 (kde#338055)
 
