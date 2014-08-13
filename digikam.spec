@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.2.0
-Release: 4%{?pre}%{?dist}
+Release: 5%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -236,6 +236,7 @@ BuildArch: noarch
 ## HACK to allow building with older opencv (for now), see
 # https://bugzilla.redhat.com/show_bug.cgi?id=1119036
 sed -i.opencv_247 -e 's|^DETECT_OPENCV(2.4.9 |DETECT_OPENCV(2.4.7 |' \
+  core/CMakeLists.txt \
   extra/kipi-plugins/CMakeLists.txt \
   extra/libkface/CMakeLists.txt \
 
@@ -553,6 +554,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed Aug 13 2014 Rex Dieter <rdieter@fedoraproject.org> 4.2.0-5
+- core/CMakeLists.txt too (#1119036)
+
 * Wed Aug 13 2014 Rex Dieter <rdieter@fedoraproject.org> 4.2.0-4
 - hack to allow build with older opencv (#1119036)
 
