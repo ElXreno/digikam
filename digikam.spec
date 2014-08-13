@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.2.0
-Release: 3%{?pre}%{?dist}
+Release: 4%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -61,7 +61,7 @@ BuildRequires: sane-backends-devel
 ## htmlexport plugin
 BuildRequires: pkgconfig(libxslt)
 ## RemoveRedeye
-BuildRequires: pkgconfig(opencv) >= 2.4.9
+BuildRequires: pkgconfig(opencv) >= 2.4.7
 ## Shwup
 BuildRequires: pkgconfig(qca2)
 ## debianscreenshorts
@@ -234,6 +234,11 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch100 -p1 -b .fix-linking
+## HACK to allow building with older opencv (for now), see
+# https://bugzilla.redhat.com/show_bug.cgi?id=1119036
+sed -i.opencv_247 -e 's|^DETECT_OPENCV(2.4.9 |DETECT_OPENCV(2.4.7 |' \
+  extra/kipi-plugins/CMakeLists.txt \
+  extra/libkface/CMakeLists.txt \
 
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
@@ -549,6 +554,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed Aug 13 2014 Rex Dieter <rdieter@fedoraproject.org> 4.2.0-4
+- hack to allow build with older opencv (#1119036)
+
 * Thu Aug 07 2014 Rex Dieter <rdieter@fedoraproject.org> 4.2.0-3
 - rebuild (marble)
 
