@@ -5,13 +5,17 @@
 %endif
 
 Name:    digikam
-Version: 4.1.0
-Release: 2%{?pre}%{?dist}
+Version: 4.2.0
+Release: 4%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
 URL:     http://www.digikam.org/
 Source0: http://download.kde.org/%{?pre:un}stable/digikam/digikam-%{version}%{?pre:-%{pre}}.tar.bz2
+%if 0%{?rhel}
+# rhel7/ppc64 lacks some dependencies, including libkdcraw, libkexiv2, libkipi
+ExcludeArch: ppc64
+%endif
 
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
 # TODO: upstream me
@@ -20,6 +24,8 @@ Source1: digikam-import.desktop
 ## upstreamable patches
 
 ## upstream patches
+# https://bugs.kde.org/show_bug.cgi?id=338037
+Patch100: digikam-4.2.0-fix-linking.patch
 
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
@@ -48,21 +54,21 @@ BuildRequires: mariadb-server
 BuildRequires: pkgconfig(exiv2)
 ## DNG converter
 BuildRequires: expat-devel
-BuildRequires: pkgconfig(libgpod-1.0)
 # until when/if libksane-devel grows a depn on sane-backends-devel
 BuildRequires: pkgconfig(libksane) 
 BuildRequires: sane-backends-devel
 ## htmlexport plugin
 BuildRequires: pkgconfig(libxslt)
 ## RemoveRedeye
-BuildRequires: pkgconfig(opencv) >= 2.4.9
+BuildRequires: pkgconfig(opencv) >= 2.4.7
 ## Shwup
 BuildRequires: pkgconfig(qca2)
 ## debianscreenshorts
 BuildRequires: pkgconfig(QJson) 
 %if 0%{?videoslideshow}
 ## VideoSlideShow
-BuildRequires: pkgconfig(QtGStreamer-0.10)
+# pkgconfig(QtGStreamer-1.0) vs. pkgconfig(QtGStreamer-0.10) is autodetected
+BuildRequires: qt-gstreamer-devel
 BuildRequires: pkgconfig(ImageMagick)
 %endif
 # Panorama plugin requires flex and bison
@@ -72,6 +78,8 @@ BuildRequires: bison
 BuildRequires: herqq-devel
 BuildRequires: pkgconfig(lensfun) >= 0.2.6
 BuildRequires: pkgconfig(lqr-1)
+%define libgpod 1
+BuildRequires: pkgconfig(libgpod-1.0)
 BuildRequires: pkgconfig(libpgf) >= 6.11.42
 %endif
 
@@ -82,7 +90,7 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
 # http://bugzilla.redhat.com/761184
 Requires: kcm_colors
-%if 0%{?fedora} || 0%{?rhel} > 6
+%if 0%{?fedora}
 # better default access to mtp-enabled devices
 Requires: kio_mtp
 %endif
@@ -224,6 +232,13 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
+%patch100 -p1 -b .fix-linking
+## HACK to allow building with older opencv (for now), see
+# https://bugzilla.redhat.com/show_bug.cgi?id=1119036
+sed -i.opencv_247 -e 's|^DETECT_OPENCV(2.4.9 |DETECT_OPENCV(2.4.7 |' \
+  extra/kipi-plugins/CMakeLists.txt \
+  extra/libkface/CMakeLists.txt \
+
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
 mv -f cmake/modules/FindKipi.cmake cmake/modules/FindKipi.cmake.ORIG
@@ -232,7 +247,7 @@ mv -f cmake/modules/FindKipi.cmake cmake/modules/FindKipi.cmake.ORIG
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kde4} -DENABLE_LCMS2=ON ..
+%{cmake_kde4} -DENABLE_LCMS2=ON -DENABLE_KDEPIMLIBSSUPPORT=ON ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -270,7 +285,9 @@ mv kipi-plugins.lang kipi-plugins-doc.lang
 %find_lang kipiplugin_gpssync
 %find_lang kipiplugin_htmlexport
 %find_lang kipiplugin_imageviewer
+%if 0%{?libgpod}
 %find_lang kipiplugin_ipodexport
+%endif
 %find_lang kipiplugin_jpeglossless
 %find_lang kipiplugin_kioexportimport
 %find_lang kipiplugin_metadataedit
@@ -289,7 +306,7 @@ kipiplugin_dngconverter.lang kipiplugin_expoblending.lang \
 kipiplugin_facebook.lang kipiplugin_flashexport.lang \
 kipiplugin_flickrexport.lang kipiplugin_galleryexport.lang \
 kipiplugin_gpssync.lang kipiplugin_htmlexport.lang \
-kipiplugin_imageviewer.lang kipiplugin_ipodexport.lang \
+kipiplugin_imageviewer.lang \
 kipiplugin_jpeglossless.lang kipiplugin_kioexportimport.lang \
 kipiplugin_metadataedit.lang kipiplugin_picasawebexport.lang \
 kipiplugin_piwigoexport.lang kipiplugin_printimages.lang \
@@ -297,6 +314,11 @@ kipiplugin_rawconverter.lang kipiplugin_removeredeyes.lang \
 kipiplugin_sendimages.lang kipiplugin_shwup.lang \
 kipiplugin_smug.lang kipiplugin_timeadjust.lang \
 kipiplugins.lang >> kipi-plugins.lang
+%if 0%{?libgpod}
+cat kipiplugin_ipodexport.lang >> kipi-plugins.lang
+%else
+rm -fv %{buildroot}%{_datadir}/locale/*/LC_MESSAGES/kipiplugin_ipodexport.mo
+%endif
 
 ## unpackaged files
 rm -fv %{buildroot}%{_kde4_libdir}/libdigikamcore.so
@@ -461,7 +483,9 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_imageviewer.so
 %{_kde4_libdir}/kde4/kipiplugin_imageshackexport.so
 %{_kde4_libdir}/kde4/kipiplugin_imgurexport.so
+%if 0%{?libgpod}
 %{_kde4_libdir}/kde4/kipiplugin_ipodexport.so
+%endif
 %{_kde4_libdir}/kde4/kipiplugin_jpeglossless.so
 %{_kde4_libdir}/kde4/kipiplugin_kioexportimport.so
 %{_kde4_libdir}/kde4/kipiplugin_kmlexport.so
@@ -529,6 +553,25 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed Aug 13 2014 Rex Dieter <rdieter@fedoraproject.org> 4.2.0-4
+- hack to allow build with older opencv (#1119036)
+
+* Thu Aug 07 2014 Rex Dieter <rdieter@fedoraproject.org> 4.2.0-3
+- rebuild (marble)
+
+* Wed Aug  6 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.2.0-2
+- enable kdepimlibs support disabled by default in 4.2.0 (kde#338055)
+
+* Mon Aug  4 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.2.0-1
+- digikam-4.2.0
+
+* Sun Aug 03 2014 Rex Dieter <rdieter@fedoraproject.org> 4.1.0-4
+- make kio_mtp fedora only
+
+* Wed Jul 23 2014 Kevin Kofler <Kevin@tigcc.ticalc.org> - 4.1.0-3
+- apply upstream patch to handle QtGstreamer API 1.0 in VideoSlideShow tool;
+  whether to build against QtGStreamer 0.10 or 1.x is autodetected (#1092659)
+
 * Mon Jul 14 2014 Rex Dieter <rdieter@fedoraproject.org> 4.1.0-2
 - rebuild (marble)
 
