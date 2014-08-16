@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.2.0
-Release: 5%{?pre}%{?dist}
+Release: 6%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -554,6 +554,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2.0-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
 * Wed Aug 13 2014 Rex Dieter <rdieter@fedoraproject.org> 4.2.0-5
 - core/CMakeLists.txt too (#1119036)
 
