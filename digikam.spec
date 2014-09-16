@@ -5,8 +5,8 @@
 %endif
 
 Name:    digikam
-Version: 4.2.0
-Release: 6%{?pre}%{?dist}
+Version: 4.3.0
+Release: 1%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -24,8 +24,6 @@ Source1: digikam-import.desktop
 ## upstreamable patches
 
 ## upstream patches
-# https://bugs.kde.org/show_bug.cgi?id=338037
-Patch100: digikam-4.2.0-fix-linking.patch
 
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
@@ -232,7 +230,6 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
-%patch100 -p1 -b .fix-linking
 ## HACK to allow building with older opencv (for now), see
 # https://bugzilla.redhat.com/show_bug.cgi?id=1119036
 sed -i.opencv_247 -e 's|^DETECT_OPENCV(2.4.9 |DETECT_OPENCV(2.4.7 |' \
@@ -554,6 +551,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue Sep 16 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.3.0-1
+- digikam-4.3.0
+
 * Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2.0-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
