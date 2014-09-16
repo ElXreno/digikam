@@ -29,6 +29,7 @@ BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
 BuildRequires: gettext
+BuildRequires: baloo-devel
 # marble integration, http://bugzilla.redhat.com/470578
 BuildRequires: marble-devel >= 1:4.6.80 
 # updated FindKipi.cmake https://bugs.kde.org/show_bug.cgi?id=307213
@@ -553,6 +554,7 @@ update-desktop-database -q &> /dev/null
 %changelog
 * Tue Sep 16 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.3.0-1
 - digikam-4.3.0
+- add BR: baloo-devel
 
 * Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2.0-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
