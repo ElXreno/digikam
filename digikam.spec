@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.3.0
-Release: 1%{?pre}%{?dist}
+Release: 2%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -24,6 +24,8 @@ Source1: digikam-import.desktop
 ## upstreamable patches
 
 ## upstream patches
+# kde bugs 325580, 339210
+Patch100: digikam-4.3.0-fix-job-crash.patch
 
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
@@ -231,6 +233,10 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
+
+pushd core
+%patch100 -p1 -b .fix-job-crash
+popd
 
 ## HACK to allow building with older opencv (for now), see
 # https://bugzilla.redhat.com/show_bug.cgi?id=1119036
@@ -556,6 +562,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sat Sep 20 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.3.0-2
+- backport job crash fix (kde bugs 325580, 339210)
+
 * Tue Sep 16 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.3.0-1
 - digikam-4.3.0
 - add BR: baloo-devel kfilemetadata-devel
