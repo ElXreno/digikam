@@ -1,0 +1,38 @@
+--- digikam-4.5.0/CMakeLists.txt	2014-11-12 12:50:30.000000000 +0200
++++ digikam-4.5.0/CMakeLists.txt	2014-11-14 13:26:00.056758672 +0200
+@@ -138,14 +138,14 @@ if(ENABLE_PRIVATE_SHAREDLIBS)
+     set(KIPI_LOCAL_DIR   extra/libkipi)
+     set(KEXIV2_LOCAL_DIR extra/libkexiv2)
+     set(KDCRAW_LOCAL_DIR extra/libkdcraw)
+-    set(KFACE_LOCAL_DIR  extra/libkface)
+     set(KSANE_LOCAL_DIR  extra/libksane)
++endif()
++    set(KFACE_LOCAL_DIR  extra/libkface)
+ 
+     #from extragear/libs
+     set(KGEOMAP_LOCAL_DIR       extra/libkgeomap)
+     set(MEDIAWIKI_LOCAL_DIR     extra/libmediawiki)
+     set(LIBKVKONTAKTE_LOCAL_DIR extra/libkvkontakte)
+-endif()
+ 
+ add_subdirectory(extra)
+ add_subdirectory(core)
+--- digikam-4.5.0/extra/CMakeLists.txt	2014-11-12 12:50:30.000000000 +0200
++++ digikam-4.5.0/extra/CMakeLists.txt	2014-11-14 13:25:29.063070249 +0200
+@@ -13,14 +13,14 @@ if(${ENABLE_PRIVATE_SHAREDLIBS})
+     add_subdirectory(libkipi)
+     add_subdirectory(libkexiv2)
+     add_subdirectory(libkdcraw)
+-    add_subdirectory(libkface)
+     MACRO_OPTIONAL_ADD_SUBDIRECTORY(libksane)
++endif()
++    add_subdirectory(libkface)
+ 
+     # from extragear/libs
+     add_subdirectory(libkgeomap)
+     MACRO_OPTIONAL_ADD_SUBDIRECTORY(libmediawiki)
+     MACRO_OPTIONAL_ADD_SUBDIRECTORY(libkvkontakte)
+ 
+-endif()
+ 
+ add_subdirectory(kipi-plugins)

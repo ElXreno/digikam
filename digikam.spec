@@ -21,6 +21,10 @@ ExcludeArch: ppc64
 # TODO: upstream me
 Source1: digikam-import.desktop
 
+# build only libkface, libkgeomap, libmediawiki, libkvkontakte
+#-DDIGIKAMSC_USE_PRIVATE_SHAREDLIBS=ON enables also libkipi, libkexiv2, libkdcraw, libksane
+# https://bugs.kde.org/show_bug.cgi?id=340945
+Patch0: digikam-4.5.0-enable-libs.patch
 ## upstreamable patches
 
 ## upstream patches
@@ -31,6 +35,8 @@ BuildRequires: doxygen
 BuildRequires: gettext
 BuildRequires: baloo-devel
 BuildRequires: kfilemetadata-devel
+# for DLNAExport
+BuildRequires: qtsoap-devel
 # marble integration, http://bugzilla.redhat.com/470578
 BuildRequires: marble-devel >= 1:4.6.80 
 # updated FindKipi.cmake https://bugs.kde.org/show_bug.cgi?id=307213
@@ -232,6 +238,7 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
+%patch0 -p1 -b .enable-libs
 
 ## HACK to allow building with older opencv (for now), see
 # https://bugzilla.redhat.com/show_bug.cgi?id=1119036
