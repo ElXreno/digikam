@@ -404,7 +404,7 @@ update-desktop-database -q &> /dev/null
 %files -n libkface-devel
 %{_kde4_includedir}/libkface/
 %{_kde4_libdir}/libkface.so
-%{_kde4_appsdir}/cmake/modules/FindKface.cmake
+%{_kde4_libdir}/cmake/Kface-3.5.0/
 %{_libdir}/pkgconfig/libkface.pc
 
 %post -n libkgeomap -p /sbin/ldconfig
