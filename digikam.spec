@@ -399,7 +399,7 @@ update-desktop-database -q &> /dev/null
 %doc extra/libkface/AUTHORS extra/libkface/COPYING
 %doc extra/libkface/README extra/libkface/COPYING.LIB
 %{_kde4_appsdir}/libkface/
-%{_kde4_libdir}/libkface.so.2*
+%{_kde4_libdir}/libkface.so.3*
 
 %files -n libkface-devel
 %{_kde4_includedir}/libkface/
