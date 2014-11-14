@@ -242,10 +242,10 @@ BuildArch: noarch
 
 ## HACK to allow building with older opencv (for now), see
 # https://bugzilla.redhat.com/show_bug.cgi?id=1119036
-sed -i.opencv_247 -e 's|^DETECT_OPENCV(2.4.9 |DETECT_OPENCV(2.4.7 |' \
+sed -i.opencv_247 -e 's|^DETECT_OPENCV(2.4.9 |DETECT_OPENCV(2.4.7 |' extra/libkface/CMakeLists.txt
+sed -i.opencv_247 -e 's|OPENCV_MIN_VERSION "2.4.9"|OPENCV_MIN_VERSION "2.4.7"|' \
   core/CMakeLists.txt \
-  extra/kipi-plugins/CMakeLists.txt \
-  extra/libkface/CMakeLists.txt \
+  extra/kipi-plugins/CMakeLists.txt
 
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
