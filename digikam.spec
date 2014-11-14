@@ -414,7 +414,7 @@ update-desktop-database -q &> /dev/null
 %doc extra/libkgeomap/AUTHORS extra/libkgeomap/COPYING
 %doc extra/libkgeomap/README extra/libkgeomap/COPYING.LIB
 %{_kde4_appsdir}/libkgeomap/
-%{_kde4_libdir}/libkgeomap.so.1*
+%{_kde4_libdir}/libkgeomap.so.2*
 
 %files -n libkgeomap-devel
 %{_kde4_includedir}/libkgeomap/
