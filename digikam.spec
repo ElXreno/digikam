@@ -358,7 +358,6 @@ update-desktop-database -q &> /dev/null
 %files -f digikam.lang
 %doc core/AUTHORS core/ChangeLog core/COPYING
 %doc core/NEWS core/README core/TODO
-%doc core/TODO.FACE core/TODO.MYSQLPORT
 %{_kde4_bindir}/digikam
 %{_kde4_bindir}/digitaglinktree
 %{_kde4_bindir}/cleanup_digikamdb
