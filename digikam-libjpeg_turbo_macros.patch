@@ -1,0 +1,61 @@
+diff -up digikam-4.5.0/core/libs/dimg/loaders/iccjpeg.h.JPP digikam-4.5.0/core/libs/dimg/loaders/iccjpeg.h
+--- digikam-4.5.0/core/libs/dimg/loaders/iccjpeg.h.JPP	2014-11-12 04:52:49.000000000 -0600
++++ digikam-4.5.0/core/libs/dimg/loaders/iccjpeg.h	2014-11-17 09:05:03.975853379 -0600
+@@ -45,6 +45,13 @@
+ #include <stdio.h>    /* needed to define "FILE", "NULL" */
+ #include <jpeglib.h>
+ 
++#ifndef JPP
++#define JPP(x) x
++#endif
++
++#ifndef FAR
++#define FAR
++#endif
+ 
+ /**
+  * This routine writes the given ICC profile data into a JPEG file.
+diff -up digikam-4.5.0/core/libs/jpegutils/libjpeg-62/jinclude.h.JPP digikam-4.5.0/core/libs/jpegutils/libjpeg-62/jinclude.h
+diff -up digikam-4.5.0/core/libs/jpegutils/libjpeg-62/transupp.h.JPP digikam-4.5.0/core/libs/jpegutils/libjpeg-62/transupp.h
+--- digikam-4.5.0/core/libs/jpegutils/libjpeg-62/transupp.h.JPP	2014-11-12 04:52:49.000000000 -0600
++++ digikam-4.5.0/core/libs/jpegutils/libjpeg-62/transupp.h	2014-11-17 09:07:33.447361822 -0600
+@@ -32,6 +32,9 @@
+ #define jcopy_markers_execute			jCMrkExec
+ #endif /* NEED_SHORT_EXTERNAL_NAMES */
+ 
++#ifndef JPP
++#define JPP(x) x
++#endif
+ 
+ /*
+  * Codes for supported types of image transformations.
+diff -up digikam-4.5.0/extra/kipi-plugins/common/libkipiplugins/tools/imageio/iccjpeg.h.JPP digikam-4.5.0/extra/kipi-plugins/common/libkipiplugins/tools/imageio/iccjpeg.h
+--- digikam-4.5.0/extra/kipi-plugins/common/libkipiplugins/tools/imageio/iccjpeg.h.JPP	2014-11-12 04:53:14.000000000 -0600
++++ digikam-4.5.0/extra/kipi-plugins/common/libkipiplugins/tools/imageio/iccjpeg.h	2014-11-17 09:00:48.591123547 -0600
+@@ -45,6 +45,13 @@
+ #include <stdio.h>    /* needed to define "FILE", "NULL" */
+ #include <jpeglib.h>
+ 
++#ifndef JPP
++#define JPP(x) x
++#endif
++
++#ifndef FAR
++#define FAR
++#endif
+ 
+ /**
+  * This routine writes the given ICC profile data into a JPEG file.
+diff -up digikam-4.5.0/extra/kipi-plugins/jpeglossless/libjpeg/transupp.h.JPP digikam-4.5.0/extra/kipi-plugins/jpeglossless/libjpeg/transupp.h
+--- digikam-4.5.0/extra/kipi-plugins/jpeglossless/libjpeg/transupp.h.JPP	2014-11-12 04:53:14.000000000 -0600
++++ digikam-4.5.0/extra/kipi-plugins/jpeglossless/libjpeg/transupp.h	2014-11-17 09:02:17.295615766 -0600
+@@ -94,6 +94,9 @@ namespace KIPIJPEGLossLessPlugin
+ #define jcopy_markers_execute		jCMrkExec
+ #endif /* NEED_SHORT_EXTERNAL_NAMES */
+ 
++#ifndef JPP
++#define JPP(x) x
++#endif
+ 
+ /*
+  * Codes for supported types of image transformations.

@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.5.0
-Release: 1%{?pre}%{?dist}
+Release: 2%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -25,7 +25,10 @@ Source1: digikam-import.desktop
 #-DDIGIKAMSC_USE_PRIVATE_SHAREDLIBS=ON enables also libkipi, libkexiv2, libkdcraw, libksane
 # https://bugs.kde.org/show_bug.cgi?id=340945
 Patch0: digikam-4.5.0-enable-libs.patch
+
 ## upstreamable patches
+# fix/workaround FTBFS against newer libjpeg-turbo, https://bugs.kde.org/show_bug.cgi?id=340944
+Patch1: digikam-libjpeg_turbo_macros.patch
 
 ## upstream patches
 
@@ -239,6 +242,7 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .enable-libs
+%patch1 -p1 -b .libjpeg_turbo_macros
 
 ## HACK to allow building with older opencv (for now), see
 # https://bugzilla.redhat.com/show_bug.cgi?id=1119036
@@ -563,6 +567,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Nov 17 2014 Rex Dieter <rdieter@fedoraproject.org> 4.5.0-2
+- fix/workaround FTBFS against newer libjpeg-turbo (kde#340944)
+
 * Fri Nov 14 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.5.0-1
 - digikam-4.5.0
 
