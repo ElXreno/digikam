@@ -27,9 +27,6 @@ Source1: digikam-import.desktop
 Patch0: digikam-4.5.0-enable-libs.patch
 
 ## upstreamable patches
-# fix/workaround FTBFS against newer libjpeg-turbo, https://bugs.kde.org/show_bug.cgi?id=340944
-#Patch1: digikam-libjpeg_turbo_macros.patch
-Patch1: digikam-libjpeg_turbo_macros-2.patch
 
 ## upstream patches
 
@@ -244,9 +241,6 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .enable-libs
-pushd core
-%patch1 -p1 -b .libjpeg_turbo_macros
-popd
 
 ## HACK to allow building with older opencv (for now), see
 # https://bugzilla.redhat.com/show_bug.cgi?id=1119036
@@ -573,6 +567,7 @@ update-desktop-database -q &> /dev/null
 %changelog
 * Wed Dec 10 2014 Rex Dieter <rdieter@fedoraproject.org> 4.5.0-3
 - rebuild (marble)
+- drop libjpeg-turbo workarounds (not needed anymore)
 
 * Mon Nov 17 2014 Rex Dieter <rdieter@fedoraproject.org> 4.5.0-2
 - fix/workaround FTBFS against newer libjpeg-turbo (kde#340944)
