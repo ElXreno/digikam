@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.5.0
-Release: 2%{?pre}%{?dist}
+Release: 3%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -28,7 +28,8 @@ Patch0: digikam-4.5.0-enable-libs.patch
 
 ## upstreamable patches
 # fix/workaround FTBFS against newer libjpeg-turbo, https://bugs.kde.org/show_bug.cgi?id=340944
-Patch1: digikam-libjpeg_turbo_macros.patch
+#Patch1: digikam-libjpeg_turbo_macros.patch
+Patch1: digikam-libjpeg_turbo_macros-2.patch
 
 ## upstream patches
 
@@ -151,7 +152,8 @@ Summary: Development files for libkface
 
 %package -n libkgeomap
 Summary: A world map library
-Requires: marble%{?_kde4_version: >= 1:%{_kde4_version}}
+# since kde-14.12, cannot rely on this versioned dep anymore -- rex
+#Requires: marble%{?_kde4_version: >= 1:%{_kde4_version}}
 %description -n libkgeomap
 %{summary}.
 
@@ -242,7 +244,9 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
 %patch0 -p1 -b .enable-libs
+pushd core
 %patch1 -p1 -b .libjpeg_turbo_macros
+popd
 
 ## HACK to allow building with older opencv (for now), see
 # https://bugzilla.redhat.com/show_bug.cgi?id=1119036
@@ -567,6 +571,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed Dec 10 2014 Rex Dieter <rdieter@fedoraproject.org> 4.5.0-3
+- rebuild (marble)
+
 * Mon Nov 17 2014 Rex Dieter <rdieter@fedoraproject.org> 4.5.0-2
 - fix/workaround FTBFS against newer libjpeg-turbo (kde#340944)
 
