@@ -418,10 +418,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/libkgeomap.so.2*
 
 %files -n libkgeomap-devel
-%{_kde4_includedir}/libkgeomap/
 %{_kde4_libdir}/libkgeomap.so
-%{_kde4_appsdir}/cmake/modules/FindKGeoMap.cmake
-%{_libdir}/pkgconfig/libkgeomap.pc
 
 %post -n libmediawiki -p /sbin/ldconfig
 %postun -n libmediawiki -p /sbin/ldconfig
@@ -432,10 +429,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/libmediawiki.so.1*
 
 %files -n libmediawiki-devel
-%{_kde4_includedir}/libmediawiki/
 %{_kde4_libdir}/libmediawiki.so
-%{_kde4_appsdir}/cmake/modules/FindMediawiki.cmake
-%{_libdir}/pkgconfig/libmediawiki.pc
 
 %post -n libkvkontakte -p /sbin/ldconfig
 %postun -n libkvkontakte -p /sbin/ldconfig
@@ -445,7 +439,6 @@ update-desktop-database -q &> /dev/null
 %{_libdir}/libkvkontakte.so.1*
 
 %files -n libkvkontakte-devel
-%{_includedir}/libkvkontakte/
 %{_libdir}/libkvkontakte.so
 %{_libdir}/cmake/LibKVkontakte/
 
