@@ -5,8 +5,8 @@
 %endif
 
 Name:    digikam
-Version: 4.5.0
-Release: 3%{?pre}%{?dist}
+Version: 4.6.0
+Release: 1%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -20,11 +20,6 @@ ExcludeArch: ppc64
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
 # TODO: upstream me
 Source1: digikam-import.desktop
-
-# build only libkface, libkgeomap, libmediawiki, libkvkontakte
-#-DDIGIKAMSC_USE_PRIVATE_SHAREDLIBS=ON enables also libkipi, libkexiv2, libkdcraw, libksane
-# https://bugs.kde.org/show_bug.cgi?id=340945
-Patch0: digikam-4.5.0-enable-libs.patch
 
 ## upstreamable patches
 
@@ -240,8 +235,6 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
-%patch0 -p1 -b .enable-libs
-
 ## HACK to allow building with older opencv (for now), see
 # https://bugzilla.redhat.com/show_bug.cgi?id=1119036
 sed -i.opencv_247 -e 's|^DETECT_OPENCV(2.4.9 |DETECT_OPENCV(2.4.7 |' extra/libkface/CMakeLists.txt
@@ -257,7 +250,13 @@ mv -f cmake/modules/FindKipi.cmake cmake/modules/FindKipi.cmake.ORIG
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kde4} -DENABLE_LCMS2=ON -DENABLE_KDEPIMLIBSSUPPORT=ON ..
+%{cmake_kde4} -DENABLE_LCMS2=ON \
+              -DENABLE_KDEPIMLIBSSUPPORT=ON \
+              -DDIGIKAMSC_COMPILE_LIBKFACE=ON \
+              -DDIGIKAMSC_COMPILE_LIBKGEOMAP=ON \
+              -DDIGIKAMSC_COMPILE_LIBMEDIAWIKI=ON \
+              -DDIGIKAMSC_COMPILE_LIBKVKONTAKTE=ON \
+              ..
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
@@ -565,6 +564,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Thu Dec 18 2014 Alexey Kurov <nucleo@fedoraproject.org> - 4.6.0-1
+- digikam-4.6.0
+
 * Wed Dec 10 2014 Rex Dieter <rdieter@fedoraproject.org> 4.5.0-3
 - rebuild (marble)
 - drop libjpeg-turbo workarounds (not needed anymore)
