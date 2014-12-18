@@ -257,6 +257,7 @@ pushd %{_target_platform}
               -DDIGIKAMSC_COMPILE_LIBMEDIAWIKI=ON \
               -DDIGIKAMSC_COMPILE_LIBKVKONTAKTE=ON \
               -DENABLE_MYSQLSUPPORT=ON \
+              -DENABLE_INTERNALMYSQL=ON \
               ..
 popd
 
