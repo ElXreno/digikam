@@ -21,6 +21,10 @@ ExcludeArch: ppc64
 # TODO: upstream me
 Source1: digikam-import.desktop
 
+# https://bugs.kde.org/show_bug.cgi?id=342004
+# install libkface devel files
+Patch0: digikam-4.6.0-libkface-devel-files.patch
+
 ## upstreamable patches
 
 ## upstream patches
@@ -234,6 +238,8 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
+
+%patch0 -p1 -b .libkface-devel-files.patch
 
 ## HACK to allow building with older opencv (for now), see
 # https://bugzilla.redhat.com/show_bug.cgi?id=1119036

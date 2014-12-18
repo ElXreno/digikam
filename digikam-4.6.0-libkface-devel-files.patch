@@ -1,0 +1,11 @@
+--- digikam-4.6.0/extra/libkface/libkface/CMakeLists.txt	2014-12-16 09:54:40.000000000 +0200
++++ digikam-4.6.0/extra/libkface/libkface/CMakeLists.txt	2014-12-18 18:10:16.881222835 +0200
+@@ -64,7 +64,7 @@
+         DESTINATION ${DATA_INSTALL_DIR}/libkface/database )
+ 
+ # Check if compilation is done through digiKam SC or not. If yes, do not install header files.
+-if(NOT DIGIKAMSC_COMPILE_LIBKFACE)
++if(DIGIKAMSC_COMPILE_LIBKFACE)
+ 
+     install(FILES facedetector.h
+                   recognitiondatabase.h
