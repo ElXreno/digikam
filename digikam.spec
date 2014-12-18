@@ -21,10 +21,6 @@ ExcludeArch: ppc64
 # TODO: upstream me
 Source1: digikam-import.desktop
 
-# https://bugs.kde.org/show_bug.cgi?id=342004
-# install libkface devel files
-Patch0: digikam-4.6.0-libkface-devel-files.patch
-
 ## upstreamable patches
 
 ## upstream patches
@@ -239,8 +235,6 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?pre:-%{pre}}
 
-%patch0 -p1 -b .libkface-devel-files.patch
-
 ## HACK to allow building with older opencv (for now), see
 # https://bugzilla.redhat.com/show_bug.cgi?id=1119036
 sed -i.opencv_247 -e 's|^DETECT_OPENCV(2.4.9 |DETECT_OPENCV(2.4.7 |' extra/libkface/CMakeLists.txt
@@ -411,10 +405,8 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/libkface.so.3*
 
 %files -n libkface-devel
-%{_kde4_includedir}/libkface/
 %{_kde4_libdir}/libkface.so
 %{_kde4_libdir}/cmake/Kface-3.5.0/
-%{_libdir}/pkgconfig/libkface.pc
 
 %post -n libkgeomap -p /sbin/ldconfig
 %postun -n libkgeomap -p /sbin/ldconfig
