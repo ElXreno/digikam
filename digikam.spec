@@ -278,8 +278,6 @@ mv showfoto.lang showfoto-doc.lang
 cat showfoto-doc.lang >> digikam-doc.lang
 %find_lang digikam
 
-%find_lang libkgeomap
-
 %find_lang kipi-plugins --with-kde --without-mo
 mv kipi-plugins.lang kipi-plugins-doc.lang
 %find_lang kipiplugins
@@ -411,7 +409,7 @@ update-desktop-database -q &> /dev/null
 %post -n libkgeomap -p /sbin/ldconfig
 %postun -n libkgeomap -p /sbin/ldconfig
 
-%files -n libkgeomap -f libkgeomap.lang
+%files -n libkgeomap
 %doc extra/libkgeomap/AUTHORS extra/libkgeomap/COPYING
 %doc extra/libkgeomap/README extra/libkgeomap/COPYING.LIB
 %{_kde4_appsdir}/libkgeomap/
@@ -559,6 +557,7 @@ update-desktop-database -q &> /dev/null
 %changelog
 * Tue Apr  7 2015 Alexey Kurov <nucleo@fedoraproject.org> - 4.9.0-1
 - digikam-4.9.0
+- removed libkgeomap translations
 
 * Mon Feb 23 2015 Alexey Kurov <nucleo@fedoraproject.org> - 4.8.0-1
 - digikam-4.8.0
