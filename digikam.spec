@@ -33,8 +33,6 @@ BuildRequires: baloo-devel
 BuildRequires: kfilemetadata-devel
 # for DLNAExport
 BuildRequires: qtsoap-devel
-# marble integration, http://bugzilla.redhat.com/470578
-BuildRequires: marble-devel >= 1:4.6.80 
 # updated FindKipi.cmake https://bugs.kde.org/show_bug.cgi?id=307213
 BuildRequires: kdelibs4-devel >= 4.9.1-4
 BuildRequires: kdelibs4-webkit-devel
@@ -217,7 +215,6 @@ BuildArch: noarch
 
 ## HACK to allow building with older opencv (for now), see
 # https://bugzilla.redhat.com/show_bug.cgi?id=1119036
-sed -i.opencv_247 -e 's|^DETECT_OPENCV(2.4.9 |DETECT_OPENCV(2.4.7 |' extra/libkface/CMakeLists.txt
 sed -i.opencv_247 -e 's|OPENCV_MIN_VERSION "2.4.9"|OPENCV_MIN_VERSION "2.4.7"|' \
   core/CMakeLists.txt \
   extra/kipi-plugins/CMakeLists.txt
