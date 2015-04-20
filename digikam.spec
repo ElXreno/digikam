@@ -134,28 +134,6 @@ BuildArch: noarch
 %description doc
 %{summary}.
 
-%package -n libkface
-Summary: A C++ wrapper around LibFace library to perform face recognition over pictures.  
-%description -n libkface 
-%{summary}.
-
-%package -n libkface-devel
-Summary: Development files for libkface 
-%description -n libkface-devel
-%{summary}.
-
-%package -n libkgeomap
-Summary: A world map library
-# since kde-14.12, cannot rely on this versioned dep anymore -- rex
-#Requires: marble%{?_kde4_version: >= 1:%{_kde4_version}}
-%description -n libkgeomap
-%{summary}.
-
-%package -n libkgeomap-devel
-Summary: Development files for libkgeomap
-%description -n libkgeomap-devel
-%{summary}.
-
 %package -n libmediawiki
 Summary: a MediaWiki C++ interface
 %description -n libmediawiki
@@ -392,31 +370,6 @@ update-desktop-database -q &> /dev/null
 %files libs
 %{_kde4_libdir}/libdigikamcore.so.4*
 %{_kde4_libdir}/libdigikamdatabase.so.4*
-
-%post -n libkface -p /sbin/ldconfig
-%postun -n libkface -p /sbin/ldconfig
-
-%files -n libkface
-%doc extra/libkface/AUTHORS extra/libkface/COPYING
-%doc extra/libkface/README extra/libkface/COPYING.LIB
-%{_kde4_appsdir}/libkface/
-%{_kde4_libdir}/libkface.so.3*
-
-%files -n libkface-devel
-%{_kde4_libdir}/libkface.so
-%{_kde4_libdir}/cmake/Kface-3.5.0/
-
-%post -n libkgeomap -p /sbin/ldconfig
-%postun -n libkgeomap -p /sbin/ldconfig
-
-%files -n libkgeomap
-%doc extra/libkgeomap/AUTHORS extra/libkgeomap/COPYING
-%doc extra/libkgeomap/README extra/libkgeomap/COPYING.LIB
-%{_kde4_appsdir}/libkgeomap/
-%{_kde4_libdir}/libkgeomap.so.2*
-
-%files -n libkgeomap-devel
-%{_kde4_libdir}/libkgeomap.so
 
 %post -n libmediawiki -p /sbin/ldconfig
 %postun -n libmediawiki -p /sbin/ldconfig
