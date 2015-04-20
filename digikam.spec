@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.9.0
-Release: 1%{?pre}%{?dist}
+Release: 2%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -52,6 +52,8 @@ BuildRequires: pkgconfig(libpng) >= 1.2.7
 BuildRequires: pkgconfig(libkdcraw) >= 2.2.0
 BuildRequires: pkgconfig(libkexiv2) >= 1.0.0
 BuildRequires: pkgconfig(libkipi) >= 2.0.0
+BuildRequires: pkgconfig(libkface) >= 3.5.0
+BuildRequires: pkgconfig(libkgeomap) >= 3.1.0
 BuildRequires: mariadb-server
 BuildRequires: pkgconfig(exiv2)
 ## DNG converter
@@ -252,8 +254,6 @@ mkdir -p %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kde4} -DENABLE_LCMS2=ON \
               -DENABLE_KDEPIMLIBSSUPPORT=ON \
-              -DDIGIKAMSC_COMPILE_LIBKFACE=ON \
-              -DDIGIKAMSC_COMPILE_LIBKGEOMAP=ON \
               -DDIGIKAMSC_COMPILE_LIBMEDIAWIKI=ON \
               -DDIGIKAMSC_COMPILE_LIBKVKONTAKTE=ON \
               -DENABLE_MYSQLSUPPORT=ON \
@@ -555,6 +555,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Apr 20 2015 Alexey Kurov <nucleo@fedoraproject.org> - 4.9.0-2
+- build against system libkface and libkgeomap
+
 * Tue Apr  7 2015 Alexey Kurov <nucleo@fedoraproject.org> - 4.9.0-1
 - digikam-4.9.0
 - removed libkgeomap translations
