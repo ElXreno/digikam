@@ -5,8 +5,8 @@
 %endif
 
 Name:    digikam
-Version: 4.9.0
-Release: 2%{?pre}%{?dist}
+Version: 4.10.0
+Release: 1%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -505,6 +505,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue May 12 2015 Alexey Kurov <nucleo@fedoraproject.org> - 4.10.0-1
+- digikam-4.10.0
+
 * Mon Apr 20 2015 Alexey Kurov <nucleo@fedoraproject.org> - 4.9.0-2
 - build against system libkface and libkgeomap
 
