@@ -284,6 +284,24 @@ mv kipi-plugins.lang kipi-plugins-doc.lang
 %find_lang kipiplugin_shwup
 %find_lang kipiplugin_smug
 %find_lang kipiplugin_timeadjust
+%find_lang kipiplugin_debianscreenshots
+%find_lang kipiplugin_dlnaexport
+%find_lang kipiplugin_dropbox
+%find_lang kipiplugin_googledrive
+%find_lang kipiplugin_imageshackexport
+%find_lang kipiplugin_imgurexport
+%find_lang kipiplugin_jalbumexport
+%find_lang kipiplugin_kmlexport
+%find_lang kipiplugin_kopete
+%find_lang kipiplugin_panorama
+%find_lang kipiplugin_photivointegration
+%find_lang kipiplugin_photolayouteditor
+%find_lang kipiplugin_rajceexport
+%find_lang kipiplugin_videoslideshow
+%find_lang kipiplugin_vkontakte
+%find_lang kipiplugin_wallpaper
+%find_lang kipiplugin_wikimedia
+%find_lang kipiplugin_yandexfotki
 cat kipiplugin_acquireimages.lang kipiplugin_advancedslideshow.lang \
 kipiplugin_batchprocessimages.lang kipiplugin_calendar.lang \
 kipiplugin_dngconverter.lang kipiplugin_expoblending.lang \
@@ -297,6 +315,15 @@ kipiplugin_piwigoexport.lang kipiplugin_printimages.lang \
 kipiplugin_rawconverter.lang kipiplugin_removeredeyes.lang \
 kipiplugin_sendimages.lang kipiplugin_shwup.lang \
 kipiplugin_smug.lang kipiplugin_timeadjust.lang \
+kipiplugin_debianscreenshots.lang kipiplugin_dlnaexport.lang \
+kipiplugin_dropbox.lang kipiplugin_googledrive.lang \
+kipiplugin_imageshackexport.lang kipiplugin_imgurexport.lang \
+kipiplugin_jalbumexport.lang kipiplugin_kmlexport.lang \
+kipiplugin_kopete.lang kipiplugin_panorama.lang \
+kipiplugin_photivointegration.lang kipiplugin_photolayouteditor.lang \
+kipiplugin_rajceexport.lang kipiplugin_videoslideshow.lang \
+kipiplugin_vkontakte.lang kipiplugin_wallpaper.lang \
+kipiplugin_wikimedia.lang kipiplugin_yandexfotki.lang \
 kipiplugins.lang >> kipi-plugins.lang
 %if 0%{?libgpod}
 cat kipiplugin_ipodexport.lang >> kipi-plugins.lang
@@ -507,6 +534,7 @@ update-desktop-database -q &> /dev/null
 %changelog
 * Tue May 12 2015 Alexey Kurov <nucleo@fedoraproject.org> - 4.10.0-1
 - digikam-4.10.0
+- added more kipiplugin translations
 
 * Mon Apr 20 2015 Alexey Kurov <nucleo@fedoraproject.org> - 4.9.0-2
 - build against system libkface and libkgeomap
