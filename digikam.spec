@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.10.0
-Release: 1%{?pre}%{?dist}
+Release: 2%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -532,6 +532,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Thu May 14 2015 Nils Philippsen <nils@redhat.com> - 4.10.0-2
+- rebuild for lensfun-0.3.1
+
 * Tue May 12 2015 Alexey Kurov <nucleo@fedoraproject.org> - 4.10.0-1
 - digikam-4.10.0
 - added more kipiplugin translations
