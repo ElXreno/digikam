@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.10.0
-Release: 2%{?pre}%{?dist}
+Release: 3%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -92,9 +92,10 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
 # http://bugzilla.redhat.com/761184
 Requires: kcm_colors
-%if 0%{?fedora}
+%if 0%{?fedora} > 20
 # better default access to mtp-enabled devices
-Requires: kio_mtp
+Recommends: kio_mtp
+Recommends: kipi-plugins
 %endif
 
 %description
@@ -532,6 +533,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sat May 16 2015 Rex Dieter <rdieter@fedoraproject.org> 4.10.0-3
+- export menu wont appear (#1222225)
+
 * Thu May 14 2015 Nils Philippsen <nils@redhat.com> - 4.10.0-2
 - rebuild for lensfun-0.3.1
 
