@@ -52,8 +52,10 @@ BuildRequires: pkgconfig(libpng) >= 1.2.7
 BuildRequires: pkgconfig(libkdcraw) >= 2.2.0
 BuildRequires: pkgconfig(libkexiv2) >= 1.0.0
 BuildRequires: pkgconfig(libkipi) >= 2.0.0
+%if 0%{?fedora}
 BuildRequires: pkgconfig(libkface) >= 3.5.0
 BuildRequires: pkgconfig(libkgeomap) >= 3.1.0
+%endif
 BuildRequires: mariadb-server
 BuildRequires: pkgconfig(exiv2)
 ## DNG converter
