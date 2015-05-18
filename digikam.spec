@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.10.0
-Release: 3%{?pre}%{?dist}
+Release: 4%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -29,8 +29,10 @@ BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
 BuildRequires: gettext
+%if 0%{?fedora}
 BuildRequires: baloo-devel
 BuildRequires: kfilemetadata-devel
+%endif
 # for DLNAExport
 BuildRequires: qtsoap-devel
 # updated FindKipi.cmake https://bugs.kde.org/show_bug.cgi?id=307213
@@ -62,7 +64,7 @@ BuildRequires: sane-backends-devel
 ## htmlexport plugin
 BuildRequires: pkgconfig(libxslt)
 ## RemoveRedeye
-BuildRequires: pkgconfig(opencv) >= 2.4.7
+BuildRequires: pkgconfig(opencv) >= 2.4.5
 ## Shwup
 BuildRequires: pkgconfig(qca2)
 ## debianscreenshorts
@@ -80,9 +82,11 @@ BuildRequires: bison
 BuildRequires: herqq-devel
 BuildRequires: pkgconfig(lensfun) >= 0.2.6
 BuildRequires: pkgconfig(lqr-1)
+%endif
+%if 0%{?fedora} || 0%{?rhel} > 6
 %define libgpod 1
 BuildRequires: pkgconfig(libgpod-1.0)
-BuildRequires: pkgconfig(libpgf) >= 6.11.42
+BuildRequires: pkgconfig(libpgf) >= 6.12.24
 %endif
 
 # when lib(-devel) subpkgs were split
@@ -216,7 +220,7 @@ BuildArch: noarch
 
 ## HACK to allow building with older opencv (for now), see
 # https://bugzilla.redhat.com/show_bug.cgi?id=1119036
-sed -i.opencv_247 -e 's|OPENCV_MIN_VERSION "2.4.9"|OPENCV_MIN_VERSION "2.4.7"|' \
+sed -i.opencv_245 -e 's|OPENCV_MIN_VERSION "2.4.9"|OPENCV_MIN_VERSION "2.4.5"|' \
   core/CMakeLists.txt \
   extra/kipi-plugins/CMakeLists.txt
 
@@ -533,6 +537,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon May 18 2015 Rex Dieter <rdieter@fedoraproject.org> 4.10.0-4
+- merge epel-7 mods (#1194901)
+
 * Sat May 16 2015 Rex Dieter <rdieter@fedoraproject.org> 4.10.0-3
 - export menu wont appear (#1222225)
 
