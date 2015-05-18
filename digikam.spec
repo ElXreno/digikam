@@ -228,7 +228,12 @@ sed -i.opencv_245 -e 's|OPENCV_MIN_VERSION "2.4.9"|OPENCV_MIN_VERSION "2.4.5"|' 
 
 # don't use bundled/old FindKipi.cmake in favor of kdelibs' version
 # see http:/bugs.kde.org/307213
-mv -f cmake/modules/FindKipi.cmake cmake/modules/FindKipi.cmake.ORIG
+mv -fv cmake/modules/FindKipi.cmake cmake/modules/FindKipi.cmake.ORIG
+
+# el7's kdelibs doesn't define this entity:
+%if 0%{?rhel}
+sed -i.docbook_fix -e 's|&Ivo.de.Klerk;||g' doc-translated/*/index.docbook
+%endif
 
 
 %build
