@@ -54,6 +54,7 @@ BuildRequires: pkgconfig(libkexiv2) >= 1.0.0
 BuildRequires: pkgconfig(libkipi) >= 2.0.0
 %if 0%{?fedora}
 BuildRequires: pkgconfig(libkface) >= 3.5.0
+%define gpssync 1
 BuildRequires: pkgconfig(libkgeomap) >= 3.1.0
 %endif
 BuildRequires: mariadb-server
@@ -278,7 +279,9 @@ mv kipi-plugins.lang kipi-plugins-doc.lang
 %find_lang kipiplugin_flashexport
 %find_lang kipiplugin_flickrexport
 %find_lang kipiplugin_galleryexport
+%if 0%{?gpssync}
 %find_lang kipiplugin_gpssync
+%endif
 %find_lang kipiplugin_htmlexport
 %find_lang kipiplugin_imageviewer
 %if 0%{?libgpod}
@@ -319,7 +322,7 @@ kipiplugin_batchprocessimages.lang kipiplugin_calendar.lang \
 kipiplugin_dngconverter.lang kipiplugin_expoblending.lang \
 kipiplugin_facebook.lang kipiplugin_flashexport.lang \
 kipiplugin_flickrexport.lang kipiplugin_galleryexport.lang \
-kipiplugin_gpssync.lang kipiplugin_htmlexport.lang \
+kipiplugin_htmlexport.lang \
 kipiplugin_imageviewer.lang \
 kipiplugin_jpeglossless.lang kipiplugin_kioexportimport.lang \
 kipiplugin_metadataedit.lang kipiplugin_picasawebexport.lang \
@@ -337,6 +340,11 @@ kipiplugin_rajceexport.lang kipiplugin_videoslideshow.lang \
 kipiplugin_vkontakte.lang kipiplugin_wallpaper.lang \
 kipiplugin_wikimedia.lang kipiplugin_yandexfotki.lang \
 kipiplugins.lang >> kipi-plugins.lang
+%if 0%{?gpssync}
+cat kipiplugin_gpssync.lang >> kipi-plugins.lang
+%else
+rm -fv %{buildrooot}%{_datadir}/locale/*/LC_MESSAGES/kipiplugin_gpssync.mo
+%endif
 %if 0%{?libgpod}
 cat kipiplugin_ipodexport.lang >> kipi-plugins.lang
 %else
@@ -469,7 +477,10 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_flashexport.so
 %{_kde4_libdir}/kde4/kipiplugin_galleryexport.so
 %{_kde4_libdir}/kde4/kipiplugin_googledrive.so
+%if 0%{?gpssync}
+%{_kde4_appsdir}/gpssync/
 %{_kde4_libdir}/kde4/kipiplugin_gpssync.so
+%endif
 %{_kde4_libdir}/kde4/kipiplugin_htmlexport.so
 %{_kde4_libdir}/kde4/kipiplugin_imageviewer.so
 %{_kde4_libdir}/kde4/kipiplugin_imageshackexport.so
@@ -504,7 +515,6 @@ update-desktop-database -q &> /dev/null
 %endif
 %{_kde4_appsdir}/kipi/tips
 %{_kde4_appsdir}/kipi/*rc
-%{_kde4_appsdir}/gpssync/
 %{_kde4_appsdir}/kipiplugin_flashexport/
 %{_kde4_appsdir}/kipiplugin_galleryexport/
 %{_kde4_appsdir}/kipiplugin_htmlexport/
