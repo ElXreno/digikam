@@ -343,7 +343,7 @@ kipiplugins.lang >> kipi-plugins.lang
 %if 0%{?gpssync}
 cat kipiplugin_gpssync.lang >> kipi-plugins.lang
 %else
-rm -fv %{buildrooot}%{_datadir}/locale/*/LC_MESSAGES/kipiplugin_gpssync.mo
+rm -fv %{buildroot}%{_datadir}/locale/*/LC_MESSAGES/kipiplugin_gpssync.mo
 %endif
 %if 0%{?libgpod}
 cat kipiplugin_ipodexport.lang >> kipi-plugins.lang
