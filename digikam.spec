@@ -6,7 +6,7 @@
 
 Name:    digikam
 Version: 4.10.0
-Release: 4%{?pre}%{?dist}
+Release: 5%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -168,7 +168,7 @@ Requires: kipi-plugins-libs%{?_isa} = %{version}-%{release}
 ## jpeglossless plugin
 Requires: ImageMagick
 ## expoblending
-%if 0%{?fedora} || 0%{?rhel} > 6
+%if 0%{?fedora}
 Requires: hugin-base
 %endif
 %description -n kipi-plugins
@@ -554,6 +554,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sat May 23 2015 Rex Dieter <rdieter@fedoraproject.org> 4.10.0-5
+- hugin-base not available in epel-7
+
 * Mon May 18 2015 Rex Dieter <rdieter@fedoraproject.org> 4.10.0-4
 - merge epel-7 mods (#1194901)
 
