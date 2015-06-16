@@ -460,7 +460,6 @@ update-desktop-database -q &> /dev/null
 %doc extra/kipi-plugins/COPYING-ADOBE extra/kipi-plugins/ChangeLog
 %doc extra/kipi-plugins/README extra/kipi-plugins/TODO extra/kipi-plugins/NEWS
 %{_kde4_bindir}/dngconverter
-%{_kde4_bindir}/dnginfo
 %{_kde4_bindir}/expoblending
 %{_kde4_bindir}/panoramagui
 %{_kde4_bindir}/photolayoutseditor
