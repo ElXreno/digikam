@@ -431,6 +431,7 @@ update-desktop-database -q &> /dev/null
 
 %files -n libkvkontakte
 %doc extra/libkvkontakte/COPYING extra/libkvkontakte/COPYING.LIB
+%{_libdir}/libkvkontakte.so.1
 %{_libdir}/libkvkontakte.so.4*
 
 %files -n libkvkontakte-devel
