@@ -5,8 +5,8 @@
 %endif
 
 Name:    digikam
-Version: 4.11.0
-Release: 2%{?pre}%{?dist}
+Version: 4.12.0
+Release: 1%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -553,6 +553,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed Jul 29 2015 Alexey Kurov <nucleo@fedoraproject.org> - 4.12.0-1
+- digikam-4.12.0
+
 * Mon Jun 22 2015 Rex Dieter <rdieter@fedoraproject.org> 4.11.0-2
 - drop BR: pkgconfig(exiv2), only need libkexiv2-devel these days
 
