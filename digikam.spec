@@ -468,7 +468,7 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_flickrexport.so
 %{_kde4_libdir}/kde4/kipiplugin_flashexport.so
 %{_kde4_libdir}/kde4/kipiplugin_galleryexport.so
-%{_kde4_libdir}/kde4/kipiplugin_googledrive.so
+%{_kde4_libdir}/kde4/kipiplugin_googleservices.so
 %if 0%{?gpssync}
 %{_kde4_appsdir}/gpssync/
 %{_kde4_libdir}/kde4/kipiplugin_gpssync.so
@@ -546,6 +546,7 @@ update-desktop-database -q &> /dev/null
 * Wed Jul 29 2015 Alexey Kurov <nucleo@fedoraproject.org> - 4.12.0-1
 - digikam-4.12.0
 - old PicasaWeb export removed
+- renamed googledrive to googleservices
 
 * Mon Jun 22 2015 Rex Dieter <rdieter@fedoraproject.org> 4.11.0-2
 - drop BR: pkgconfig(exiv2), only need libkexiv2-devel these days
