@@ -289,7 +289,6 @@ mv kipi-plugins.lang kipi-plugins-doc.lang
 %find_lang kipiplugin_jpeglossless
 %find_lang kipiplugin_kioexportimport
 %find_lang kipiplugin_metadataedit
-%find_lang kipiplugin_picasawebexport
 %find_lang kipiplugin_piwigoexport
 %find_lang kipiplugin_printimages
 %find_lang kipiplugin_rawconverter
@@ -308,7 +307,6 @@ mv kipi-plugins.lang kipi-plugins-doc.lang
 %find_lang kipiplugin_kmlexport
 %find_lang kipiplugin_kopete
 %find_lang kipiplugin_panorama
-%find_lang kipiplugin_photivointegration
 %find_lang kipiplugin_photolayouteditor
 %find_lang kipiplugin_rajceexport
 %find_lang kipiplugin_videoslideshow
@@ -321,10 +319,9 @@ kipiplugin_batchprocessimages.lang kipiplugin_calendar.lang \
 kipiplugin_dngconverter.lang kipiplugin_expoblending.lang \
 kipiplugin_facebook.lang kipiplugin_flashexport.lang \
 kipiplugin_flickrexport.lang kipiplugin_galleryexport.lang \
-kipiplugin_htmlexport.lang \
-kipiplugin_imageviewer.lang \
+kipiplugin_htmlexport.lang kipiplugin_imageviewer.lang \
 kipiplugin_jpeglossless.lang kipiplugin_kioexportimport.lang \
-kipiplugin_metadataedit.lang kipiplugin_picasawebexport.lang \
+kipiplugin_metadataedit.lang kipiplugin_photolayouteditor.lang \
 kipiplugin_piwigoexport.lang kipiplugin_printimages.lang \
 kipiplugin_rawconverter.lang kipiplugin_removeredeyes.lang \
 kipiplugin_sendimages.lang kipiplugin_shwup.lang \
@@ -334,7 +331,6 @@ kipiplugin_dropbox.lang kipiplugin_googledrive.lang \
 kipiplugin_imageshackexport.lang kipiplugin_imgurexport.lang \
 kipiplugin_jalbumexport.lang kipiplugin_kmlexport.lang \
 kipiplugin_kopete.lang kipiplugin_panorama.lang \
-kipiplugin_photivointegration.lang kipiplugin_photolayouteditor.lang \
 kipiplugin_rajceexport.lang kipiplugin_videoslideshow.lang \
 kipiplugin_vkontakte.lang kipiplugin_wallpaper.lang \
 kipiplugin_wikimedia.lang kipiplugin_yandexfotki.lang \
@@ -507,8 +503,6 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_wikimedia.so
 %{_kde4_libdir}/kde4/kipiplugin_dlnaexport.so
 %{_kde4_libdir}/kde4/kipiplugin_jalbumexport.so
-# Plugin not yet ready for production
-#{_kde4_libdir}/kde4/kipiplugin_photivointegration.so
 %if 0%{?videoslideshow}
 %{_kde4_libdir}/kde4/kipiplugin_videoslideshow.so
 %endif
@@ -555,6 +549,7 @@ update-desktop-database -q &> /dev/null
 %changelog
 * Wed Jul 29 2015 Alexey Kurov <nucleo@fedoraproject.org> - 4.12.0-1
 - digikam-4.12.0
+- old PicasaWeb export removed
 
 * Mon Jun 22 2015 Rex Dieter <rdieter@fedoraproject.org> 4.11.0-2
 - drop BR: pkgconfig(exiv2), only need libkexiv2-devel these days
