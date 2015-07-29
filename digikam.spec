@@ -188,7 +188,6 @@ IpodExport         : export pictures to an Ipod device
 JpegLossLess       : rotate/flip images without losing quality
 KioExportImport    : export/imports pictures to/from accessible via KIO
 MetadataEdit       : edit EXIF, IPTC and XMP metadata
-PicasaWebExport    : export images to a remote Picasa web service
 PrintWizard        : print images in various format
 RemoveRedEyes      : remove red eyes on image automatically
 RawConverter       : convert Raw Image to JPEG/PNG/TIFF
@@ -489,7 +488,6 @@ update-desktop-database -q &> /dev/null
 %{_kde4_libdir}/kde4/kipiplugin_kopete.so
 %{_kde4_libdir}/kde4/kipiplugin_metadataedit.so
 %{_kde4_libdir}/kde4/kipiplugin_panorama.so
-%{_kde4_libdir}/kde4/kipiplugin_picasawebexport.so
 %{_kde4_libdir}/kde4/kipiplugin_piwigoexport.so
 %{_kde4_libdir}/kde4/kipiplugin_printimages.so
 %{_kde4_libdir}/kde4/kipiplugin_rajceexport.so
