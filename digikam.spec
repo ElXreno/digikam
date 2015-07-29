@@ -310,7 +310,6 @@ mv kipi-plugins.lang kipi-plugins-doc.lang
 %find_lang kipiplugin_rajceexport
 %find_lang kipiplugin_videoslideshow
 %find_lang kipiplugin_vkontakte
-%find_lang kipiplugin_wallpaper
 %find_lang kipiplugin_wikimedia
 %find_lang kipiplugin_yandexfotki
 cat kipiplugin_acquireimages.lang kipiplugin_advancedslideshow.lang \
@@ -331,9 +330,8 @@ kipiplugin_imageshackexport.lang kipiplugin_imgurexport.lang \
 kipiplugin_jalbumexport.lang kipiplugin_kmlexport.lang \
 kipiplugin_kopete.lang kipiplugin_panorama.lang \
 kipiplugin_rajceexport.lang kipiplugin_videoslideshow.lang \
-kipiplugin_vkontakte.lang kipiplugin_wallpaper.lang \
 kipiplugin_wikimedia.lang kipiplugin_yandexfotki.lang \
-kipiplugins.lang >> kipi-plugins.lang
+kipiplugin_vkontakte.lang kipiplugins.lang >> kipi-plugins.lang
 %if 0%{?gpssync}
 cat kipiplugin_gpssync.lang >> kipi-plugins.lang
 %else
