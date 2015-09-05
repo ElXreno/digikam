@@ -5,7 +5,7 @@
 %endif
 
 Name:    digikam
-Version: 4.12.0
+Version: 4.13.0
 Release: 1%{?pre}%{?dist}
 Summary: A digital camera accessing & photo management application
 
@@ -543,6 +543,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sat Sep  5 2015 Alexey Kurov <nucleo@fedoraproject.org> - 4.13.0-1
+- digikam-4.13.0
+
 * Wed Jul 29 2015 Alexey Kurov <nucleo@fedoraproject.org> - 4.12.0-1
 - digikam-4.12.0
 - old PicasaWeb export removed
