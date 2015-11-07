@@ -16,9 +16,14 @@ Source0: http://download.kde.org/%{?pre:un}stable/digikam/digikam-%{version}%{?b
 ExcludeArch: ppc64
 %endif
 
+# in 4.14.0 (last kde4 release), upstream finally decides to not include these in the tarball
+Source1: http://download.kde.org/stable/libkvkontakte/4.12.0/src/libkvkontakte-4.12.0.tar.xz
+# libmediawiki from digikam-4.13.0
+Source2: libmediawiki-digikam-4.13.0.tar.xz
+
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
 # TODO: upstream me
-Source1: digikam-import.desktop
+Source10: digikam-import.desktop
 
 ## upstreamable patches
 
@@ -217,7 +222,10 @@ BuildArch: noarch
 
 
 %prep
-%setup -q -n %{name}-%{version}%{?beta:-%{beta}}
+%setup -q -n %{name}-%{version}%{?beta:-%{beta}} -a1 -a2
+
+mv libkvkontakte-4.12.0 extra/libkvkontakte
+mv libmediawiki extra/libmediawiki
 
 ## HACK to allow building with older opencv (for now), see
 # https://bugzilla.redhat.com/show_bug.cgi?id=1119036
@@ -255,7 +263,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 
 desktop-file-install --vendor="" \
   --dir=%{buildroot}%{_datadir}/applications/kde4 \
-  %{SOURCE1}
+  %{SOURCE10}
 
 %find_lang digikam --with-kde --without-mo
 mv digikam.lang digikam-doc.lang
@@ -312,6 +320,7 @@ mv kipi-plugins.lang kipi-plugins-doc.lang
 %find_lang kipiplugin_vkontakte
 %find_lang kipiplugin_wikimedia
 %find_lang kipiplugin_yandexfotki
+%find_lang libkvkontakte
 cat kipiplugin_acquireimages.lang kipiplugin_advancedslideshow.lang \
 kipiplugin_batchprocessimages.lang kipiplugin_calendar.lang \
 kipiplugin_dngconverter.lang kipiplugin_expoblending.lang \
@@ -421,7 +430,7 @@ update-desktop-database -q &> /dev/null
 %post -n libkvkontakte -p /sbin/ldconfig
 %postun -n libkvkontakte -p /sbin/ldconfig
 
-%files -n libkvkontakte
+%files -n libkvkontakte -f libkvkontakte.lang
 %doc extra/libkvkontakte/COPYING extra/libkvkontakte/COPYING.LIB
 %{_libdir}/libkvkontakte.so.1
 %{_libdir}/libkvkontakte.so.4*
