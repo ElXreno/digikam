@@ -5,7 +5,7 @@
 
 Name:    digikam
 Version: 4.14.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -94,13 +94,14 @@ BuildRequires: pkgconfig(libpgf) >= 6.12.24
 Obsoletes: digikam-devel < 2.0.0-2
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
+%{?kde_runtime_requires}
 # http://bugzilla.redhat.com/761184
 Requires: kcm_colors
 %if 0%{?fedora} > 20
 # better default access to mtp-enabled devices
 Recommends: kio_mtp
 Recommends: kipi-plugins
+Recommends: qt-mysql%{?_isa}
 %endif
 
 %description
@@ -542,6 +543,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sat Nov 07 2015 Rex Dieter <rdieter@fedoraproject.org> 4.14.0-2
+- use kde_runtime_requires macro, Recommends: qt-mysql (#1279080)
+
 * Thu Oct 15 2015 Alexey Kurov <nucleo@fedoraproject.org> - 4.14.0-1
 - digikam-4.14.0
 
