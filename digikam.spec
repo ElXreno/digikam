@@ -1,4 +1,3 @@
-#define pre rc
 
 %if 0%{?fedora}
 %define videoslideshow 1
@@ -6,12 +5,12 @@
 
 Name:    digikam
 Version: 4.14.0
-Release: 1%{?pre}%{?dist}
+Release: 1%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
 URL:     http://www.digikam.org/
-Source0: http://download.kde.org/%{?pre:un}stable/digikam/digikam-%{version}%{?pre:-%{pre}}.tar.bz2
+Source0: http://download.kde.org/%{?pre:un}stable/digikam/digikam-%{version}%{?beta:-%{beta}}.tar.bz2
 %if 0%{?rhel}
 # rhel7/ppc64 lacks some dependencies, including libkdcraw, libkexiv2, libkipi
 ExcludeArch: ppc64
@@ -217,7 +216,7 @@ BuildArch: noarch
 
 
 %prep
-%setup -q -n %{name}-%{version}%{?pre:-%{pre}}
+%setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
 ## HACK to allow building with older opencv (for now), see
 # https://bugzilla.redhat.com/show_bug.cgi?id=1119036
