@@ -5,7 +5,7 @@
 
 Name:    digikam
 Version: 4.14.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -29,6 +29,7 @@ Source10: digikam-import.desktop
 
 ## upstream patches
 
+BuildRequires: cmake
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
@@ -36,6 +37,7 @@ BuildRequires: gettext
 %if 0%{?fedora}
 BuildRequires: baloo-devel
 BuildRequires: kfilemetadata-devel
+BuildRequires: kf5-rpm-macros
 %endif
 # for DLNAExport
 BuildRequires: qtsoap-devel
@@ -103,6 +105,7 @@ Requires: kde-runtime
 # http://bugzilla.redhat.com/761184
 Requires: kcm_colors
 %if 0%{?fedora} > 20
+Requires: kf5-filesystem
 # better default access to mtp-enabled devices
 Recommends: kio_mtp
 Recommends: kipi-plugins
@@ -265,6 +268,15 @@ desktop-file-install --vendor="" \
   --dir=%{buildroot}%{_datadir}/applications/kde4 \
   %{SOURCE10}
 
+%if 0%{?fedora}
+# services, solid/actions
+mkdir -p %{buildroot}%{_kf5_datadir}/solid/actions/
+cp -alf \
+  %{buildroot}%{_kde4_appsdir}/solid/actions/digikam*.desktop \
+  %{buildroto}%{_kf5_datadir}/solid/actions/
+%endif
+
+
 %find_lang digikam --with-kde --without-mo
 mv digikam.lang digikam-doc.lang
 %find_lang showfoto --with-kde --without-mo
@@ -392,6 +404,9 @@ update-desktop-database -q &> /dev/null
 %{_kde4_appsdir}/digikam/
 %{_kde4_appsdir}/showfoto/
 %{_kde4_appsdir}/solid/actions/digikam*.desktop
+%if 0%{?fedora}
+%{_kf5_datadir}/solid/actions/digikam*.desktop
+%endif
 %{_kde4_datadir}/appdata/digiKam-ImagePlugin*xml
 %{_kde4_datadir}/appdata/digikam.appdata.xml
 %{_kde4_datadir}/appdata/showfoto.appdata.xml
@@ -552,6 +567,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue Dec 29 2015 Rex Dieter <rdieter@fedoraproject.org> 4.14.0-4
+- support kf5 solid/actions
+
 * Tue Dec 22 2015 Rex Dieter <rdieter@fedoraproject.org> 4.14.0-3
 - Requires: kde-runtime (simpler)
 
