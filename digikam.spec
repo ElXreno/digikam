@@ -273,7 +273,7 @@ desktop-file-install --vendor="" \
 mkdir -p %{buildroot}%{_kf5_datadir}/solid/actions/
 cp -alf \
   %{buildroot}%{_kde4_appsdir}/solid/actions/digikam*.desktop \
-  %{buildroto}%{_kf5_datadir}/solid/actions/
+  %{buildroot}%{_kf5_datadir}/solid/actions/
 %endif
 
 
