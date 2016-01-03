@@ -1,0 +1,14 @@
+diff -up digikam-4.14.0/core/libs/dimg/filters/lens/lensfuniface.h.0050 digikam-4.14.0/core/libs/dimg/filters/lens/lensfuniface.h
+--- digikam-4.14.0/core/libs/dimg/filters/lens/lensfuniface.h.0050	2016-01-03 17:41:31.025149806 -0600
++++ digikam-4.14.0/core/libs/dimg/filters/lens/lensfuniface.h	2016-01-03 17:42:56.628812701 -0600
+@@ -24,10 +24,7 @@
+ 
+ // Lib LensFun includes
+ 
+-extern "C"
+-{
+ #include <lensfun.h>
+-}
+ 
+ // local includes
+ 

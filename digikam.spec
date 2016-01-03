@@ -5,7 +5,7 @@
 
 Name:    digikam
 Version: 4.14.0
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -28,6 +28,7 @@ Source10: digikam-import.desktop
 ## upstreamable patches
 
 ## upstream patches
+Patch50: digikam-4.14.0-lensfun032.patch
 
 BuildRequires: cmake
 BuildRequires: eigen3-devel
@@ -88,9 +89,7 @@ BuildRequires: flex
 BuildRequires: bison
 %if 0%{?fedora}
 BuildRequires: herqq-devel
-%if 0%{?fedora} < 24
 BuildRequires: pkgconfig(lensfun) >= 0.2.6
-%endif
 BuildRequires: pkgconfig(lqr-1)
 %endif
 %if 0%{?fedora} || 0%{?rhel} > 6
@@ -228,6 +227,8 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}} -a1 -a2
+
+%patch50 -p1 -b .lensfun032
 
 mv libkvkontakte-4.12.0 extra/libkvkontakte
 mv libmediawiki extra/libmediawiki
@@ -569,6 +570,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sun Jan 03 2016 Rex Dieter <rdieter@fedoraproject.org> 4.14.0-6
+- backport lensfun-0.3.2 fix (kde#356672)
+
 * Sun Jan 03 2016 Rex Dieter <rdieter@fedoraproject.org> 4.14.0-5
 - rebuild (lensfun)
 
