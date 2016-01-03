@@ -88,7 +88,9 @@ BuildRequires: flex
 BuildRequires: bison
 %if 0%{?fedora}
 BuildRequires: herqq-devel
+%if 0%{?fedora} < 24
 BuildRequires: pkgconfig(lensfun) >= 0.2.6
+%endif
 BuildRequires: pkgconfig(lqr-1)
 %endif
 %if 0%{?fedora} || 0%{?rhel} > 6
