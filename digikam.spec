@@ -5,7 +5,7 @@
 
 Name:    digikam
 Version: 4.14.0
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: A digital camera accessing & photo management application
 
 License: GPLv2+
@@ -570,6 +570,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 4.14.0-7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
 * Sun Jan 03 2016 Rex Dieter <rdieter@fedoraproject.org> 4.14.0-6
 - backport lensfun-0.3.2 fix (kde#356672)
 
