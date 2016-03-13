@@ -1,10 +1,10 @@
 
-%global beta beta3
+%global beta beta4
 
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.0.0
-Release: 0.4.%{beta}%{?dist}
+Release: 0.7.%{beta}%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -15,7 +15,6 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?
 Source10: digikam-import.desktop
 
 ## upstreamable patches
-Patch1: digikam-5.0.0-beta2-MarbleQt5.patch
 Patch2: digikam-5.0.0-beta3-gcc6.patch
 
 ## upstream patches
@@ -159,7 +158,6 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
-%patch1 -p1 -b .MarbleQt5
 %patch2 -p1 -b .gcc6
 
 
@@ -278,6 +276,12 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sat Mar 12 2016 Rex Dieter <rdieter@fedoraproject.org> 5.0.0-0.7.beta4
+- digikam-5.0.0-beta4
+
+* Wed Mar 09 2016 Rex Dieter <rdieter@fedoraproject.org> 5.0.0-0.6.beta3
+- drop bad MarbleQt5.patch
+
 * Thu Feb 11 2016 Rex Dieter <rdieter@fedoraproject.org> 5.0.0-0.5.beta3
 - digikam-5.0.0-beta3
 
