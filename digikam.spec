@@ -16,6 +16,7 @@ Source10: digikam-import.desktop
 
 ## upstreamable patches
 Patch2: digikam-5.0.0-beta3-gcc6.patch
+Patch3: digikam-5.0.0-beta3-no_pedantic.patch
 
 ## upstream patches
 
@@ -159,6 +160,7 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
 %patch2 -p1 -b .gcc6
+%patch3 -p1 -b .no_pedantic
 
 
 %build
