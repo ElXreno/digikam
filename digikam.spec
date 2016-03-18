@@ -4,7 +4,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.0.0
-Release: 0.6.%{beta}%{?dist}
+Release: 0.7.%{beta}%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -29,6 +29,7 @@ BuildRequires: extra-cmake-modules
 BuildRequires: gettext
 BuildRequires: libjpeg-devel
 BuildRequires: libtiff-devel
+BuildRequires: marble-astro-devel
 BuildRequires: marble-widget-qt5-devel
 BuildRequires: pkgconfig(exiv2)
 BuildRequires: pkgconfig(glib-2.0)
@@ -278,6 +279,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Fri Mar 18 2016 Rex Dieter <rdieter@fedoraproject.org> 5.0.0-0.6.beta3
+- BR: marble-astro-devel
+
 * Wed Mar 09 2016 Rex Dieter <rdieter@fedoraproject.org> 5.0.0-0.6.beta3
 - drop bad MarbleQt5.patch
 
