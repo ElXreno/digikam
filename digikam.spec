@@ -1,10 +1,10 @@
 
-%global beta beta3
+%global beta beta5
 
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.0.0
-Release: 0.7.%{beta}%{?dist}
+Release: 0.8.%{beta}%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -15,13 +15,10 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?
 Source10: digikam-import.desktop
 
 ## upstreamable patches
-Patch2: digikam-5.0.0-beta3-gcc6.patch
-Patch3: digikam-5.0.0-beta3-no_pedantic.patch
 
 ## upstream patches
 
 BuildRequires: boost-devel
-BuildRequires: cmake
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
 BuildRequires: doxygen
@@ -50,10 +47,10 @@ BuildRequires: pkgconfig(x11) pkgconfig(xproto)
 BuildRequires: kf5-akonadi-devel
 BuildRequires: kf5-akonadi-contact-devel
 %endif
-BuildRequires: kf5-libkdcraw-devel
-BuildRequires: kf5-libkface-devel
-BuildRequires: kf5-libkipi-devel
-#BuildRequires: kf5-libksane-devel
+BuildRequires: kf5-libkdcraw-devel >= 16.03
+BuildRequires: kf5-libkface-devel >= 16.03
+BuildRequires: kf5-libkipi-devel >= 16.03
+BuildRequires: kf5-libksane-devel >= 16.03
 BuildRequires: kf5-kconfig-devel
 BuildRequires: kf5-kdoctools-devel
 BuildRequires: kf5-kfilemetadata-devel
@@ -126,13 +123,13 @@ needed to develop applications using %{name}.
 
 %package doc
 Summary: Application handbooks
-Requires:  digikam = %{version}-%{release}
+Requires:  %{name} = %{version}-%{release}
 BuildArch: noarch
 %description doc
 %{summary}.
 
 %package -n kipi-plugins
-Summary: Plugins to use with Kipi
+Summary: Plugins to use with kf5-libkipi applications
 Requires: kipi-plugins-libs%{?_isa} = %{version}-%{release}
 %if 0%{?fedora} > 21
 Recommends: kipi-plugins-doc = %{version}-%{release}
@@ -159,9 +156,6 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
-
-%patch2 -p1 -b .gcc6
-%patch3 -p1 -b .no_pedantic
 
 
 %build
@@ -249,12 +243,10 @@ touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null  ||:
 if [ $1 -eq 0 ] ; then
   touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null ||:
   gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
-  update-desktop-database -q &> /dev/null
 fi
 
 %posttrans -n kipi-plugins
 gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
-update-desktop-database -q &> /dev/null
 
 %files -n kipi-plugins
 %doc extra/kipi-plugins/AUTHORS extra/kipi-plugins/ChangeLog
@@ -262,8 +254,9 @@ update-desktop-database -q &> /dev/null
 %license extra/kipi-plugins/COPYING
 %{_kf5_datadir}/applications/kipiplugins.desktop
 %{_kf5_datadir}/kxmlgui5/kipi/
-%{_kf5_datadir}/kipiplugins/
 %{_kf5_datadir}/icons/hicolor/*/apps/kipi-*
+%{_kf5_datadir}/icons/hicolor/*/apps/expoblending.*
+%{_kf5_datadir}/icons/hicolor/*/apps/panorama.*
 %{_kf5_datadir}/kservices5/kipiplugin_*.desktop
 %{_kf5_datadir}/kipiplugin_*/
 
@@ -279,7 +272,10 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
-* Fri Mar 18 2016 Rex Dieter <rdieter@fedoraproject.org> 5.0.0-0.6.beta3
+* Wed Apr 13 2016 Rex Dieter <rdieter@fedoraproject.org> 5.0.0-0.8.beta5
+- digikam-5.0.0-beta5
+
+* Fri Mar 18 2016 Rex Dieter <rdieter@fedoraproject.org> 5.0.0-0.7.beta3
 - BR: marble-astro-devel
 
 * Wed Mar 09 2016 Rex Dieter <rdieter@fedoraproject.org> 5.0.0-0.6.beta3
