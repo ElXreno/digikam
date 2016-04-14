@@ -131,7 +131,7 @@ BuildArch: noarch
 %package -n kf5-kipi-plugins
 Summary: Plugins to use with kf5-libkipi applications
 # upgrade path
-Obsoletes: kipi-plugins < 5.0.0
+Obsoletes: kipi-plugins < 5.0.0-0.9
 Requires: kf5-kipi-plugins-libs%{?_isa} = %{version}-%{release}
 %if 0%{?fedora} > 21
 Recommends: kipi-plugins-doc = %{version}-%{release}
@@ -145,7 +145,7 @@ Interface.
 %package -n kf5-kipi-plugins-libs
 Summary: Runtime libraries for kf5-kipi-plugins
 # upgrade path
-Obsoletes: kipi-plugins < 5.0.0
+Obsoletes: kipi-plugins-libs < 5.0.0-0.9
 Requires: kf5-kipi-plugins = %{version}-%{release}
 %description -n kf5-kipi-plugins-libs
 %{summary}.
