@@ -4,7 +4,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.0.0
-Release: 0.8.%{beta}%{?dist}
+Release: 0.9.%{beta}%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -90,9 +90,9 @@ BuildRequires: pkgconfig(libpgf) >= 6.12.24
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 %if 0%{?fedora} > 21
 Recommends: %{name}-doc = %{version}-%{release}
+Recommends: kf5-kipi-plugins = %{version}-%{release}
 # better default access to mtp-enabled devices
 Recommends: kio-extras
-Recommends: kipi-plugins
 Recommends: qt5-qtbase-mysql%{?_isa}
 %endif
 
@@ -105,7 +105,7 @@ preview the images and download and/or delete them.
 digiKam built-in image editor makes the common photo correction a simple task.
 The image editor is extensible via plugins, can also make use of the KIPI image
 handling plugins to extend its capabilities even further for photo
-manipulations, import and export, etc. Install the kipi-plugins packages
+manipulations, import and export, etc. Install the kf5-kipi-plugins packages
 to use them.
 
 %package libs
@@ -128,27 +128,31 @@ BuildArch: noarch
 %description doc
 %{summary}.
 
-%package -n kipi-plugins
+%package -n kf5-kipi-plugins
 Summary: Plugins to use with kf5-libkipi applications
-Requires: kipi-plugins-libs%{?_isa} = %{version}-%{release}
+# upgrade path
+Obsoletes: kipi-plugins < 5.0.0
+Requires: kf5-kipi-plugins-libs%{?_isa} = %{version}-%{release}
 %if 0%{?fedora} > 21
 Recommends: kipi-plugins-doc = %{version}-%{release}
 ## expoblending
 Requires: hugin-base
 %endif
-%description -n kipi-plugins
+%description -n kf5-kipi-plugins
 This package contains plugins to use with Kipi, the KDE Image Plugin
 Interface.
 
-%package -n kipi-plugins-libs
-Summary: Runtime libraries for kipi-plugins
-Requires: kipi-plugins = %{version}-%{release}
-%description -n kipi-plugins-libs
+%package -n kf5-kipi-plugins-libs
+Summary: Runtime libraries for kf5-kipi-plugins
+# upgrade path
+Obsoletes: kipi-plugins < 5.0.0
+Requires: kf5-kipi-plugins = %{version}-%{release}
+%description -n kf5-kipi-plugins-libs
 %{summary}.
 
 %package -n kipi-plugins-doc
 Summary: Application handbooks
-Requires:  kipi-plugins = %{version}-%{release}
+Requires:  kf5-kipi-plugins = %{version}-%{release}
 BuildArch: noarch
 %description -n kipi-plugins-doc
 %{summary}.
@@ -236,19 +240,19 @@ update-desktop-database -q &> /dev/null
 %{_kf5_libdir}/libdigikamgui.so*
 %{_kf5_qtplugindir}/digikamimageplugin_*.so
 
-%post -n kipi-plugins
+%post -n kf5-kipi-plugins
 touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null  ||:
 
-%postun -n kipi-plugins
+%postun -n kf5-kipi-plugins
 if [ $1 -eq 0 ] ; then
   touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null ||:
   gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 fi
 
-%posttrans -n kipi-plugins
+%posttrans -n kf5-kipi-plugins
 gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
-%files -n kipi-plugins
+%files -n kf5-kipi-plugins
 %doc extra/kipi-plugins/AUTHORS extra/kipi-plugins/ChangeLog
 %doc extra/kipi-plugins/README extra/kipi-plugins/TODO extra/kipi-plugins/NEWS
 %license extra/kipi-plugins/COPYING
@@ -261,17 +265,21 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 %{_kf5_datadir}/kipiplugin_*/
 
 %files -n kipi-plugins-doc
-%{_kf5_docdir}/HTML/en/kipi-plugins
+%{_kf5_docdir}/HTML/en/kipi-plugins/
 
-%post -n kipi-plugins-libs -p /sbin/ldconfig
-%postun -n kipi-plugins-libs -p /sbin/ldconfig
+%post -n kf5-kipi-plugins-libs -p /sbin/ldconfig
+%postun -n kf5-kipi-plugins-libs -p /sbin/ldconfig
 
-%files -n kipi-plugins-libs
+%files -n kf5-kipi-plugins-libs
 %{_kf5_libdir}/libKF5kipiplugins.so*
 %{_kf5_qtplugindir}/kipiplugin_*.so
 
 
 %changelog
+* Thu Apr 14 2016 Rex Dieter <rdieter@fedoraproject.org> 5.0.0-0.9.beta6
+- rename kipi-plugins -> kf5-kipi-plugins (not -doc subpkg)
+  allows for shipping a kde4-based kipi-plugins too
+
 * Wed Apr 13 2016 Rex Dieter <rdieter@fedoraproject.org> 5.0.0-0.8.beta5
 - digikam-5.0.0-beta5
 
