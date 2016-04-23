@@ -4,7 +4,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.0.0
-Release: 0.9.%{beta}%{?dist}
+Release: 0.10.%{beta}%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -276,6 +276,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Fri Apr 22 2016 Rex Dieter <rdieter@fedoraproject.org> 5.0.0-0.10.beta6
+- rebuild (marble)
+
 * Thu Apr 14 2016 Rex Dieter <rdieter@fedoraproject.org> 5.0.0-0.9.beta6
 - rename kipi-plugins -> kf5-kipi-plugins (not -doc subpkg)
   allows for shipping a kde4-based kipi-plugins too
