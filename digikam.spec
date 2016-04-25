@@ -77,7 +77,12 @@ BuildRequires: expat-devel
 ## htmlexport plugin
 BuildRequires: pkgconfig(libxslt)
 ## RemoveRedeye
-BuildRequires: pkgconfig(opencv) >= 2.4.5
+%if 0%{?fedora} > 24
+%global opencv3 -DENABLE_OPENCV:BOOL=ON
+BuildRequires: pkgconfig(opencv) >= 3
+%else
+BuildRequires: pkgconfig(opencv) >= 2.4.9
+%endif
 # Panorama plugin requires flex and bison
 BuildRequires: flex
 BuildRequires: bison
@@ -165,7 +170,8 @@ BuildArch: noarch
 %build
 mkdir %{_target_platform}
 pushd %{_target_platform}
-%{cmake_kf5} ..
+%{cmake_kf5} .. \
+  %{?opencv3}
 popd
 
 make %{?_smp_mflags} -C %{_target_platform}
