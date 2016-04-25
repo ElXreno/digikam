@@ -78,7 +78,7 @@ BuildRequires: expat-devel
 BuildRequires: pkgconfig(libxslt)
 ## RemoveRedeye
 %if 0%{?fedora} > 24
-%global opencv3 -DENABLE_OPENCV:BOOL=ON
+%global opencv3 -DENABLE_OPENCV3:BOOL=ON
 BuildRequires: pkgconfig(opencv) >= 3
 %else
 BuildRequires: pkgconfig(opencv) >= 2.4.9
