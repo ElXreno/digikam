@@ -4,7 +4,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.0.0
-Release: 0.10.%{beta}%{?dist}
+Release: 0.11.%{beta}%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -282,6 +282,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Tue Apr 26 2016 Orion Poplawski <orion@cora.nwra.com> - 5.0.0-0.11.beta5
+- Rebuild for OpenCV 3.1
+
 * Fri Apr 22 2016 Rex Dieter <rdieter@fedoraproject.org> 5.0.0-0.10.beta6
 - rebuild (marble)
 
