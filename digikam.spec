@@ -28,6 +28,7 @@ BuildRequires: libjpeg-devel
 BuildRequires: libtiff-devel
 BuildRequires: marble-astro-devel
 BuildRequires: marble-widget-qt5-devel
+BuildRequires: perl-generators
 BuildRequires: pkgconfig(exiv2)
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(jasper)
