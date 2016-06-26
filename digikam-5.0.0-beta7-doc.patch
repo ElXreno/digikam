@@ -1,0 +1,12 @@
+diff -up digikam-5.0.0-beta7/CMakeLists.txt.doc digikam-5.0.0-beta7/CMakeLists.txt
+--- digikam-5.0.0-beta7/CMakeLists.txt.doc	2016-06-02 15:57:08.000000000 -0500
++++ digikam-5.0.0-beta7/CMakeLists.txt	2016-06-26 06:39:47.788245752 -0500
+@@ -109,7 +109,7 @@ if(DIGIKAMSC_COMPILE_DOC AND NOT EXISTS
+         message(STATUS "You can use DIGIKAMSC_CHECKOUT_DOC option to extract doc i18n files from KDE repositories.")
+     endif()
+ 
+-    set(DIGIKAMSC_COMPILE_DOC OFF)
++#    set(DIGIKAMSC_COMPILE_DOC OFF)
+ 
+ endif()
+ 

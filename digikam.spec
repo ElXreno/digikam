@@ -1,20 +1,22 @@
 
-%global beta beta5
+%global beta beta7
 
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.0.0
-Release: 0.11.%{beta}%{?dist}
+Release: 0.12.%{beta}%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
-Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?beta:-%{beta}}.tar.bz2
+Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?beta:-%{beta}}.tar.xz
 
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
 # TODO: upstream me
 Source10: digikam-import.desktop
 
 ## upstreamable patches
+# fix non-translated doc generation
+Patch100: digikam-5.0.0-beta7-doc.patch
 
 ## upstream patches
 
@@ -167,6 +169,8 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
+%patch100 -p1 -b .doc
+
 
 %build
 mkdir %{_target_platform}
@@ -231,6 +235,7 @@ update-desktop-database -q &> /dev/null
 %{_kf5_datadir}/applications/showfoto.desktop
 %{_mandir}/man1/digitaglinktree.1*
 %{_mandir}/man1/cleanup_digikamdb.1*
+%{_kf5_datadir}/icons/hicolor/*/actions/*
 %{_kf5_datadir}/icons/hicolor/*/apps/digikam*
 %{_kf5_datadir}/icons/hicolor/*/apps/showfoto*
 
@@ -283,6 +288,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Sat Jun 25 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.0.0-0.12.beta7
+- digikam-5.0.0-beta7
+
 * Tue Apr 26 2016 Orion Poplawski <orion@cora.nwra.com> - 5.0.0-0.11.beta5
 - Rebuild for OpenCV 3.1
 
