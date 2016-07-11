@@ -1,10 +1,8 @@
 
-%global beta beta7
-
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.0.0
-Release: 0.12.%{beta}%{?dist}
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -16,7 +14,7 @@ Source10: digikam-import.desktop
 
 ## upstreamable patches
 # fix non-translated doc generation
-Patch100: digikam-5.0.0-beta7-doc.patch
+Patch100: digikam-kde365135.patch
 
 ## upstream patches
 
@@ -74,7 +72,7 @@ BuildRequires: kf5-kitemviews-devel
 BuildRequires: kf5-kbookmarks-devel
 BuildRequires: kf5-rpm-macros
 
-BuildRequires: mariadb-server
+BuildRequires: mariadb-devel mariadb-server
 ## DNG converter
 BuildRequires: expat-devel
 ## htmlexport plugin
@@ -171,11 +169,28 @@ BuildArch: noarch
 
 %patch100 -p1 -b .doc
 
+# try to fix doc-translated FTBFS mess, see also
+# https://bugs.kde.org/show_bug.cgi?id=365135#c12
+pushd doc-translated/digikam
+rm -fv CMakeLists.txt
+for lang in it nl pt pt_BR sv uk; do
+mkdir $lang
+echo "add_subdirectory($lang)" >> CMakeLists.txt
+mv digikam/${lang}  ${lang}/digikam
+mv showfoto/${lang} ${lang}/showfoto
+echo 'add_subdirectory(digikam)'  >> ${lang}/CMakeLists.txt
+echo 'add_subdirectory(showfoto)' >> ${lang}/CMakeLists.txt
+sed -i.install_path -e 's|SUBDIR digikam|SUBDIR showfoto|g' ${lang}/showfoto/CMakeLists.txt
+done
+popd
+
 
 %build
 mkdir %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} .. \
+  -DENABLE_MYSQLSUPPORT:BOOL=ON \
+  -DENABLE_INTERNALMYSQL:BOOL=ON \
   %{?opencv3}
 popd
 
@@ -188,6 +203,14 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 desktop-file-install --vendor="" \
   --dir=%{buildroot}%{_datadir}/applications/ \
   %{SOURCE10}
+
+%find_lang all --all-name
+
+grep digikam.mo all.lang > digikam.lang
+grep kipiplugin all.lang > kipiplugin.lang
+
+## unpackaged files
+rm -fv %{buildroot}%{_datadir}/locale/*/LC_MESSAGES/libkvkontakte.mo
 
 
 %check
@@ -210,7 +233,7 @@ fi
 gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor &> /dev/null || :
 update-desktop-database -q &> /dev/null
 
-%files
+%files -f digikam.lang
 %doc core/AUTHORS core/ChangeLog
 %doc core/NEWS core/README core/TODO
 %license core/COPYING
@@ -240,8 +263,20 @@ update-desktop-database -q &> /dev/null
 %{_kf5_datadir}/icons/hicolor/*/apps/showfoto*
 
 %files doc
-%{_kf5_docdir}/HTML/en/digikam/
-%{_kf5_docdir}/HTML/en/showfoto/
+%lang(en) %{_kf5_docdir}/HTML/en/digikam/
+%lang(it) %{_kf5_docdir}/HTML/it/digikam/
+%lang(nl) %{_kf5_docdir}/HTML/nl/digikam/
+%lang(pt) %{_kf5_docdir}/HTML/pt/digikam/
+%lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/digikam/
+%lang(sv) %{_kf5_docdir}/HTML/sv/digikam/
+%lang(uk) %{_kf5_docdir}/HTML/uk/digikam/
+%lang(en) %{_kf5_docdir}/HTML/en/showfoto/
+%lang(it) %{_kf5_docdir}/HTML/it/showfoto/
+%lang(nl) %{_kf5_docdir}/HTML/nl/showfoto/
+%lang(pt) %{_kf5_docdir}/HTML/pt/showfoto/
+%lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/showfoto/
+%lang(sv) %{_kf5_docdir}/HTML/sv/showfoto/
+%lang(uk) %{_kf5_docdir}/HTML/uk/showfoto/
 
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
@@ -264,7 +299,7 @@ fi
 %posttrans -n kf5-kipi-plugins
 gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
-%files -n kf5-kipi-plugins
+%files -n kf5-kipi-plugins -f kipiplugin.lang
 %doc extra/kipi-plugins/AUTHORS extra/kipi-plugins/ChangeLog
 %doc extra/kipi-plugins/README extra/kipi-plugins/TODO extra/kipi-plugins/NEWS
 %license extra/kipi-plugins/COPYING
@@ -288,6 +323,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Sun Jul 10 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.0.0-1
+- digikam-5.0.0, enable mysql support
+
 * Sat Jun 25 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.0.0-0.12.beta7
 - digikam-5.0.0-beta7
 

@@ -1,0 +1,35 @@
+commit 26d56cc7a165e7efce6d22278fbda7a959b4ede3
+Author: Gilles Caulier <caulier.gilles@gmail.com>
+Date:   Sun Jul 10 14:44:06 2016 +0200
+
+    check if documentation directories are prsent before to try to compile doc plus translations
+    BUGS: 365135
+    FIXED-IN: 5.1.0
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9276d51..df05291 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -91,7 +91,7 @@ endif()
+ 
+ if(DIGIKAMSC_COMPILE_PO AND NOT EXISTS ${CMAKE_SOURCE_DIR}/po/)
+ 
+-    message(STATUS "${CMAKE_SOURCE_DIR}/po/ dir do not exists. Application translations compilation disabled...")
++    message(STATUS "Application translations directory is missing. Compilation of application translations is disabled...")
+ 
+     if(NOT DIGIKAMSC_CHECKOUT_PO)
+         message(STATUS "You can use DIGIKAMSC_CHECKOUT_PO option to extract GUI i18n files from KDE repositories.")
+@@ -101,9 +101,11 @@ if(DIGIKAMSC_COMPILE_PO AND NOT EXISTS ${CMAKE_SOURCE_DIR}/po/)
+ 
+ endif()
+ 
+-if(DIGIKAMSC_COMPILE_DOC AND NOT EXISTS ${CMAKE_SOURCE_DIR}/doc-translated/)
++if(DIGIKAMSC_COMPILE_DOC AND
++   (NOT EXISTS ${CMAKE_SOURCE_DIR}/doc/ OR NOT EXISTS ${CMAKE_SOURCE_DIR}/doc-translated/)
++  )
+ 
+-    message(STATUS "${CMAKE_SOURCE_DIR}/doc-translated/ dir do not exists. Documentation translations compilation disabled...")
++    message(STATUS "At least, one documentation directory is missing. Compilation of documentation is disabled...")
+ 
+     if(NOT DIGIKAMSC_CHECKOUT_DOC)
+         message(STATUS "You can use DIGIKAMSC_CHECKOUT_DOC option to extract doc i18n files from KDE repositories.")
