@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.0.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -36,7 +36,7 @@ BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(libgphoto2_port) pkgconfig(libusb-1.0) pkgconfig(libusb)
 BuildRequires: pkgconfig(libpng) >= 1.2.7
 BuildRequires: pkgconfig(phonon4qt5)
-BuildRequires: pkgconfig(Qt5Multimedia)
+BuildRequires: pkgconfig(Qt5Multimedia) >= 5.6
 BuildRequires: pkgconfig(Qt5OpenGL)
 BuildRequires: pkgconfig(Qt5Svg)
 BuildRequires: pkgconfig(Qt5WebKit)
@@ -189,6 +189,7 @@ popd
 mkdir %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} .. \
+  -DENABLE_MEDIAPLAYER:BOOL=ON \
   -DENABLE_MYSQLSUPPORT:BOOL=ON \
   -DENABLE_INTERNALMYSQL:BOOL=ON \
   %{?opencv3}
@@ -323,6 +324,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Fri Jul 22 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.0.0-2
+- ENABLE_MEDIAPLAYER=ON
+
 * Sun Jul 10 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.0.0-1
 - digikam-5.0.0, enable mysql support
 
