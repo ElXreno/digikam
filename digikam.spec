@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.0.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -324,6 +324,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Fri Jul 29 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.0.0-3
+- rebuild (kde-apps-16.07.80)
+
 * Fri Jul 22 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.0.0-2
 - ENABLE_MEDIAPLAYER=ON
 
