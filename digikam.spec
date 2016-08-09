@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.1.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -101,6 +101,9 @@ Recommends: kf5-kipi-plugins = %{version}-%{release}
 Recommends: kio-extras
 Recommends: qt5-qtbase-mysql%{?_isa}
 %endif
+
+# core/libs/rawengine/libraw/
+Provides: bundled(LibRaw) = 0.18.0
 
 %description
 digiKam is an easy to use and powerful digital photo management application,
@@ -321,6 +324,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Tue Aug 09 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.1.0-2
+- Provides: bundled(LibRaw) = 0.18.0
+
 * Tue Aug 09 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.1.0-1
 - digikam-5.1.0 (#1365508)
 
