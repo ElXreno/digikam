@@ -1,8 +1,8 @@
 
 Name:    digikam
 Summary: A digital camera accessing & photo management application
-Version: 5.0.0
-Release: 3%{?dist}
+Version: 5.1.0
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -13,8 +13,6 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?
 Source10: digikam-import.desktop
 
 ## upstreamable patches
-# fix non-translated doc generation
-Patch100: digikam-kde365135.patch
 
 ## upstream patches
 
@@ -167,20 +165,15 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
-%patch100 -p1 -b .doc
-
-# try to fix doc-translated FTBFS mess, see also
-# https://bugs.kde.org/show_bug.cgi?id=365135#c12
+# try to fix doc-translated mess, see also
+#https://bugs.kde.org/show_bug.cgi?id=365135#c18
 pushd doc-translated/digikam
-rm -fv CMakeLists.txt
 for lang in it nl pt pt_BR sv uk; do
-mkdir $lang
-echo "add_subdirectory($lang)" >> CMakeLists.txt
-mv digikam/${lang}  ${lang}/digikam
-mv showfoto/${lang} ${lang}/showfoto
-echo 'add_subdirectory(digikam)'  >> ${lang}/CMakeLists.txt
-echo 'add_subdirectory(showfoto)' >> ${lang}/CMakeLists.txt
-sed -i.install_path -e 's|SUBDIR digikam|SUBDIR showfoto|g' ${lang}/showfoto/CMakeLists.txt
+mv $lang/CMakeLists.txt $lang/CMakeLists.txt.orig
+cat > $lang/CMakeLists.txt << EOF
+KDOCTOOLS_CREATE_HANDBOOK( digikam/index.docbook  INSTALL_DESTINATION \${HTML_INSTALL_DIR}/$lang/ SUBDIR digikam )
+KDOCTOOLS_CREATE_HANDBOOK( showfoto/index.docbook INSTALL_DESTINATION \${HTML_INSTALL_DIR}/$lang/ SUBDIR showfoto )
+EOF
 done
 popd
 
@@ -324,6 +317,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Tue Aug 09 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.1.0-1
+- digikam-5.1.0 (#1365508)
+
 * Fri Jul 29 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.0.0-3
 - rebuild (kde-apps-16.07.80)
 
