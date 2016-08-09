@@ -13,6 +13,8 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?
 Source10: digikam-import.desktop
 
 ## upstreamable patches
+# https://bugs.kde.org/show_bug.cgi?id=366542
+Patch100: digikam-5.1.0-libraw_endian.patch
 
 ## upstream patches
 
@@ -164,6 +166,8 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
+
+%patch100 -p1 .libraw_endian
 
 # try to fix doc-translated mess, see also
 #https://bugs.kde.org/show_bug.cgi?id=365135#c18
