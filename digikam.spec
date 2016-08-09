@@ -167,7 +167,7 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
-%patch100 -p1 .libraw_endian
+%patch100 -p1 -b .libraw_endian
 
 # try to fix doc-translated mess, see also
 #https://bugs.kde.org/show_bug.cgi?id=365135#c18
