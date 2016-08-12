@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.1.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -97,9 +97,10 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 %if 0%{?fedora} > 21
 Recommends: %{name}-doc = %{version}-%{release}
 Recommends: kf5-kipi-plugins = %{version}-%{release}
-# better default access to mtp-enabled devices
+# thumbnailers, better default access to mtp-enabled devices
 Recommends: kio-extras
 Recommends: qt5-qtbase-mysql%{?_isa}
+Recommends: qt5-qtimageformats%{?_isa}
 %endif
 
 # core/libs/rawengine/libraw/
@@ -324,6 +325,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Fri Aug 12 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.1.0-3
+- Recommends: qt5-qtimageformats
+
 * Tue Aug 09 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.1.0-2
 - Provides: bundled(LibRaw) = 0.18.0
 
