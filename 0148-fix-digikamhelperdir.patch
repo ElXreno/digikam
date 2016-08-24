@@ -1,0 +1,28 @@
+From d29c1733e5fc735e41bb0d41a18c3a46783ccb7b Mon Sep 17 00:00:00 2001
+From: Rex Dieter <rdieter@math.unl.edu>
+Date: Wed, 24 Aug 2016 12:45:38 -0500
+Subject: [PATCH 148/148] fix digikamhelperdir
+
+Cannot assume DATA_INSTALL_DIR is a fully-qualified path
+
+BUG: 367675
+---
+ data/hotplug/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/data/hotplug/CMakeLists.txt b/data/hotplug/CMakeLists.txt
+index d6bb711..ca6dc1b 100644
+--- a/data/hotplug/CMakeLists.txt
++++ b/data/hotplug/CMakeLists.txt
+@@ -4,7 +4,7 @@
+ # Redistribution and use is allowed according to the terms of the BSD license.
+ # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+ 
+-set(digikamhelperdir ${DATA_INSTALL_DIR}/digikam/utils)
++set(digikamhelperdir ${KDE_INSTALL_FULL_DATADIR}/digikam/utils)
+ 
+ #configure_file(digikam-download.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/digikam-download.desktop @ONLY)
+ #configure_file(digikam-gphoto2-camera.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/digikam-gphoto2-camera.desktop @ONLY)
+-- 
+2.7.4
+

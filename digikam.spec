@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.1.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -17,6 +17,7 @@ Source10: digikam-import.desktop
 Patch100: digikam-5.1.0-libraw_endian.patch
 
 ## upstream patches
+Patch148: 0148-fix-digikamhelperdir.patch
 
 BuildRequires: boost-devel
 BuildRequires: eigen3-devel
@@ -172,6 +173,9 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
 %patch100 -p1 -b .libraw_endian
+pushd core
+%patch148 -p1 -b .0148
+popd
 
 # try to fix doc-translated mess, see also
 #https://bugs.kde.org/show_bug.cgi?id=365135#c18
@@ -325,6 +329,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Wed Aug 24 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.1.0-4
+- fix digikamhelperdir (kde#367675)
+
 * Fri Aug 12 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.1.0-3
 - Recommends: qt5-qtimageformats
 
