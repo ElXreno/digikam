@@ -1,8 +1,8 @@
 
 Name:    digikam
 Summary: A digital camera accessing & photo management application
-Version: 5.1.0
-Release: 4%{?dist}
+Version: 5.2.0
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -11,13 +11,6 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
 # TODO: upstream me
 Source10: digikam-import.desktop
-
-## upstreamable patches
-# https://bugs.kde.org/show_bug.cgi?id=366542
-Patch100: digikam-5.1.0-libraw_endian.patch
-
-## upstream patches
-Patch148: 0148-fix-digikamhelperdir.patch
 
 BuildRequires: boost-devel
 BuildRequires: eigen3-devel
@@ -44,10 +37,8 @@ BuildRequires: pkgconfig(Qt5WebKit)
 BuildRequires: pkgconfig(Qt5XmlPatterns)
 BuildRequires: pkgconfig(Qt5X11Extras)
 BuildRequires: pkgconfig(x11) pkgconfig(xproto)
-#if 0%{?fedora} > 23
-%if 0
-BuildRequires: kf5-akonadi-devel
-BuildRequires: kf5-akonadi-contact-devel
+%if 0%{?fedora} > 23
+BuildRequires: cmake(KF5AkonadiContact)
 %endif
 BuildRequires: kf5-libkdcraw-devel >= 16.03
 BuildRequires: kf5-libkface-devel >= 16.03
@@ -172,13 +163,9 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
-%patch100 -p1 -b .libraw_endian
-pushd core
-%patch148 -p1 -b .0148
-popd
-
 # try to fix doc-translated mess, see also
 #https://bugs.kde.org/show_bug.cgi?id=365135#c18
+%if 0
 pushd doc-translated/digikam
 for lang in it nl pt pt_BR sv uk; do
 mv $lang/CMakeLists.txt $lang/CMakeLists.txt.orig
@@ -188,6 +175,7 @@ KDOCTOOLS_CREATE_HANDBOOK( showfoto/index.docbook INSTALL_DESTINATION \${HTML_IN
 EOF
 done
 popd
+%endif
 
 
 %build
@@ -200,7 +188,7 @@ pushd %{_target_platform}
   %{?opencv3}
 popd
 
-make %{?_smp_mflags} -C %{_target_platform}
+make -j2 %{?_smp_mflags} -j2 -C %{_target_platform}
 
 
 %install
@@ -250,18 +238,18 @@ update-desktop-database -q &> /dev/null
 %{_kf5_datadir}/kxmlgui5/digikam/
 %{_kf5_datadir}/kxmlgui5/showfoto/
 %{_kf5_datadir}/knotifications5/digikam.notifyrc
-%{_kf5_datadir}/kconf_update/adjustlevelstool.upd
-%{_kf5_datadir}/kservices5/digikamimageplugin_*.desktop
-%{_kf5_datadir}/kservicetypes5/digikamimageplugin.desktop
+#{_kf5_datadir}/kconf_update/adjustlevelstool.upd
+#{_kf5_datadir}/kservices5/digikamimageplugin_*.desktop
+#{_kf5_datadir}/kservicetypes5/digikamimageplugin.desktop
 %{_kf5_datadir}/digikam/
 %{_kf5_datadir}/showfoto/
 %{_kf5_datadir}/solid/actions/digikam*.desktop
-%{_kf5_datadir}/appdata/digiKam-ImagePlugin*xml
-%{_kf5_datadir}/appdata/digikam.appdata.xml
-%{_kf5_datadir}/appdata/showfoto.appdata.xml
+#{_kf5_datadir}/appdata/digiKam-ImagePlugin*xml
+%{_kf5_datadir}/appdata/org.kde.digikam.appdata.xml
+%{_kf5_datadir}/appdata/org.kde.showfoto.appdata.xml
 %{_kf5_datadir}/applications/digikam-import.desktop
-%{_kf5_datadir}/applications/digikam.desktop
-%{_kf5_datadir}/applications/showfoto.desktop
+%{_kf5_datadir}/applications/org.kde.digikam.desktop
+%{_kf5_datadir}/applications/org.kde.showfoto.desktop
 %{_mandir}/man1/digitaglinktree.1*
 %{_mandir}/man1/cleanup_digikamdb.1*
 %{_kf5_datadir}/icons/hicolor/*/actions/*
@@ -270,19 +258,19 @@ update-desktop-database -q &> /dev/null
 
 %files doc
 %lang(en) %{_kf5_docdir}/HTML/en/digikam/
-%lang(it) %{_kf5_docdir}/HTML/it/digikam/
-%lang(nl) %{_kf5_docdir}/HTML/nl/digikam/
-%lang(pt) %{_kf5_docdir}/HTML/pt/digikam/
-%lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/digikam/
-%lang(sv) %{_kf5_docdir}/HTML/sv/digikam/
-%lang(uk) %{_kf5_docdir}/HTML/uk/digikam/
-%lang(en) %{_kf5_docdir}/HTML/en/showfoto/
-%lang(it) %{_kf5_docdir}/HTML/it/showfoto/
-%lang(nl) %{_kf5_docdir}/HTML/nl/showfoto/
-%lang(pt) %{_kf5_docdir}/HTML/pt/showfoto/
-%lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/showfoto/
-%lang(sv) %{_kf5_docdir}/HTML/sv/showfoto/
-%lang(uk) %{_kf5_docdir}/HTML/uk/showfoto/
+#lang(it) %{_kf5_docdir}/HTML/it/digikam/
+#lang(nl) %{_kf5_docdir}/HTML/nl/digikam/
+#lang(pt) %{_kf5_docdir}/HTML/pt/digikam/
+#lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/digikam/
+#lang(sv) %{_kf5_docdir}/HTML/sv/digikam/
+#lang(uk) %{_kf5_docdir}/HTML/uk/digikam/
+#lang(en) %{_kf5_docdir}/HTML/en/showfoto/
+#lang(it) %{_kf5_docdir}/HTML/it/showfoto/
+#lang(nl) %{_kf5_docdir}/HTML/nl/showfoto/
+#lang(pt) %{_kf5_docdir}/HTML/pt/showfoto/
+#lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/showfoto/
+#lang(sv) %{_kf5_docdir}/HTML/sv/showfoto/
+#lang(uk) %{_kf5_docdir}/HTML/uk/showfoto/
 
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
@@ -291,7 +279,7 @@ update-desktop-database -q &> /dev/null
 %{_kf5_libdir}/libdigikamcore.so*
 %{_kf5_libdir}/libdigikamdatabase.so*
 %{_kf5_libdir}/libdigikamgui.so*
-%{_kf5_qtplugindir}/digikamimageplugin_*.so
+#{_kf5_qtplugindir}/digikamimageplugin_*.so
 
 %post -n kf5-kipi-plugins
 touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null  ||:
@@ -318,7 +306,7 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 %{_kf5_datadir}/kipiplugin_*/
 
 %files -n kipi-plugins-doc
-%{_kf5_docdir}/HTML/en/kipi-plugins/
+#{_kf5_docdir}/HTML/en/kipi-plugins/
 
 %post -n kf5-kipi-plugins-libs -p /sbin/ldconfig
 %postun -n kf5-kipi-plugins-libs -p /sbin/ldconfig
@@ -329,6 +317,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Fri Sep 23 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.2.0-1
+- digikam-5.2.0 (#1378866)
+
 * Wed Aug 24 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.1.0-4
 - fix digikamhelperdir (kde#367675)
 
