@@ -264,7 +264,7 @@ update-desktop-database -q &> /dev/null
 #lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/digikam/
 #lang(sv) %{_kf5_docdir}/HTML/sv/digikam/
 #lang(uk) %{_kf5_docdir}/HTML/uk/digikam/
-#lang(en) %{_kf5_docdir}/HTML/en/showfoto/
+%lang(en) %{_kf5_docdir}/HTML/en/showfoto/
 #lang(it) %{_kf5_docdir}/HTML/it/showfoto/
 #lang(nl) %{_kf5_docdir}/HTML/nl/showfoto/
 #lang(pt) %{_kf5_docdir}/HTML/pt/showfoto/
