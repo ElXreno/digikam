@@ -12,6 +12,10 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?
 # TODO: upstream me
 Source10: digikam-import.desktop
 
+## upstreamable patches
+# fix doc subdirs
+Patch50: digikam-5.3.0-doc_subdir.patch
+
 BuildRequires: boost-devel
 BuildRequires: eigen3-devel
 BuildRequires: desktop-file-utils
@@ -166,19 +170,7 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
-# try to fix doc-translated mess, see also
-#https://bugs.kde.org/show_bug.cgi?id=365135#c18
-%if 0
-pushd doc-translated/digikam
-for lang in it nl pt pt_BR sv uk; do
-mv $lang/CMakeLists.txt $lang/CMakeLists.txt.orig
-cat > $lang/CMakeLists.txt << EOF
-KDOCTOOLS_CREATE_HANDBOOK( digikam/index.docbook  INSTALL_DESTINATION \${HTML_INSTALL_DIR}/$lang/ SUBDIR digikam )
-KDOCTOOLS_CREATE_HANDBOOK( showfoto/index.docbook INSTALL_DESTINATION \${HTML_INSTALL_DIR}/$lang/ SUBDIR showfoto )
-EOF
-done
-popd
-%endif
+%patch50 -p1 -b .doc_subdir
 
 
 %build
@@ -191,7 +183,7 @@ pushd %{_target_platform}
   %{?opencv3}
 popd
 
-make -j2 %{?_smp_mflags} -j2 -C %{_target_platform}
+make %{?_smp_mflags} -C %{_target_platform}
 
 
 %install
@@ -262,11 +254,11 @@ update-desktop-database -q &> /dev/null
 %files doc
 %lang(en) %{_kf5_docdir}/HTML/en/digikam/
 #lang(it) %{_kf5_docdir}/HTML/it/digikam/
-#lang(nl) %{_kf5_docdir}/HTML/nl/digikam/
+%lang(nl) %{_kf5_docdir}/HTML/nl/digikam/
 #lang(pt) %{_kf5_docdir}/HTML/pt/digikam/
 #lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/digikam/
 #lang(sv) %{_kf5_docdir}/HTML/sv/digikam/
-#lang(uk) %{_kf5_docdir}/HTML/uk/digikam/
+%lang(uk) %{_kf5_docdir}/HTML/uk/digikam/
 %lang(en) %{_kf5_docdir}/HTML/en/showfoto/
 #lang(it) %{_kf5_docdir}/HTML/it/showfoto/
 #lang(nl) %{_kf5_docdir}/HTML/nl/showfoto/
