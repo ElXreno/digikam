@@ -261,11 +261,11 @@ update-desktop-database -q &> /dev/null
 %lang(uk) %{_kf5_docdir}/HTML/uk/digikam/
 %lang(en) %{_kf5_docdir}/HTML/en/showfoto/
 #lang(it) %{_kf5_docdir}/HTML/it/showfoto/
-#lang(nl) %{_kf5_docdir}/HTML/nl/showfoto/
+%lang(nl) %{_kf5_docdir}/HTML/nl/showfoto/
 #lang(pt) %{_kf5_docdir}/HTML/pt/showfoto/
 #lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/showfoto/
 #lang(sv) %{_kf5_docdir}/HTML/sv/showfoto/
-#lang(uk) %{_kf5_docdir}/HTML/uk/showfoto/
+%lang(uk) %{_kf5_docdir}/HTML/uk/showfoto/
 
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
