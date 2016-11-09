@@ -37,8 +37,11 @@ BuildRequires: pkgconfig(Qt5WebKit)
 BuildRequires: pkgconfig(Qt5XmlPatterns)
 BuildRequires: pkgconfig(Qt5X11Extras)
 BuildRequires: pkgconfig(x11) pkgconfig(xproto)
-%if 0%{?fedora} > 23
+# fixme: f24's qt-5.6.x currently does not yet define qt5_qtwebengine_arches macro -- rex
+%if 0%{?qt5_qtwebengine_arches:1}
+%ifarch %{?qt5_qtwebengine_arches}
 BuildRequires: cmake(KF5AkonadiContact)
+%endif
 %endif
 BuildRequires: kf5-libkdcraw-devel >= 16.03
 BuildRequires: kf5-libkface-devel >= 16.03
