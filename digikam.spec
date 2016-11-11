@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.3.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -177,6 +177,7 @@ BuildArch: noarch
 mkdir %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} .. \
+  -DENABLE_APPSTYLES:BOOL=ON \
   -DENABLE_MEDIAPLAYER:BOOL=ON \
   -DENABLE_MYSQLSUPPORT:BOOL=ON \
   -DENABLE_INTERNALMYSQL:BOOL=ON \
@@ -312,6 +313,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Fri Nov 11 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.3.0-2
+- -DENABLE_APPSTYLES=ON
+
 * Wed Nov 09 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.3.0-1
 - digikam-5.3.0 (#1392645)
 
