@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.3.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -11,6 +11,9 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
 # TODO: upstream me
 Source10: digikam-import.desktop
+
+## upstream patches
+Patch34: 0034-try-to-fix-crash-under-wayland-native-support-later.patch
 
 ## upstreamable patches
 # fix doc subdirs
@@ -170,6 +173,9 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
+pushd core
+%patch34 -p1 -b .0034
+popd
 %patch50 -p1 -b .doc_subdir
 
 
@@ -313,6 +319,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Mon Nov 14 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.3.0-3
+- pull in crash-on-wayland fix (#1384618)
+
 * Fri Nov 11 2016 Rex Dieter <rdieter@fedoraproject.org> - 5.3.0-2
 - -DENABLE_APPSTYLES=ON
 
