@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.3.0
-Release: 4%{?dist}
+Release: 5%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -319,6 +319,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Wed Dec 28 2016 Rich Mattes <richmattes@gmail.com> - 5.3.0-5
+- Rebuild for eigen3-3.3.1
+
 * Mon Dec 05 2016 Than Ngo <than@redhat.com> - - 5.3.0-4
 - rebuild against new jasper-2.0.0
 
