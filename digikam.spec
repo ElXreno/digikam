@@ -1,8 +1,8 @@
 
 Name:    digikam
 Summary: A digital camera accessing & photo management application
-Version: 5.3.0
-Release: 5%{?dist}
+Version: 5.4.0
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -13,11 +13,8 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?
 Source10: digikam-import.desktop
 
 ## upstream patches
-Patch34: 0034-try-to-fix-crash-under-wayland-native-support-later.patch
 
 ## upstreamable patches
-# fix doc subdirs
-Patch50: digikam-5.3.0-doc_subdir.patch
 
 BuildRequires: boost-devel
 BuildRequires: eigen3-devel
@@ -173,17 +170,14 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
-pushd core
-%patch34 -p1 -b .0034
-popd
-%patch50 -p1 -b .doc_subdir
-
 
 %build
 mkdir %{_target_platform}
 pushd %{_target_platform}
 %{cmake_kf5} .. \
+  -DENABLE_AKONADICONTACTSUPPORT:BOOL=ON \
   -DENABLE_APPSTYLES:BOOL=ON \
+  -DENABLE_KFILEMETADATASUPPORT:BOOL=ON \
   -DENABLE_MEDIAPLAYER:BOOL=ON \
   -DENABLE_MYSQLSUPPORT:BOOL=ON \
   -DENABLE_INTERNALMYSQL:BOOL=ON \
@@ -261,18 +255,18 @@ update-desktop-database -q &> /dev/null
 %files doc
 %lang(en) %{_kf5_docdir}/HTML/en/digikam/
 #lang(it) %{_kf5_docdir}/HTML/it/digikam/
-%lang(nl) %{_kf5_docdir}/HTML/nl/digikam/
+#lang(nl) %{_kf5_docdir}/HTML/nl/digikam/
 #lang(pt) %{_kf5_docdir}/HTML/pt/digikam/
 #lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/digikam/
 #lang(sv) %{_kf5_docdir}/HTML/sv/digikam/
-%lang(uk) %{_kf5_docdir}/HTML/uk/digikam/
+#lang(uk) %{_kf5_docdir}/HTML/uk/digikam/
 %lang(en) %{_kf5_docdir}/HTML/en/showfoto/
 #lang(it) %{_kf5_docdir}/HTML/it/showfoto/
-%lang(nl) %{_kf5_docdir}/HTML/nl/showfoto/
+#lang(nl) %{_kf5_docdir}/HTML/nl/showfoto/
 #lang(pt) %{_kf5_docdir}/HTML/pt/showfoto/
 #lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/showfoto/
 #lang(sv) %{_kf5_docdir}/HTML/sv/showfoto/
-%lang(uk) %{_kf5_docdir}/HTML/uk/showfoto/
+#lang(uk) %{_kf5_docdir}/HTML/uk/showfoto/
 
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
@@ -319,6 +313,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Mon Jan 09 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.4.0-1
+- digikam-5.4.0 (#1411549)
+
 * Wed Dec 28 2016 Rich Mattes <richmattes@gmail.com> - 5.3.0-5
 - Rebuild for eigen3-3.3.1
 
