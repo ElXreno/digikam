@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.4.0
-Release: 2%{?dist}
+Release: 1%{?dist}.1
 
 License: GPLv2+
 URL:     http://www.digikam.org/
