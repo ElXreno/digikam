@@ -14,6 +14,8 @@ Source10: digikam-import.desktop
 
 ## upstream patches
 
+Patch2: 0002-Fix-compilation-with-clang.patch
+
 ## upstreamable patches
 
 BuildRequires: boost-devel
@@ -170,6 +172,10 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
+pushd core
+%patch2 -p1 -b .0002
+popd
+
 
 %build
 mkdir %{_target_platform}
@@ -313,6 +319,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Tue Feb 21 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.4.0-3
+- backport upstream FTBFS fix (#1423329)
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 5.4.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
