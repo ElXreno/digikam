@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.4.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -190,7 +190,7 @@ pushd %{_target_platform}
   %{?opencv3}
 popd
 
-make %{?_smp_mflags} -C %{_target_platform}
+make -k -j1 %{?_smp_mflags} -j1 VERBOSE= -C %{_target_platform}
 
 
 %install
@@ -319,6 +319,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Sun Mar 05 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.4.0-4
+- rebuild (opencv)
+
 * Tue Feb 21 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.4.0-3
 - backport upstream FTBFS fix (#1423329)
 
