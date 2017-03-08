@@ -12,9 +12,9 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?
 # TODO: upstream me
 Source10: digikam-import.desktop
 
-## upstream patches
-
-Patch2: 0002-Fix-compilation-with-clang.patch
+## upstream patches (lookaside cache)
+Patch42: 0042-Fix-compilation-with-clang.patch
+Patch44: 0044-Fix-compilation-with-new-KDECompilerSettings.cmake.patch
 
 ## upstreamable patches
 
@@ -171,7 +171,8 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
 pushd core
-%patch2 -p1 -b .0002
+%patch42 -p1 -b .0042
+%patch44 -p1 -b .0044
 popd
 
 
@@ -319,6 +320,7 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 %changelog
 * Wed Mar 08 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.4.0-5
 - drop unused BR: libkdcraw libkface
+- pull in upstream FTBFS fix
 
 * Sun Mar 05 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.4.0-4
 - rebuild (opencv)
