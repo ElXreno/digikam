@@ -1,8 +1,8 @@
 
 Name:    digikam
 Summary: A digital camera accessing & photo management application
-Version: 5.4.0
-Release: 6%{?dist}
+Version: 5.5.0
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -13,10 +13,10 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?
 Source10: digikam-import.desktop
 
 ## upstream patches (lookaside cache)
-Patch42: 0042-Fix-compilation-with-clang.patch
-Patch44: 0044-Fix-compilation-with-new-KDECompilerSettings.cmake.patch
 
 ## upstreamable patches
+# doc-translated FTBFS, https://bugs.kde.org/show_bug.cgi?id=377597
+Patch100: digikam-5.5.0-doc_translated.patch
 
 BuildRequires: boost-devel
 BuildRequires: eigen3-devel
@@ -170,10 +170,7 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
-pushd core
-%patch42 -p1 -b .0042
-%patch44 -p1 -b .0044
-popd
+%patch100 -p1 -b .doc_translated
 
 
 %build
@@ -260,18 +257,18 @@ update-desktop-database -q &> /dev/null
 %files doc
 %lang(en) %{_kf5_docdir}/HTML/en/digikam/
 #lang(it) %{_kf5_docdir}/HTML/it/digikam/
-#lang(nl) %{_kf5_docdir}/HTML/nl/digikam/
+%lang(nl) %{_kf5_docdir}/HTML/nl/digikam/
 #lang(pt) %{_kf5_docdir}/HTML/pt/digikam/
 #lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/digikam/
 #lang(sv) %{_kf5_docdir}/HTML/sv/digikam/
-#lang(uk) %{_kf5_docdir}/HTML/uk/digikam/
+%lang(uk) %{_kf5_docdir}/HTML/uk/digikam/
 %lang(en) %{_kf5_docdir}/HTML/en/showfoto/
 #lang(it) %{_kf5_docdir}/HTML/it/showfoto/
-#lang(nl) %{_kf5_docdir}/HTML/nl/showfoto/
+%lang(nl) %{_kf5_docdir}/HTML/nl/showfoto/
 #lang(pt) %{_kf5_docdir}/HTML/pt/showfoto/
 #lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/showfoto/
 #lang(sv) %{_kf5_docdir}/HTML/sv/showfoto/
-#lang(uk) %{_kf5_docdir}/HTML/uk/showfoto/
+%lang(uk) %{_kf5_docdir}/HTML/uk/showfoto/
 
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
@@ -318,6 +315,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Tue Mar 14 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.5.0-1
+- digikam-5.5.0 (#1432042)
+
 * Tue Mar 14 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.4.0-6
 - drop %%build debugging
 
