@@ -1,6 +1,5 @@
 [Desktop Entry]
 Categories=Qt;KDE;Graphics;Photography;
-Encoding=UTF-8
 Exec=digikam --download-from %f
 GenericName=Photo Management Program
 Icon=digikam
