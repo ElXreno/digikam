@@ -1,7 +1,7 @@
 
 Name:    digikam
 Summary: A digital camera accessing & photo management application
-Version: 5.5.0
+Version: 5.6.0
 Release: 1%{?dist}
 
 License: GPLv2+
@@ -16,7 +16,7 @@ Source10: digikam-import.desktop
 
 ## upstreamable patches
 # doc-translated FTBFS, https://bugs.kde.org/show_bug.cgi?id=377597
-Patch100: digikam-5.5.0-doc_translated.patch
+Patch100: digikam-5.6.0-doc_translated.patch
 
 BuildRequires: boost-devel
 BuildRequires: eigen3-devel
@@ -36,7 +36,8 @@ BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(libgphoto2_port) pkgconfig(libusb-1.0) pkgconfig(libusb)
 BuildRequires: pkgconfig(libpng) >= 1.2.7
 BuildRequires: pkgconfig(phonon4qt5)
-BuildRequires: pkgconfig(Qt5Multimedia) >= 5.6
+## uses QtAv now (not available in fedora)
+#BuildRequires: pkgconfig(Qt5Multimedia) >= 5.6
 BuildRequires: pkgconfig(Qt5OpenGL)
 BuildRequires: pkgconfig(Qt5Svg)
 BuildRequires: pkgconfig(Qt5WebKit)
@@ -103,7 +104,7 @@ Recommends: qt5-qtimageformats%{?_isa}
 %endif
 
 # core/libs/rawengine/libraw/
-Provides: bundled(LibRaw) = 0.18.0
+Provides: bundled(LibRaw) = 0.18.2
 
 %description
 digiKam is an easy to use and powerful digital photo management application,
@@ -119,7 +120,11 @@ to use them.
 
 %package libs
 Summary: Runtime libraries for %{name}
+%if 0%{?fedora} > 21
+Recommends: %{name} = %{version}-%{release}
+%else
 Requires: %{name} = %{version}-%{release}
+%endif
 %description libs
 %{summary}.
 
@@ -260,14 +265,14 @@ update-desktop-database -q &> /dev/null
 %lang(nl) %{_kf5_docdir}/HTML/nl/digikam/
 #lang(pt) %{_kf5_docdir}/HTML/pt/digikam/
 #lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/digikam/
-#lang(sv) %{_kf5_docdir}/HTML/sv/digikam/
+%lang(sv) %{_kf5_docdir}/HTML/sv/digikam/
 %lang(uk) %{_kf5_docdir}/HTML/uk/digikam/
 %lang(en) %{_kf5_docdir}/HTML/en/showfoto/
 #lang(it) %{_kf5_docdir}/HTML/it/showfoto/
 %lang(nl) %{_kf5_docdir}/HTML/nl/showfoto/
 #lang(pt) %{_kf5_docdir}/HTML/pt/showfoto/
 #lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/showfoto/
-#lang(sv) %{_kf5_docdir}/HTML/sv/showfoto/
+%lang(sv) %{_kf5_docdir}/HTML/sv/showfoto/
 %lang(uk) %{_kf5_docdir}/HTML/uk/showfoto/
 
 %post libs -p /sbin/ldconfig
@@ -277,7 +282,6 @@ update-desktop-database -q &> /dev/null
 %{_kf5_libdir}/libdigikamcore.so*
 %{_kf5_libdir}/libdigikamdatabase.so*
 %{_kf5_libdir}/libdigikamgui.so*
-#{_kf5_qtplugindir}/digikamimageplugin_*.so
 
 %post -n kf5-kipi-plugins
 touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null  ||:
@@ -315,6 +319,18 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Wed Jun 21 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.6.0-1
+- 5.6.0
+
+* Mon May 15 2017 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.5.0-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_27_Mass_Rebuild
+
+* Tue May 02 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.5.0-3
+- rebuild (exiv2)
+
+* Fri Apr 14 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.5.0-2
+- Provides: bundled(LibRaw) = 0.18.2
+
 * Tue Mar 14 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.5.0-1
 - digikam-5.5.0 (#1432042)
 
