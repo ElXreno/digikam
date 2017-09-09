@@ -1,8 +1,8 @@
 
 Name:    digikam
 Summary: A digital camera accessing & photo management application
-Version: 5.6.0
-Release: 4%{?dist}
+Version: 5.7.0
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -29,7 +29,7 @@ BuildRequires: libtiff-devel
 BuildRequires: marble-astro-devel
 BuildRequires: marble-widget-qt5-devel
 BuildRequires: perl-generators
-BuildRequires: pkgconfig(exiv2)
+BuildRequires: pkgconfig(exiv2) >= 0.25
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(jasper)
 BuildRequires: pkgconfig(lcms2)
@@ -177,6 +177,9 @@ BuildArch: noarch
 
 %patch100 -p1 -b .doc_translated
 
+# EVIV2_MIN_VERSION
+sed -i -e "s|0.26|0.25|g" core/CMakeLists.txt
+
 
 %build
 mkdir %{_target_platform}
@@ -185,7 +188,7 @@ pushd %{_target_platform}
   -DENABLE_AKONADICONTACTSUPPORT:BOOL=ON \
   -DENABLE_APPSTYLES:BOOL=ON \
   -DENABLE_KFILEMETADATASUPPORT:BOOL=ON \
-  -DENABLE_MEDIAPLAYER:BOOL=ON \
+  -DENABLE_MEDIAPLAYER:BOOL=OFF \
   -DENABLE_MYSQLSUPPORT:BOOL=ON \
   -DENABLE_INTERNALMYSQL:BOOL=ON \
   %{?opencv3}
@@ -201,9 +204,10 @@ desktop-file-install --vendor="" \
   --dir=%{buildroot}%{_datadir}/applications/ \
   %{SOURCE10}
 
-%find_lang all --all-name
+%find_lang all --all-name --with-html
 
 grep digikam.mo all.lang > digikam.lang
+grep HTML all.lang > digikam-doc.lang
 grep kipiplugin all.lang > kipiplugin.lang
 
 ## unpackaged files
@@ -259,21 +263,7 @@ update-desktop-database -q &> /dev/null
 %{_kf5_datadir}/icons/hicolor/*/apps/digikam*
 %{_kf5_datadir}/icons/hicolor/*/apps/showfoto*
 
-%files doc
-%lang(en) %{_kf5_docdir}/HTML/en/digikam/
-#lang(it) %{_kf5_docdir}/HTML/it/digikam/
-%lang(nl) %{_kf5_docdir}/HTML/nl/digikam/
-#lang(pt) %{_kf5_docdir}/HTML/pt/digikam/
-#lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/digikam/
-%lang(sv) %{_kf5_docdir}/HTML/sv/digikam/
-%lang(uk) %{_kf5_docdir}/HTML/uk/digikam/
-%lang(en) %{_kf5_docdir}/HTML/en/showfoto/
-#lang(it) %{_kf5_docdir}/HTML/it/showfoto/
-%lang(nl) %{_kf5_docdir}/HTML/nl/showfoto/
-#lang(pt) %{_kf5_docdir}/HTML/pt/showfoto/
-#lang(pt_BR) %{_kf5_docdir}/HTML/pt_BR/showfoto/
-%lang(sv) %{_kf5_docdir}/HTML/sv/showfoto/
-%lang(uk) %{_kf5_docdir}/HTML/uk/showfoto/
+%files doc -f digikam-doc.lang
 
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
@@ -319,6 +309,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Sat Sep 09 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-1
+- 5.7.0
+
 * Wed Sep 06 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.6.0-4
 - rebuild (marble)
 
