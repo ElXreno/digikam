@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.7.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -72,7 +72,9 @@ BuildRequires: kf5-kitemviews-devel
 BuildRequires: kf5-kbookmarks-devel
 BuildRequires: kf5-rpm-macros
 
-BuildRequires: mariadb-devel mariadb-server
+## not actually checked-for or used -- rex
+## rely on explicit cmake build options instead
+#BuildRequires: mariadb-devel mariadb-server
 ## DNG converter
 BuildRequires: expat-devel
 ## htmlexport plugin
@@ -147,8 +149,10 @@ Summary: Plugins to use with kf5-libkipi applications
 # upgrade path
 Obsoletes: kipi-plugins < 5.0.0-0.9
 Requires: kf5-kipi-plugins-libs%{?_isa} = %{version}-%{release}
+# drop empty kipi-plugins-doc (at least until content returns)
+Obsoletes: kipi-plugins-doc  < 5.7.0-2
 %if 0%{?fedora} > 21
-Recommends: kipi-plugins-doc = %{version}-%{release}
+#Recommends: kipi-plugins-doc = %{version}-%{release}
 ## expoblending
 Requires: hugin-base
 %endif
@@ -297,7 +301,7 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 %{_kf5_datadir}/kservices5/kipiplugin_*.desktop
 %{_kf5_datadir}/kipiplugin_*/
 
-%files -n kipi-plugins-doc
+#files -n kipi-plugins-doc
 #{_kf5_docdir}/HTML/en/kipi-plugins/
 
 %post -n kf5-kipi-plugins-libs -p /sbin/ldconfig
@@ -309,6 +313,10 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Sun Sep 17 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-2
+- drop mariadb build deps, rely on exlicit cmake build options only
+- drop empty kipi-plugins-doc
+
 * Sat Sep 09 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-1
 - 5.7.0
 
