@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.7.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -12,7 +12,8 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?
 # TODO: upstream me
 Source10: digikam-import.desktop
 
-## upstream patches (lookaside cache)
+## upstream patches
+Patch489: 0489-try-to-fix-the-Qt-5.9.3-empty-album-problem.patch
 
 ## upstreamable patches
 # doc-translated FTBFS, https://bugs.kde.org/show_bug.cgi?id=377597
@@ -154,11 +155,11 @@ Obsoletes: kipi-plugins-doc  < 5.7.0-2
 %if 0%{?fedora} > 21
 #Recommends: kipi-plugins-doc = %{version}-%{release}
 ## expoblending
-Requires: hugin-base
+Recommends: hugin-base
 %endif
 %description -n kf5-kipi-plugins
 This package contains plugins to use with Kipi, the KDE Image Plugin
-Interface.
+Interface.  Expoblending plugin requires hugin-base.
 
 %package -n kf5-kipi-plugins-libs
 Summary: Runtime libraries for kf5-kipi-plugins
@@ -178,6 +179,10 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
+
+pushd core
+%patch489 -p1 -b .0489
+popd
 
 %patch100 -p1 -b .doc_translated
 
@@ -313,6 +318,10 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Tue Nov 28 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-3
+- upstream qt-5.9.3 fix
+- kipi-plugins: make hugin-base dep soft
+
 * Sun Sep 17 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-2
 - drop mariadb build deps, rely on exlicit cmake build options only
 - drop empty kipi-plugins-doc
