@@ -13,6 +13,8 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?
 Source10: digikam-import.desktop
 
 ## upstream patches
+Patch207: 0207-calendar-Adjust-to-new-KCalCore-API-fixes-CI.patch
+Patch211: 0211-Adapt-to-KCalCore-API-changes.patch
 Patch489: 0489-try-to-fix-the-Qt-5.9.3-empty-album-problem.patch
 
 ## upstreamable patches
@@ -181,6 +183,8 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
 pushd core
+%patch207 -p1
+%patch211 -p1
 %patch489 -p1 -b .0489
 popd
 
