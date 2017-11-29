@@ -264,9 +264,9 @@ update-desktop-database -q &> /dev/null
 %{_kf5_datadir}/digikam/
 %{_kf5_datadir}/showfoto/
 %{_kf5_datadir}/solid/actions/digikam*.desktop
-#{_kf5_datadir}/appdata/digiKam-ImagePlugin*xml
-%{_kf5_datadir}/appdata/org.kde.digikam.appdata.xml
-%{_kf5_datadir}/appdata/org.kde.showfoto.appdata.xml
+#{_kf5_metainfodir}/digiKam-ImagePlugin*xml
+%{_kf5_metainfodir}/org.kde.digikam.appdata.xml
+%{_kf5_metainfodir}/org.kde.showfoto.appdata.xml
 %{_kf5_datadir}/applications/digikam-import.desktop
 %{_kf5_datadir}/applications/org.kde.digikam.desktop
 %{_kf5_datadir}/applications/org.kde.showfoto.desktop
