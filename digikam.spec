@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.7.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -322,6 +322,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Sun Dec 17 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-4
+- rebuild (kf5-kcalendarcore)
+
 * Tue Nov 28 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-3
 - upstream qt-5.9.3 fix
 - kipi-plugins: make hugin-base dep soft
