@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.7.0
-Release: 4%{?dist}
+Release: 5%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -15,7 +15,10 @@ Source10: digikam-import.desktop
 ## upstream patches
 Patch207: 0207-calendar-Adjust-to-new-KCalCore-API-fixes-CI.patch
 Patch211: 0211-Adapt-to-KCalCore-API-changes.patch
+Patch308: 0308-update-internal-liraw-to-last-stable-0.18.4-https-ww.patch
+Patch361: 0361-update-internal-libraw-to-last-0.18.5-https-www.libr.patch
 Patch489: 0489-try-to-fix-the-Qt-5.9.3-empty-album-problem.patch
+Patch539: 0539-update-internal-libraw-to-last-0.18.6.patch
 
 ## upstreamable patches
 # doc-translated FTBFS, https://bugs.kde.org/show_bug.cgi?id=377597
@@ -109,7 +112,7 @@ Recommends: qt5-qtimageformats%{?_isa}
 %endif
 
 # core/libs/rawengine/libraw/
-Provides: bundled(LibRaw) = 0.18.2
+Provides: bundled(LibRaw) = 0.18.5
 
 %description
 digiKam is an easy to use and powerful digital photo management application,
@@ -185,7 +188,10 @@ BuildArch: noarch
 pushd core
 %patch207 -p1
 %patch211 -p1
+%patch308 -p1
+%patch361 -p1
 %patch489 -p1 -b .0489
+%patch539 -p1
 popd
 
 %patch100 -p1 -b .doc_translated
@@ -322,6 +328,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Mon Dec 18 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-5
+- backport bundled(libraw) updates
+
 * Sun Dec 17 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-4
 - rebuild (kf5-kcalendarcore)
 
