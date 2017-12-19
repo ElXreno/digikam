@@ -23,6 +23,7 @@ Patch539: 0539-update-internal-libraw-to-last-0.18.6.patch
 ## upstreamable patches
 # doc-translated FTBFS, https://bugs.kde.org/show_bug.cgi?id=377597
 Patch100: digikam-5.6.0-doc_translated.patch
+Patch101: digikam-5.7.0-glibc_powf64.patch
 
 BuildRequires: boost-devel
 BuildRequires: eigen3-devel
@@ -195,6 +196,7 @@ pushd core
 popd
 
 %patch100 -p1 -b .doc_translated
+%patch101 -p1 -b .glibc_powf64
 
 # EVIV2_MIN_VERSION
 sed -i -e "s|0.26|0.25|g" core/CMakeLists.txt
