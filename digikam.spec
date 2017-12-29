@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.7.0
-Release: 5%{?dist}
+Release: 6%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -105,6 +105,8 @@ BuildRequires: pkgconfig(libpgf) >= 6.12.24
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 %if 0%{?fedora} > 21
 Recommends: %{name}-doc = %{version}-%{release}
+# expoblending assistant
+Recommends: hugin-base
 Recommends: kf5-kipi-plugins = %{version}-%{release}
 # thumbnailers, better default access to mtp-enabled devices
 Recommends: kio-extras
@@ -158,14 +160,9 @@ Obsoletes: kipi-plugins < 5.0.0-0.9
 Requires: kf5-kipi-plugins-libs%{?_isa} = %{version}-%{release}
 # drop empty kipi-plugins-doc (at least until content returns)
 Obsoletes: kipi-plugins-doc  < 5.7.0-2
-%if 0%{?fedora} > 21
-#Recommends: kipi-plugins-doc = %{version}-%{release}
-## expoblending
-Recommends: hugin-base
-%endif
 %description -n kf5-kipi-plugins
 This package contains plugins to use with Kipi, the KDE Image Plugin
-Interface.  Expoblending plugin requires hugin-base.
+Interface.
 
 %package -n kf5-kipi-plugins-libs
 Summary: Runtime libraries for kf5-kipi-plugins
@@ -330,6 +327,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Fri Dec 29 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-6
+- move Recommends: hugin-base to main
+
 * Mon Dec 18 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-5
 - backport bundled(libraw) updates
 
