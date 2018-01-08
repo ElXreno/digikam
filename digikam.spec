@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.7.0
-Release: 6%{?dist}
+Release: 7%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -327,6 +327,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Mon Jan 08 2018 Sérgio Basto <sergio@serjux.com> - 5.7.0-7
+- Rebuild (opencv-3.3.1)
+
 * Fri Dec 29 2017 Rex Dieter <rdieter@fedoraproject.org> - 5.7.0-6
 - move Recommends: hugin-base to main
 
