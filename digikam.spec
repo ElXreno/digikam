@@ -1,8 +1,8 @@
 
 Name:    digikam
 Summary: A digital camera accessing & photo management application
-Version: 5.7.0
-Release: 7%{?dist}
+Version: 5.8.0
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -13,12 +13,6 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?
 Source10: digikam-import.desktop
 
 ## upstream patches
-Patch207: 0207-calendar-Adjust-to-new-KCalCore-API-fixes-CI.patch
-Patch211: 0211-Adapt-to-KCalCore-API-changes.patch
-Patch308: 0308-update-internal-liraw-to-last-stable-0.18.4-https-ww.patch
-Patch361: 0361-update-internal-libraw-to-last-0.18.5-https-www.libr.patch
-Patch489: 0489-try-to-fix-the-Qt-5.9.3-empty-album-problem.patch
-Patch539: 0539-update-internal-libraw-to-last-0.18.6.patch
 
 ## upstreamable patches
 # doc-translated FTBFS, https://bugs.kde.org/show_bug.cgi?id=377597
@@ -183,15 +177,6 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
-pushd core
-%patch207 -p1
-%patch211 -p1
-%patch308 -p1
-%patch361 -p1
-%patch489 -p1 -b .0489
-%patch539 -p1
-popd
-
 %patch100 -p1 -b .doc_translated
 %patch101 -p1 -b .glibc_powf64
 
@@ -254,7 +239,7 @@ update-desktop-database -q &> /dev/null
 
 %files -f digikam.lang
 %doc core/AUTHORS core/ChangeLog
-%doc core/NEWS core/README core/TODO
+%doc core/NEWS core/README.md core/TODO
 %license core/COPYING
 %{_kf5_bindir}/digikam
 %{_kf5_bindir}/digitaglinktree
@@ -327,6 +312,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Wed Jan 10 2018 Rex Dieter <rdieter@fedoraproject.org> - 5.8.0-1
+- 5.8.0
+
 * Mon Jan 08 2018 Sérgio Basto <sergio@serjux.com> - 5.7.0-7
 - Rebuild (opencv-3.3.1)
 
