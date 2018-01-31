@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.8.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -13,6 +13,11 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?
 Source10: digikam-import.desktop
 
 ## upstream patches
+# dbconfig.xml mysql schema fixes
+Patch4: 0004-fix-schema-update-from-V7-8-to-V9-with-temporary-tab.patch
+Patch5: 0005-small-fix-for-the-schema-update.patch
+Patch11: 0011-disable-foreign-key-checks-temporarily-for-the-Tags-.patch
+Patch12: 0012-drop-old-table-if-new-run-required.patch
 
 ## upstreamable patches
 # doc-translated FTBFS, https://bugs.kde.org/show_bug.cgi?id=377597
@@ -177,6 +182,13 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
+pushd core
+%patch4 -p1 -b .0004
+%patch5 -p1 -b .0005
+%patch11 -p1 -b .0011
+%patch12 -p1 -b .0012
+popd
+
 %patch100 -p1 -b .doc_translated
 %patch101 -p1 -b .glibc_powf64
 
@@ -312,6 +324,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Wed Jan 31 2018 Rex Dieter <rdieter@fedoraproject.org> - 5.8.0-3
+- backport mysql schema fixes
+
 * Thu Jan 18 2018 Rex Dieter <rdieter@fedoraproject.org> - 5.8.0-2
 - rebuild (marble)
 

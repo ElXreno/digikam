@@ -1,0 +1,51 @@
+From ceb41a7f89ddf9716507466861828925357ab3f3 Mon Sep 17 00:00:00 2001
+From: Maik Qualmann <metzpinguin@gmail.com>
+Date: Fri, 19 Jan 2018 19:59:44 +0100
+Subject: [PATCH 12/32] drop old table if new run required
+
+---
+ data/database/dbconfig.xml.cmake.in | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/data/database/dbconfig.xml.cmake.in b/data/database/dbconfig.xml.cmake.in
+index a98434b175..3ec790fa9c 100644
+--- a/data/database/dbconfig.xml.cmake.in
++++ b/data/database/dbconfig.xml.cmake.in
+@@ -2024,6 +2024,7 @@
+                 <statement mode="plain">CALL drop_foreign_key('TagProperties', 'TagProperties_Tags');</statement>
+                 <statement mode="plain">CALL drop_foreign_key('ImageTagProperties', 'ImageTagProperties_Images');</statement>
+                 <statement mode="plain">CALL drop_foreign_key('ImageTagProperties', 'ImageTagProperties_Tags');</statement>
++
+                 <statement mode="plain">ALTER TABLE AlbumRoots MODIFY COLUMN label LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci;</statement>
+                 <statement mode="plain">ALTER TABLE AlbumRoots MODIFY COLUMN identifier LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci;</statement>
+                 <statement mode="plain">ALTER TABLE AlbumRoots MODIFY COLUMN specificPath LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci;</statement>
+@@ -2063,6 +2064,26 @@
+                 <statement mode="plain">ALTER TABLE ImageTagProperties MODIFY COLUMN property TEXT CHARACTER SET utf8 COLLATE utf8_general_ci;</statement>
+                 <statement mode="plain">ALTER TABLE ImageTagProperties MODIFY COLUMN value LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci;</statement>
+ 
++                <statement mode="plain">DROP TABLE IF EXISTS ImageTagProperties_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS TagProperties_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS ImageRelations_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS ImageHistory_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS Settings_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS DownloadHistory_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS ImageProperties_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS ImageTags_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS Tags_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS ImageCopyright_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS ImageComments_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS ImagePositions_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS VideoMetadata_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS ImageMetadata_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS ImageInformation_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS ImageHaarMatrix_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS Images_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS Albums_old;</statement>
++                <statement mode="plain">DROP TABLE IF EXISTS AlbumRoots_old;</statement>
++
+                 <statement mode="plain">RENAME TABLE AlbumRoots TO AlbumRoots_old;</statement>
+                 <statement mode="plain">CREATE TABLE AlbumRoots LIKE AlbumRoots_old;</statement>
+                 <statement mode="plain">ALTER TABLE AlbumRoots
+-- 
+2.14.3
+
