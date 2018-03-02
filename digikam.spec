@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.8.0
-Release: 4%{?dist}
+Release: 5%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -324,6 +324,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Fri Mar 02 2018 Adam Williamson <awilliam@redhat.com> - 5.8.0-5
+- Rebuild for opencv 3.4.1
+
 * Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 5.8.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
