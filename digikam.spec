@@ -2,7 +2,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 5.8.0
-Release: 5%{?dist}
+Release: 6%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -30,6 +30,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: doxygen
 BuildRequires: extra-cmake-modules
 BuildRequires: gettext
+BuildRequires: gcc-c++
 BuildRequires: libjpeg-devel
 BuildRequires: libtiff-devel
 BuildRequires: marble-astro-devel
@@ -209,7 +210,7 @@ pushd %{_target_platform}
   %{?opencv3}
 popd
 
-make %{?_smp_mflags} -C %{_target_platform}
+%make_build -C %{_target_platform} VERBOSE=1
 
 
 %install
@@ -234,7 +235,7 @@ for i in %{buildroot}%{_kf5_datadir}/applications/*.desktop ; do
 desktop-file-validate $i ||:
 done
 
-
+%if 0%{?rhel} < 8
 %post
 touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null || :
 
@@ -248,6 +249,7 @@ fi
 %posttrans
 gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor &> /dev/null || :
 update-desktop-database -q &> /dev/null
+%endif
 
 %files -f digikam.lang
 %doc core/AUTHORS core/ChangeLog
@@ -280,8 +282,7 @@ update-desktop-database -q &> /dev/null
 
 %files doc -f digikam-doc.lang
 
-%post libs -p /sbin/ldconfig
-%postun libs -p /sbin/ldconfig
+%ldconfig_scriptlets libs
 
 %files libs
 %{_kf5_libdir}/libdigikamcore.so*
@@ -315,8 +316,7 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 #files -n kipi-plugins-doc
 #{_kf5_docdir}/HTML/en/kipi-plugins/
 
-%post -n kf5-kipi-plugins-libs -p /sbin/ldconfig
-%postun -n kf5-kipi-plugins-libs -p /sbin/ldconfig
+%ldconfig_scriptlets -n kf5-kipi-plugins-libs
 
 %files -n kf5-kipi-plugins-libs
 %{_kf5_libdir}/libKF5kipiplugins.so*
@@ -324,6 +324,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Fri Mar 02 2018 Rex Dieter <rdieter@fedoraproject.org> - 5.8.0-6
+- BR: gcc-c++, use %%make_build %%ldconfig_scriptlets
+
 * Fri Mar 02 2018 Adam Williamson <awilliam@redhat.com> - 5.8.0-5
 - Rebuild for opencv 3.4.1
 
