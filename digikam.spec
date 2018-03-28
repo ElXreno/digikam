@@ -1,8 +1,8 @@
 
 Name:    digikam
 Summary: A digital camera accessing & photo management application
-Version: 5.8.0
-Release: 6%{?dist}
+Version: 5.9.0
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -13,15 +13,10 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?
 Source10: digikam-import.desktop
 
 ## upstream patches
-# dbconfig.xml mysql schema fixes
-Patch4: 0004-fix-schema-update-from-V7-8-to-V9-with-temporary-tab.patch
-Patch5: 0005-small-fix-for-the-schema-update.patch
-Patch11: 0011-disable-foreign-key-checks-temporarily-for-the-Tags-.patch
-Patch12: 0012-drop-old-table-if-new-run-required.patch
 
 ## upstreamable patches
 # doc-translated FTBFS, https://bugs.kde.org/show_bug.cgi?id=377597
-Patch100: digikam-5.6.0-doc_translated.patch
+Patch100: digikam-5.9.0-doc_translated.patch
 Patch101: digikam-5.7.0-glibc_powf64.patch
 
 BuildRequires: boost-devel
@@ -183,15 +178,8 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
-pushd core
-%patch4 -p1 -b .0004
-%patch5 -p1 -b .0005
-%patch11 -p1 -b .0011
-%patch12 -p1 -b .0012
-popd
-
 %patch100 -p1 -b .doc_translated
-%patch101 -p1 -b .glibc_powf64
+#patch101 -p1 -b .glibc_powf64
 
 # EVIV2_MIN_VERSION
 sed -i -e "s|0.26|0.25|g" core/CMakeLists.txt
@@ -324,6 +312,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Mon Mar 26 2018 Rex Dieter <rdieter@fedoraproject.org> - 5.9.0-1
+- 5.9.0
+
 * Fri Mar 02 2018 Rex Dieter <rdieter@fedoraproject.org> - 5.8.0-6
 - BR: gcc-c++, use %%make_build %%ldconfig_scriptlets
 
