@@ -223,7 +223,7 @@ for i in %{buildroot}%{_kf5_datadir}/applications/*.desktop ; do
 desktop-file-validate $i ||:
 done
 
-%if 0%{?rhel} < 8
+%if 0%{?rhel} && 0%{?rhel} < 8
 %post
 touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null || :
 
