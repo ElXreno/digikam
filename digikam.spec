@@ -17,6 +17,9 @@ License: GPLv2+
 URL:     http://www.digikam.org/
 Source0: http://download.kde.org/%{?beta:un}stable/digikam/%{version}/digikam-%{version}%{?beta:-%{beta}}.tar.xz
 
+#https://bugzilla.redhat.com/show_bug.cgi?id=1674809
+ExcludeArch: ppc64le
+
 # kipi-plugins no longer distributed as part of digikam nor has any immediate plans to be released
 # seprately, so, extracted kipi-plugins content from digikam-5.9.0 tarball and included here for now
 # https://mail.kde.org/pipermail/digikam-devel/2019-January/101615.html
@@ -334,6 +337,9 @@ gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
 
 
 %changelog
+* Tue Mar 05 2019 Rex Dieter <rdieter@fedoraproject.org> -  6.0.0-5
+- ExcludeArch: ppc64le (#1674809)
+
 * Tue Feb 26 2019 Rex Dieter <rdieter@fedoraproject.org> - 6.0.0-5
 - digikam-6.0.0
 - include kipi-plugins-5.9.0 here (for now)
