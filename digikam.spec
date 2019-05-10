@@ -11,8 +11,11 @@ License: GPLv2+
 URL:     http://www.digikam.org/
 Source0: http://download.kde.org/%{?beta:un}stable/digikam/%{version}/digikam-%{version}%{?beta:-%{beta}}.tar.xz
 
-#https://bugzilla.redhat.com/show_bug.cgi?id=1674809
-#ExcludeArch: ppc64le
+# workaround ppc64le FTBFS
+# https://bugs.kde.org/show_bug.cgi?id=404853
+%ifarch ppc64le
+%global facesengine ENABLE_FACESENGINE_DNN:BOOL=OFF
+%endif
 
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
 # TODO: upstream me
@@ -162,7 +165,8 @@ pushd %{_target_platform}
   -DENABLE_KFILEMETADATASUPPORT:BOOL=ON \
   -DENABLE_MEDIAPLAYER:BOOL=OFF \
   -DENABLE_MYSQLSUPPORT:BOOL=ON \
-  -DENABLE_INTERNALMYSQL:BOOL=ON
+  -DENABLE_INTERNALMYSQL:BOOL=ON \
+  %{?facesengine}
 popd
 
 %if 0%{?ninja}
