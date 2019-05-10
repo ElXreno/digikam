@@ -1,30 +1,18 @@
 
 # use ninja or not
-%global ninja 1
-
-# build kipi-plugins bundled here (nor not)
-%global kipi_plugins 1
-%global kipi_plugins_version 5.9.0
-
-%global digikam_version 6.0.0
+#global ninja 1
 
 Name:    digikam
 Summary: A digital camera accessing & photo management application
-Version: %{digikam_version}
-Release: 5%{?dist}
+Version: 6.1.0
+Release: 6%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
 Source0: http://download.kde.org/%{?beta:un}stable/digikam/%{version}/digikam-%{version}%{?beta:-%{beta}}.tar.xz
 
 #https://bugzilla.redhat.com/show_bug.cgi?id=1674809
-ExcludeArch: ppc64le
-
-# kipi-plugins no longer distributed as part of digikam nor has any immediate plans to be released
-# seprately, so, extracted kipi-plugins content from digikam-5.9.0 tarball and included here for now
-# https://mail.kde.org/pipermail/digikam-devel/2019-January/101615.html
-# https://mail.kde.org/pipermail/digikam-devel/2019-February/101616.html
-Source1: kipi-plugins-5.9.0.tar.xz
+#ExcludeArch: ppc64le
 
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
 # TODO: upstream me
@@ -136,11 +124,7 @@ digiKam built-in image editor makes the common photo correction a simple task.
 
 %package libs
 Summary: Runtime libraries for %{name}
-%if 0%{?fedora} > 21
-Recommends: %{name} = %{version}-%{release}
-%else
 Requires: %{name} = %{version}-%{release}
-%endif
 %description libs
 %{summary}.
 
@@ -158,46 +142,11 @@ BuildArch: noarch
 %description doc
 %{summary}.
 
-%if 0%{?kipi_plugins}
-%package -n kf5-kipi-plugins
-Summary: Plugins to use with kf5-libkipi applications
-Version: %{kipi_plugins_version}
-# upgrade path
-Obsoletes: kipi-plugins < 5.0.0-0.9
-Requires: kf5-kipi-plugins-libs%{?_isa} = %{version}-%{release}
-# drop empty kipi-plugins-doc (at least until content returns)
-Obsoletes: kipi-plugins-doc  < 5.7.0-2
-%description -n kf5-kipi-plugins
-This package contains plugins to use with Kipi, the KDE Image Plugin
-Interface.
-
-%package -n kf5-kipi-plugins-libs
-Summary: Runtime libraries for kf5-kipi-plugins
-Version: %{kipi_plugins_version}
-# upgrade path
-Obsoletes: kipi-plugins-libs < 5.0.0-0.9
-Requires: kf5-kipi-plugins = %{version}-%{release}
-%description -n kf5-kipi-plugins-libs
-%{summary}.
-
-%package -n kipi-plugins-doc
-Summary: Application handbooks
-Version: %{kipi_plugins_version}
-Requires:  kf5-kipi-plugins = %{version}-%{release}
-BuildArch: noarch
-%description -n kipi-plugins-doc
-%{summary}.
-%endif
-
 
 %prep
-%setup -q -n %{name}-%{digikam_version}%{?beta:-%{beta}} %{?kipi_plugins:-a1}
+%setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
-%if 0%{?kipi_plugins}
-echo 'add_subdirectory(extra)' >> CMakeLists.txt
-%endif
-
-%patch100 -p1 -b .doc_translated
+#patch100 -p1 -b .doc_translated
 
 # EVIV2_MIN_VERSION
 sed -i -e "s|0.26|0.25|g" core/CMakeLists.txt
@@ -294,49 +243,24 @@ update-desktop-database -q &> /dev/null
 %ldconfig_scriptlets libs
 
 %files libs
-%{_kf5_libdir}/libdigikamcore.so*
-%{_kf5_libdir}/libdigikamdatabase.so*
-%{_kf5_libdir}/libdigikamgui.so*
+%{_kf5_libdir}/libdigikamcore.so.*
+%{_kf5_libdir}/libdigikamdatabase.so.*
+%{_kf5_libdir}/libdigikamgui.so.*
+%{_kf5_qtplugindir}/digikam/
 
-%if 0%{?kipi_plugins}
-%if 0%{?rhel} && 0%{?rhel} < 8
-%post -n kf5-kipi-plugins
-touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null  ||:
-
-%postun -n kf5-kipi-plugins
-if [ $1 -eq 0 ] ; then
-  touch --no-create %{_kf5_datadir}/icons/hicolor &> /dev/null ||:
-  gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
-fi
-
-%posttrans -n kf5-kipi-plugins
-gtk-update-icon-cache %{_kf5_datadir}/icons/hicolor >& /dev/null ||:
-%endif
-
-%files -n kf5-kipi-plugins -f kipiplugin.lang
-%doc extra/kipi-plugins/AUTHORS extra/kipi-plugins/ChangeLog
-%doc extra/kipi-plugins/README extra/kipi-plugins/TODO extra/kipi-plugins/NEWS
-%license extra/kipi-plugins/COPYING
-%{_kf5_datadir}/applications/kipiplugins.desktop
-%{_kf5_datadir}/kxmlgui5/kipi/
-%{_kf5_datadir}/icons/hicolor/*/apps/kipi-*
-%{_kf5_datadir}/icons/hicolor/*/apps/expoblending.*
-%{_kf5_datadir}/icons/hicolor/*/apps/panorama.*
-%{_kf5_datadir}/kservices5/kipiplugin_*.desktop
-%{_kf5_datadir}/kipiplugin_*/
-
-#files -n kipi-plugins-doc
-#{_kf5_docdir}/HTML/en/kipi-plugins/
-
-%ldconfig_scriptlets -n kf5-kipi-plugins-libs
-
-%files -n kf5-kipi-plugins-libs
-%{_kf5_libdir}/libKF5kipiplugins.so*
-%{_kf5_qtplugindir}/kipiplugin_*.so
-%endif
+%files devel
+%{_kf5_libdir}/libdigikamcore.so
+%{_kf5_libdir}/libdigikamdatabase.so
+%{_kf5_libdir}/libdigikamgui.so
+%{_kf5_libdir}/cmake/digikam/
+%{_includedir}/digikam/
 
 
 %changelog
+* Fri May 10 2019 Rex Dieter <rdieter@fedoraproject.org> - 6.1.0-6
+- digikam-6.1.0
+- drop kf5-kipi-plugins (now packaged separately
+
 * Tue Mar 05 2019 Rex Dieter <rdieter@fedoraproject.org> -  6.0.0-5
 - ExcludeArch: ppc64le (#1674809)
 
