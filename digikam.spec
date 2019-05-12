@@ -13,10 +13,12 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/%{version}/digikam-%{
 
 # workaround ppc64le FTBFS
 # https://bugs.kde.org/show_bug.cgi?id=404853
-ExcludeArch ppc64le s390x
 %ifarch ppc64le
-%global facesengine ENABLE_FACESENGINE_DNN:BOOL=OFF
+%global facesengine -DENABLE_FACESENGINE_DNN:BOOL=OFF
 %endif
+
+# rawhide s390x is borked recently
+ExcludeArch s390x
 
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
 # TODO: upstream me
