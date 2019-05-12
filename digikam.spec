@@ -13,6 +13,7 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/%{version}/digikam-%{
 
 # workaround ppc64le FTBFS
 # https://bugs.kde.org/show_bug.cgi?id=404853
+ExcludeArch ppc64le s390x
 %ifarch ppc64le
 %global facesengine ENABLE_FACESENGINE_DNN:BOOL=OFF
 %endif
