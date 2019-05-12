@@ -18,7 +18,7 @@ Source0: http://download.kde.org/%{?beta:un}stable/digikam/%{version}/digikam-%{
 %endif
 
 # rawhide s390x is borked recently
-ExcludeArch s390x
+ExcludeArch: s390x
 
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
 # TODO: upstream me
