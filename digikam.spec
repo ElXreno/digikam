@@ -58,15 +58,16 @@ BuildRequires: pkgconfig(Qt5OpenGL)
 BuildRequires: pkgconfig(Qt5Svg)
 BuildRequires: pkgconfig(Qt5XmlPatterns)
 BuildRequires: pkgconfig(Qt5X11Extras)
+BuildRequires: pkgconfig(Qt5WebKit)
 BuildRequires: pkgconfig(x11) pkgconfig(xproto)
 %if 0%{?qt5_qtwebengine_arches:1}
 %ifarch %{?qt5_qtwebengine_arches}
 %global qwebengine -DENABLE_QWEBENGINE:BOOL=ON
 BuildRequires: cmake(KF5AkonadiContact)
 BuildRequires: pkgconfig(Qt5WebEngine)
-%endif
 %else
 BuildRequires: pkgconfig(Qt5WebKit)
+%endif
 %endif
 BuildRequires: kf5-libkipi-devel >= 16.03
 BuildRequires: kf5-libksane-devel >= 16.03
