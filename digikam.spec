@@ -5,7 +5,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 6.1.0
-Release: 6%{?dist}
+Release: 7%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -56,14 +56,17 @@ BuildRequires: pkgconfig(phonon4qt5)
 ## uses QtAv now (not available in fedora)
 BuildRequires: pkgconfig(Qt5OpenGL)
 BuildRequires: pkgconfig(Qt5Svg)
-BuildRequires: pkgconfig(Qt5WebKit)
 BuildRequires: pkgconfig(Qt5XmlPatterns)
 BuildRequires: pkgconfig(Qt5X11Extras)
 BuildRequires: pkgconfig(x11) pkgconfig(xproto)
 %if 0%{?qt5_qtwebengine_arches:1}
 %ifarch %{?qt5_qtwebengine_arches}
+%global qwebengine -DENABLE_QWEBENGINE:BOOL=ON
 BuildRequires: cmake(KF5AkonadiContact)
+BuildRequires: pkgconfig(Qt5WebEngine)
 %endif
+%else
+BuildRequires: pkgconfig(Qt5WebKit)
 %endif
 BuildRequires: kf5-libkipi-devel >= 16.03
 BuildRequires: kf5-libksane-devel >= 16.03
@@ -169,7 +172,8 @@ pushd %{_target_platform}
   -DENABLE_MEDIAPLAYER:BOOL=OFF \
   -DENABLE_MYSQLSUPPORT:BOOL=ON \
   -DENABLE_INTERNALMYSQL:BOOL=ON \
-  %{?facesengine}
+  %{?facesengine} \
+  %{?qwebengine}
 popd
 
 %if 0%{?ninja}
@@ -264,6 +268,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Thu Jul 11 2019 Rex Dieter <rdieter@fedoraproject.org> - 6.1.0-7
+- enable qwebengine support where available (#1728036)
+
 * Fri May 10 2019 Rex Dieter <rdieter@fedoraproject.org> - 6.1.0-6
 - digikam-6.1.0
 - drop kf5-kipi-plugins (now packaged separately
