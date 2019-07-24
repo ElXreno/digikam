@@ -5,7 +5,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 6.1.0
-Release: 7%{?dist}
+Release: 8%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -269,6 +269,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed Jul 24 2019 Fedora Release Engineering <releng@fedoraproject.org> - 6.1.0-8
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Thu Jul 11 2019 Rex Dieter <rdieter@fedoraproject.org> - 6.1.0-7
 - enable qwebengine support where available (#1728036)
 
