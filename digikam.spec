@@ -4,8 +4,8 @@
 
 Name:    digikam
 Summary: A digital camera accessing & photo management application
-Version: 6.1.0
-Release: 8%{?dist}
+Version: 6.2.0
+Release: 1%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -27,8 +27,7 @@ Source10: digikam-import.desktop
 ## upstream patches
 
 ## upstreamable patches
-# doc-translated FTBFS, https://bugs.kde.org/show_bug.cgi?id=377597
-Patch100: digikam-5.9.0-doc_translated.patch
+Patch100: digikam-6.2.0-Wall.patch
 
 %if 0%{?ninja}
 BuildRequires: ninja-build
@@ -41,6 +40,7 @@ BuildRequires: doxygen
 BuildRequires: extra-cmake-modules
 BuildRequires: gettext
 BuildRequires: gcc-c++
+BuildRequires: ImageMagick-devel ImageMagick-c++-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libtiff-devel
 BuildRequires: marble-astro-devel
@@ -69,7 +69,7 @@ BuildRequires: pkgconfig(Qt5WebEngine)
 BuildRequires: pkgconfig(Qt5WebKit)
 %endif
 %endif
-BuildRequires: kf5-libkipi-devel >= 16.03
+#BuildRequires: kf5-libkipi-devel >= 16.03
 BuildRequires: kf5-libksane-devel >= 16.03
 BuildRequires: kf5-kconfig-devel
 BuildRequires: kf5-kdoctools-devel
@@ -156,10 +156,10 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
-#patch100 -p1 -b .doc_translated
-
 # EVIV2_MIN_VERSION
 sed -i -e "s|0.26|0.25|g" core/CMakeLists.txt
+
+%patch100 -p1 -b .Wall
 
 
 %build
@@ -180,7 +180,7 @@ popd
 %if 0%{?ninja}
 %ninja_build -C %{_target_platform}
 %else
-%make_build -C %{_target_platform}
+%make_build -C %{_target_platform} VERBOSE=
 %endif
 
 
@@ -269,6 +269,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Wed Jul 31 2019 Rex Dieter <rdieter@fedoraproject.org> - 6.2.0-1
+- digikam-6.2.0
+
 * Wed Jul 24 2019 Fedora Release Engineering <releng@fedoraproject.org> - 6.1.0-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
