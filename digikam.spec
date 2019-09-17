@@ -264,7 +264,7 @@ update-desktop-database -q &> /dev/null
 %{_kf5_libdir}/libdigikamcore.so
 %{_kf5_libdir}/libdigikamdatabase.so
 %{_kf5_libdir}/libdigikamgui.so
-%{_kf5_libdir}/cmake/digikam/
+%{_kf5_libdir}/cmake/Digikam*/
 %{_includedir}/digikam/
 
 
