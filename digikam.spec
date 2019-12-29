@@ -5,7 +5,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 6.4.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -269,6 +269,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Sun Dec 29 2019 Nicolas Chauvet <kwizart@gmail.com> - 6.4.0-2
+- Rebuilt for opencv4
+
 * Tue Nov 12 2019 Rex Dieter <rdieter@fedoraproject.org> - 6.4.0-1
 - digikam-6.4.0
 
