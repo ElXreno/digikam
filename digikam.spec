@@ -1,24 +1,20 @@
 
 # use ninja or not
-#global ninja 1
+%global ninja 1
+
+%global beta beta1
 
 Name:    digikam
 Summary: A digital camera accessing & photo management application
-Version: 6.4.0
-Release: 2%{?dist}
+Version: 7.0.0
+Release: 0.1.%{beta}%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
-Source0: http://download.kde.org/%{?beta:un}stable/digikam/%{version}/digikam-%{version}%{?beta:-%{beta}}.tar.xz
-
-# workaround ppc64le FTBFS
-# https://bugs.kde.org/show_bug.cgi?id=404853
-%ifarch ppc64le
-%global facesengine -DENABLE_FACESENGINE_DNN:BOOL=OFF
-%endif
+Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?beta:-%{beta}}.tar.xz
 
 # rawhide s390x is borked recently
-ExcludeArch: s390x
+#ExcludeArch: s390x
 
 # digiKam not listed as a media handler for pictures in Nautilus (#516447)
 # TODO: upstream me
@@ -27,7 +23,6 @@ Source10: digikam-import.desktop
 ## upstream patches
 
 ## upstreamable patches
-Patch100: digikam-6.4.0-Wall.patch
 
 %if 0%{?ninja}
 BuildRequires: ninja-build
@@ -46,7 +41,7 @@ BuildRequires: libtiff-devel
 BuildRequires: marble-astro-devel
 BuildRequires: marble-widget-qt5-devel
 BuildRequires: perl-generators
-BuildRequires: pkgconfig(exiv2) >= 0.25
+BuildRequires: pkgconfig(exiv2) >= 0.26
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(jasper)
 BuildRequires: pkgconfig(lcms2)
@@ -156,11 +151,6 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}%{?beta:-%{beta}}
 
-# EVIV2_MIN_VERSION
-sed -i -e "s|0.26|0.25|g" core/CMakeLists.txt
-
-%patch100 -p1 -b .Wall
-
 
 %build
 mkdir %{_target_platform}
@@ -173,7 +163,6 @@ pushd %{_target_platform}
   -DENABLE_MEDIAPLAYER:BOOL=OFF \
   -DENABLE_MYSQLSUPPORT:BOOL=ON \
   -DENABLE_INTERNALMYSQL:BOOL=ON \
-  %{?facesengine} \
   %{?qwebengine}
 popd
 
@@ -269,6 +258,11 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue Dec 31 2019 Rex Dieter <rdieter@fedoraproject.org> - 7.0.0-0.1.beta1
+- digkam-7.0.0-beta1
+- use ninja
+- (re)enable s390x arch
+
 * Sun Dec 29 2019 Nicolas Chauvet <kwizart@gmail.com> - 6.4.0-2
 - Rebuilt for opencv4
 
