@@ -2,12 +2,12 @@
 # use ninja or not
 %global ninja 1
 
-%global beta beta1
+%global beta beta2
 
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 7.0.0
-Release: 0.1.%{beta}%{?dist}
+Release: 0.2.%{beta}%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -258,6 +258,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Mon Jan 27 2020 Nicolas Chauvet <kwizart@gmail.com> - 7.0.0-0.2.beta2
+- Update to beta2
+
 * Tue Dec 31 2019 Rex Dieter <rdieter@fedoraproject.org> - 7.0.0-0.1.beta1
 - digkam-7.0.0-beta1
 - use ninja
