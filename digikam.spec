@@ -7,7 +7,7 @@
 Name:    digikam
 Summary: A digital camera accessing & photo management application
 Version: 7.0.0
-Release: 0.2.%{beta}%{?dist}
+Release: 0.3.%{beta}%{?dist}
 
 License: GPLv2+
 URL:     http://www.digikam.org/
@@ -258,6 +258,9 @@ update-desktop-database -q &> /dev/null
 
 
 %changelog
+* Tue Jan 28 2020 Nicolas Chauvet <kwizart@gmail.com> - 7.0.0-0.3.beta2
+- Rebuild for OpenCV 4.2
+
 * Mon Jan 27 2020 Nicolas Chauvet <kwizart@gmail.com> - 7.0.0-0.2.beta2
 - Update to beta2
 
