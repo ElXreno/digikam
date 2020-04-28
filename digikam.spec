@@ -57,7 +57,7 @@ BuildRequires: pkgconfig(Qt5WebKit)
 BuildRequires: pkgconfig(x11) pkgconfig(xproto)
 %if 0%{?qt5_qtwebengine_arches:1}
 %ifarch %{?qt5_qtwebengine_arches}
-%global qwebengine -DENABLE_QWEBENGINE:BOOL=ON
+%global qwebengine 1
 BuildRequires: cmake(KF5AkonadiContact)
 BuildRequires: pkgconfig(Qt5WebEngine)
 %else
@@ -163,7 +163,7 @@ pushd %{_target_platform}
   -DENABLE_MEDIAPLAYER:BOOL=OFF \
   -DENABLE_MYSQLSUPPORT:BOOL=ON \
   -DENABLE_INTERNALMYSQL:BOOL=ON \
-  %{?qwebengine}
+  -DENABLE_QWEBENGINE:BOOL=%{?qwebengine:ON}%{!?qwebengine:OFF}
 popd
 
 %if 0%{?ninja}
