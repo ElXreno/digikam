@@ -94,7 +94,7 @@ BuildRequires: expat-devel
 ## htmlexport plugin
 BuildRequires: pkgconfig(libxslt)
 ## RemoveRedeye
-BuildRequires: pkgconfig(opencv) >= 3.1
+BuildRequires: pkgconfig(opencv) >= 3.3
 # Panorama plugin requires flex and bison
 BuildRequires: flex
 BuildRequires: bison
