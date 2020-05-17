@@ -10,8 +10,8 @@ Version: 7.0.0
 Release: 0.5.%{beta}%{?dist}
 
 License: GPLv2+
-URL:     http://www.digikam.org/
-Source0: http://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?beta:-%{beta}}.tar.xz
+URL:     https://www.digikam.org/
+Source0: https://download.kde.org/%{?beta:un}stable/digikam/digikam-%{version}%{?beta:-%{beta}}.tar.xz
 
 # rawhide s390x is borked recently
 #ExcludeArch: s390x
